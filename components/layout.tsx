@@ -17,22 +17,20 @@ export default function Layout({ children, home }: {
         <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
-          content="Hashtune Home Page"
+          content="Hashtune"
         />
-        <meta
-          property="og:image"
-
-        />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#F0D065" />
+        <meta property="og:image"/>
         <title>Hashtune</title>
         <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Navbar/>
       <main>{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>← Back to home</a>
+            <a>Home</a>
           </Link>
         </div>
       )}
