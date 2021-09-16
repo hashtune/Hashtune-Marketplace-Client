@@ -19,7 +19,7 @@ export default function Layout({ children, home }: {
           name="description"
           content="Hashtune"
         />
-        <link rel="manifest" href="/manifest.json" />
+        {/* <link rel="manifest" href="/manifest.json" /> */}
         <meta name="theme-color" content="#F0D065" />
         <meta property="og:image"/>
         <title>Hashtune</title>
