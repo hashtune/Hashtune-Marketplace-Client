@@ -1,0 +1,44 @@
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: 100%;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-transition-delay: 0s;
+  -moz-transition-delay: 0s;
+  transition-delay: 0s;
+  padding: 0.25rem;
+  justify-content: flex-end;
+}
+
+.text-input {
+  display: block;
+  position: absolute;
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #777777;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: transparent;
+  border-radius: 0;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  border-radius: 5rem;
+  outline: none;
+
+  &:focus {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+.input-group[class*="input-group-rounded"] {
+  border-radius: 2.5rem;
+}
+.input-group-append {
+  display: flex;
+}
