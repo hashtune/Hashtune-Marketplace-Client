@@ -10,7 +10,7 @@ class MyDocument extends Document {
        <Head>
          <meta content="IE=edge" httpEquiv="X-UA-Compatible" />
          <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-         <meta name="description" content="a decentralized NFTs Music marketplace/ streamin g service that empowers artists to build their fanbase, consistent source of income and have a platform where they can publish/ monetize their music independently without record labels influencing their decisions and creative visions" />
+         <meta name="description" content="Hashtune is a decentralized NFTs Music marketplace/ streamin g service that empowers artists to build their fanbase, consistent source of income and have a platform where they can publish/ monetize their music independently without record labels influencing their decisions and creative visions" />
 
          <meta content="./browserconfig.xml" name="msapplication-config" />
          <meta content="#" name="yandex-verification" />
@@ -40,14 +40,14 @@ class MyDocument extends Document {
          <meta property="og:title" content="Hashtune . Home"/>
          <meta property="og:url" content="https://hashtune.co"/>
          <meta property="og:image" content="public/featured.jpg" />
-         <meta property="og:description" content="Hashtune lets you connect do things and all the best good things awesome the best." />
+         <meta property="og:description" content="Hashtune is a decentralized NFTs Music marketplace/ streamin g service that empowers artists to build their fanbase, consistent source of income and have a platform where they can publish/ monetize their music independently without record labels influencing their decisions and creative visions" />
 
 
          <meta name="twitter:card" content="summary"/>
          <meta name="twitter:title" content="Hashtune . Home"/>
          <meta name="twitter:site" content="@Hashtune"/>
          <meta name="twitter:description/"
-         content="Hashtine lets you connect do things and all the best good things awesome the best." />
+         content="Hashtune is a decentralized NFTs Music marketplace/ streamin g service that empowers artists to build their fanbase, consistent source of income and have a platform where they can publish/ monetize their music independently without record labels influencing their decisions and creative visions" />
          <meta name="twitter:image" content="public/featured.jpg" />
          <meta name="twitter:image:alt" content="Hashtune"/>
 
