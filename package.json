@@ -9,19 +9,21 @@
     "lint": "next lint",
     "test": "jest",
     "cy:run": "cypress run",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "prisma:studio": "dotenv -e .env.local prisma studio"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.12",
+    "@prisma/client": "^3.0.2",
     "@testing-library/cypress": "^8.0.1",
     "classnames": "^2.3.1",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.5.3",
     "gray-matter": "^4.0.3",
     "next": "11.1.2",
-    "postcss-flexbugs-fixes": "^5.0.2",
-    "postcss-preset-env": "^6.7.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "^1.40.1",
-    "tailwindcss": "^2.2.15"
+    "sass": "^1.40.1"
   },
   "devDependencies": {
     "@types/react": "17.0.20",
