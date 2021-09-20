@@ -15,10 +15,9 @@ const Hero = () => {
          
          <div className={classes.hero__content}>
             <h3 className="heading-secondary mb-small">Hashtune is being Cooked 🎸</h3>
-            <p className="lead text-secondary mb-large">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla aperiam, omnis similique</p>
-            <span className="eyebrow text-muted mt-big mb-small">Join our mailing list for upcoming updates 🤩</span>
+            <p className="lead text-secondary mb-large">Want to be one of the first people who try The first NFT platform exclusively for musicians?! 😃</p>
+            <span className="eyebrow text-muted mt-big mb-small">Join our mailing list for upcoming updates</span>
             <Newsletter/>
-            
          </div>
       </div>
    )

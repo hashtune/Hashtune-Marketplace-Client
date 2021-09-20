@@ -1,17 +1,20 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import classes from '../styles/pages/index.module.scss'
+// import Header from '../components/Landing/Header'
+import Hero from '../components/Landing/Hero'
+
 
 const Home: NextPage = () => {
   return (
     <div className="">
       <Head>
-        <title>Hashtune</title>
-        <meta name="description" content="Hashtune" />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#F0D065" />
+        <title>Hashtune . Home</title>
       </Head>
+      {/* <Header/> */}
+      <Hero/>
+      
     </div>
   )
 }
