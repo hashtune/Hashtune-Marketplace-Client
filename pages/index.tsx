@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <div className="">
       <Head>
-        <title>Hashtune</title>
+        <title>Hashtune . Home</title>
       </Head>
       {/* <Header/> */}
       <Hero/>
