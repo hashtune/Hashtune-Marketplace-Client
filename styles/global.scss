@@ -1,0 +1,48 @@
+@import url(//db.onlinewebfonts.com/c/ace51fb0e489a977bed8a67511865c11?family=Averta+CY+W01);
+
+@font-face {
+  font-family: "Averta CY W01";
+  src: url("//db.onlinewebfonts.com/t/ace51fb0e489a977bed8a67511865c11.eot");
+  src: url("//db.onlinewebfonts.com/t/ace51fb0e489a977bed8a67511865c11.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/ace51fb0e489a977bed8a67511865c11.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/ace51fb0e489a977bed8a67511865c11.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/ace51fb0e489a977bed8a67511865c11.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/ace51fb0e489a977bed8a67511865c11.svg#Averta CY W01")
+      format("svg");
+}
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Averta CY W01, Verdana, Geneva, Tahoma, sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+ul {
+  li {
+    color: white;
+  }
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
