@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from './layout.module.css'
+import styles from '../css/layout.module.scss'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
 import { Navbar } from './Navbar/Navbar'
@@ -24,9 +24,10 @@ export default function Layout({ children, home }: {
         <meta property="og:image"/>
         <title>Hashtune</title>
         <meta name="og:title" content={siteTitle} />
+        <link href="//db.onlinewebfonts.com/c/ace51fb0e489a977bed8a67511865c11?family=Averta+CY+W01" rel="stylesheet" type="text/css"/>
       </Head>
       <Navbar/>
-      <main>{children}</main>
+      <main className= {styles.main}>{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
