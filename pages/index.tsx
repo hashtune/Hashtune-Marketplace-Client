@@ -1,43 +1,58 @@
 import Head from 'next/head'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
-import {getSortedPostsData} from '../lib/posts'
 import { GetStaticProps } from 'next'
+import client from '../apollo-client'
+import { gql } from "@apollo/client";
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
+
+export const getStaticProps:  GetStaticProps = async() => {
+  const {data} = await client.query({
+      query: gql`
+        query ExampleQuery {
+          listArtworks {
+            id
+            handle
+            kind
+            artworkType
+            description
+            owner {
+              id
+            }
+          }
+        }
+      `,
+    });
+    return {
+      props: {
+        allArtworksData: data.listArtworks.slice(0, 8),
+        fallback: true
+      },
+   };
 }
 
-export default function Home({allPostsData}: {
-  allPostsData: {
-    date: string
-    title: string
+
+export default function Home ({allArtworksData}: {
+  allArtworksData: {
+    handle: string
     id: string
+    kind: string
   }[]
 }) {
+  
   return (
-  <Layout home>
-      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>For Auction</h2>
-        <ul className={utilStyles.list}>
-          {allPostsData.map(({ id, date, title }) => (
-            <li className={utilStyles.listItem} key={id}>
-              {title}
-              <br />
-              {id}
-              <br />
-              {date}
-            </li>
-          ))}
-        </ul>
-      </section>
+    <Layout home>
+    <ul> 
+      {allArtworksData.map(artwork => (
+          <li key={artwork.id}>
+            {artwork.handle}
+          </li>
+        ))}
+    </ul>
     </Layout>
   )
 }
+
 
 
