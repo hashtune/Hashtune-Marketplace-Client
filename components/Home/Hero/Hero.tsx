@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-import ArtistIconHandle from "../ListArtist/ArtistIconHandle";
+import CreatorIconHandle from "../ListCreator/CreatorIconHandle";
 import BidButton from "./BidButton";
 
 interface HeroProps {
@@ -8,8 +8,8 @@ interface HeroProps {
     background: string,
     coverImage: string,
     price: number, 
-    artistImage: string,
-    artistHandle: string,
+    creatorImage: string,
+    creatorHandle: string,
     hours: number,
     minutes: number,
     seconds: number,
@@ -24,7 +24,7 @@ const Hero = (props: HeroProps) => {
                 <div className= "song-info">
                     <section className= "song-header">
                         <div className= "title-handle">
-                            <ArtistIconHandle image={props.artistImage} handle={props.artistHandle}/>
+                            <CreatorIconHandle image={props.creatorImage} handle={props.creatorHandle}/>
                             <h1>{props.title}</h1>
                         </div>
                         <div className= "play-button">

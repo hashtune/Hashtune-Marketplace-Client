@@ -5,6 +5,10 @@ import { GetStaticProps } from 'next'
 import client from '../apollo-client'
 import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from 'next'
+import React from 'react'
+import Hero from '../components/Home/Hero/Hero'
+import MusicList from '../components/Home/ListContainer/MusicList'
+import CreatorList from '../components/Home/ListContainer/CreatorList'
 
 
 export const getStaticProps:  GetStaticProps = async() => {
@@ -19,7 +23,16 @@ export const getStaticProps:  GetStaticProps = async() => {
             description
             owner {
               id
+              image
+              handle
             }
+          }
+          listTrendyCreators {
+            image
+            handle
+            id
+            name 
+            bio
           }
         }
       `,
@@ -27,29 +40,42 @@ export const getStaticProps:  GetStaticProps = async() => {
     return {
       props: {
         allArtworksData: data.listArtworks.slice(0, 8),
+        allTrendyCreatorsData: data.listTrendyCreators.slice(0,16),
         fallback: true
       },
    };
 }
 
 
-export default function Home ({allArtworksData}: {
+export default function Home ({allArtworksData, allTrendyCreatorsData}: {
   allArtworksData: {
-    handle: string
-    id: string
-    kind: string
+    id: string,
+    name: string
+    handle: string,
+    image: string,
+    artworkType: string,
+    owner: {
+       handle: string,
+       image: string 
+    }
+  }[],
+  allTrendyCreatorsData: {
+    id: string,
+    name: string
+    handle: string,
+    image: string,
+    bio:string
   }[]
 }) {
   
   return (
     <Layout home>
-    <ul> 
-      {allArtworksData.map(artwork => (
-          <li key={artwork.id}>
-            {artwork.handle}
-          </li>
-        ))}
-    </ul>
+    {/* TODO: get price, cover img, from props. Calculate hours, minutes, seconds,
+    add string to creators.*/}
+    <Hero title={allArtworksData[0].handle} background={'/images/backgroundHome.jpg'} coverImage={'/images/artwork.png'} price={3.04} creatorImage={allArtworksData[0].owner.image} creatorHandle={allArtworksData[0].owner.handle} hours={0} minutes={0} seconds={0}/>
+    <MusicList title={'Trending Auctions'} viewAll={'Auctions'} artworks={allArtworksData}/>
+    <MusicList title={'Trending Music'} viewAll={'Music'} artworks={allArtworksData}/>
+    <CreatorList title={'Trending Creators'} creators={allTrendyCreatorsData}/>
     </Layout>
   )
 }

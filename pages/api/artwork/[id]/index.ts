@@ -3,7 +3,7 @@ import { resultKeyNameFromField } from "@apollo/client/utilities";
 import { GetStaticPaths, GetStaticProps, NextApiRequest, NextApiResponse } from "next";
 import Head from "next/head";
 import client from "../../../../apollo-client";
-import Layout from "../../../../components/layout";
+import Layout from "../../../../components/Layout/layout";
 
 const getAllArtworksData = async () => {
   const { data } = await client.query({
