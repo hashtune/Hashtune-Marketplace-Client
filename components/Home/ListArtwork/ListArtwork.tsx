@@ -6,10 +6,11 @@ import ListArtworkBottom from "./ListArtworkBottom";
 
 interface ListArtworkProps {
   name: string,
-  coversrc: string,
+  coverImage: string,
   artistHandle: string,
-  genre: string,
-  type: string
+  genre: string [],
+  artworkType: string
+  artistImage: string
 
   purchasable?: boolean,
   auction?: boolean,
@@ -20,11 +21,12 @@ interface ListArtworkProps {
 }
 
 
+
 const ListArtwork = (props: ListArtworkProps) => {
     return (
         <div>
             <div>
-                <ListArtworkTop name={props.name} coversrc={props.coversrc} artistHandle={props.artistHandle} genre={props.genre} type={props.type}/>
+                <ListArtworkTop name={props.name} image={props.coverImage} artistHandle={props.artistHandle} genre={props.genre} artworkType={props.artworkType} artistImage={props.artistImage}/>
                 <ListArtworkBottom auction= {props.auction} purchasable = {props.purchasable} inStock= {props.inStock} currentBid= {props.currentBid}endingIn={props.endingIn}/>
             </div>
         </div>
