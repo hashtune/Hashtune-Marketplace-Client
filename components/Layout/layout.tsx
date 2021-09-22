@@ -1,7 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../css/layout.module.scss'
-import utilStyles from '../styles/utils.module.css'
+import styles from './Layout.module.scss'
 import Link from 'next/link'
 import { Navbar } from './Navbar/Navbar'
 
