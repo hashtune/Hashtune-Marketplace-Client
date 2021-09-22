@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import styles from '../../css/Navbar.module.scss'
+import styles from './Navbar.module.scss'
 import Image from 'next/image'
-import MenuItem from './MenuItem'
+import MenuItem from '../MenuItem/MenuItem'
 export const Navbar = () => {
   return (
     <>
