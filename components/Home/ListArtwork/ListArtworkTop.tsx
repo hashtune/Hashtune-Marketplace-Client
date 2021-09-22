@@ -1,22 +1,21 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image"
-import CreatorImageHandle from "../ListArtist/ArtistIconHandle";
+import CreatorImageHandle from "../ListCreator/CreatorIconHandle";
 
 interface ListArtworkProps {
   name: string,
   image: string,
   genre: string[],
   artworkType: string,
-  artistImage: string,
-  artistHandle: string,
+  creatorImage: string,
+  creatorHandle: string,
 }
 
 
 
 
 const ListArtworkTop = (props: ListArtworkProps) => {
-    const href: string ='../../../pages/api/artist/';
     return (
         <div>
             <Image src= {props.image} width = {206} height= {206}/>
@@ -26,7 +25,7 @@ const ListArtworkTop = (props: ListArtworkProps) => {
                         <div className="name">
                             <Link href= '/'>{props.name}</Link>
                         </div>
-                        <CreatorImageHandle image={props.artistImage} handle={props.artistHandle} />
+                        <CreatorImageHandle image={props.creatorImage} handle={props.creatorHandle} />
                         <ul className ="genre">
                             {props.genre.map ( genre => (
                                 <li>#{genre}</li>
