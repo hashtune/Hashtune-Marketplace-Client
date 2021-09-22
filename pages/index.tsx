@@ -68,6 +68,7 @@ export default function Home ({allArtworksData, allTrendyCreatorsData}: {
   }[]
 }) {
   
+  
   return (
     <Layout home>
     {/* TODO: get price, cover img, from props. Calculate hours, minutes, seconds,
