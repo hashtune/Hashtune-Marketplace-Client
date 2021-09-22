@@ -1,6 +1,10 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image"
+import BottomInfo from "./BottomInfo";
+
+
+
 
 interface ListArtworkBottomProps {
   purchasable?: boolean,
@@ -13,40 +17,24 @@ interface ListArtworkBottomProps {
 
 
 const ListArtworkBottom = (props: ListArtworkBottomProps) => {
-    if (props.purchasable){
+    if (props.auction){
         return (
             <div>
-                <div>
-                    <h3>Buy for</h3>
-                    <h3>{props.price}</h3>
-                </div>
-                <div>
-                    <h3>In Stock</h3>
-                    <h3>{props.inStock}</h3>
-                </div>
+                <BottomInfo label="Current Bid" price={props.currentBid}/>
+                <BottomInfo label="Ending in" endingIn={props.endingIn}/>
             </div>
         )
     }
-    else if (props.auction) {
+    else if (props.purchasable) {
         return (
-        <div>
             <div>
-                <h3>Current Bid</h3>
-                <h3>{props.currentBid}</h3>
+                <BottomInfo label="Buy for" price={props.price}/>
             </div>
-            <div>
-                <h3>Ending in</h3>
-                <h3>{props.endingIn}</h3>
-            </div>
-        </div>
     )
     }
     return (
-            <div>
-                <div>
-                    <h3>Reserve Price</h3>
-                    <h3>{props.price}</h3>
-                </div>
+            <div>  
+                <BottomInfo label="Reserve Price" price={props.price}/>
             </div>
     )
 }
