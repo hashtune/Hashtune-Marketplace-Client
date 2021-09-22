@@ -1,5 +1,5 @@
 import React from "react"
-import ListArtist from "../ListArtist/ListArtist"
+import ListCreator from "../ListCreator/ListCreator"
 import CreatorListRow from "./CreatorListRow"
 import TitleViewAll from "./TitleViewAll"
 
