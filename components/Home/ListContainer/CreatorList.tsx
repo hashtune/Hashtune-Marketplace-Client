@@ -3,15 +3,17 @@ import ListCreator from "../ListCreator/ListCreator"
 import CreatorListRow from "./CreatorListRow"
 import TitleViewAll from "./TitleViewAll"
 
+export interface Creator {
+    id: string,
+    name: string
+    handle: string,
+    image: string,
+    bio:string
+}
+
 interface CreatorListProps {
     title: string,
-    creators: {
-        id: string,
-        name: string
-        handle: string,
-        image: string,
-        bio:string
-    }[]
+    creators: Creator[],
 }
 
 const CreatorList = (props: CreatorListProps) => {

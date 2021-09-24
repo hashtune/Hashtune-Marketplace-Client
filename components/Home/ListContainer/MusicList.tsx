@@ -1,21 +1,13 @@
 import React from "react";
 import MusicListRow from "./MusicListRow";
 import TitleViewAll from "./TitleViewAll";
+import {Artwork} from "../ListArtwork/ListArtwork"
+
 
 interface MusicListProps {
     title: string,
     viewAll: string, 
-    artworks: {
-        id: string,
-        name: string
-        handle: string,
-        image: string,
-        artworkType: string,
-        owner: {
-           handle: string,
-           image: string 
-        }
-    }[]
+    artworks: Artwork[],
 }
 
 const MusicList = (props: MusicListProps) => {
@@ -24,8 +16,8 @@ const MusicList = (props: MusicListProps) => {
             <div>
                 <TitleViewAll title={props.title} viewAll={props.viewAll}/>
                 <div>
-                    <MusicListRow start={0} end={4} artworks={props.artworks}/>
-                    <MusicListRow start={4} end={8} artworks={props.artworks}/>
+                    <MusicListRow startSlice={0} endSlice={4} artworks={props.artworks}/>
+                    <MusicListRow startSlice={4} endSlice={8} artworks={props.artworks}/>
                 </div>
             </div>
         </div>

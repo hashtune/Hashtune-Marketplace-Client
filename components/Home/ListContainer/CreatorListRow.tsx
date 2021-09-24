@@ -1,17 +1,12 @@
 import React from "react"
 import ListCreator from "../ListCreator/ListCreator"
 import TitleViewAll from "./TitleViewAll"
+import {Creator} from "./CreatorList"
 
 interface CreatorListRowProps {
     start: number,
     end: number,
-    creators: {
-        id: string,
-        name: string
-        handle: string,
-        image: string,
-        bio:string
-    }[]
+    creators: Creator[]
 }
 const CreatorListRow = (props: CreatorListRowProps) => {
   return (
