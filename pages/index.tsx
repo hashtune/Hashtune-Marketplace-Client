@@ -9,6 +9,7 @@ import React from 'react'
 import Hero from '../components/Home/Hero/Hero'
 import MusicList from '../components/Home/ListContainer/MusicList'
 import CreatorList from '../components/Home/ListContainer/CreatorList'
+import {Artwork} from "../components/Home/ListArtwork/ListArtwork"
 
 
 export const getStaticProps:  GetStaticProps = async() => {
@@ -39,27 +40,17 @@ export const getStaticProps:  GetStaticProps = async() => {
     });
     return {
       props: {
-        allArtworksData: data.listArtworks.slice(0, 8),
-        allTrendyCreatorsData: data.listTrendyCreators.slice(0,16),
+        allArtworks: data.listArtworks.slice(0, 8),
+        allTrendyCreators: data.listTrendyCreators.slice(0,16),
         fallback: true
       },
    };
 }
 
 
-export default function Home ({allArtworksData, allTrendyCreatorsData}: {
-  allArtworksData: {
-    id: string,
-    name: string
-    handle: string,
-    image: string,
-    artworkType: string,
-    owner: {
-       handle: string,
-       image: string 
-    }
-  }[],
-  allTrendyCreatorsData: {
+export default function Home ({allArtworks, allTrendyCreators}: {
+  allArtworks: Artwork[],
+  allTrendyCreators: {
     id: string,
     name: string
     handle: string,
@@ -67,16 +58,16 @@ export default function Home ({allArtworksData, allTrendyCreatorsData}: {
     bio:string
   }[]
 }) {
-  
+
   
   return (
     <Layout home>
     {/* TODO: get price, cover img, from props. Calculate hours, minutes, seconds,
     add string to creators.*/}
-    <Hero title={allArtworksData[0].handle} background={'/images/backgroundHome.jpg'} coverImage={'/images/artwork.png'} price={3.04} creatorImage={allArtworksData[0].owner.image} creatorHandle={allArtworksData[0].owner.handle} hours={0} minutes={0} seconds={0}/>
-    <MusicList title={'Trending Auctions'} viewAll={'Auctions'} artworks={allArtworksData}/>
-    <MusicList title={'Trending Music'} viewAll={'Music'} artworks={allArtworksData}/>
-    <CreatorList title={'Trending Creators'} creators={allTrendyCreatorsData}/>
+    <Hero artwork = {allArtworks[0]}/>
+    <MusicList title={'Trending Auctions'} viewAll={'Auctions'} artworks={allArtworks}/>
+    <MusicList title={'Trending Music'} viewAll={'Music'} artworks={allArtworks}/>
+    <CreatorList title={'Trending Creators'} creators={allTrendyCreators}/>
     </Layout>
   )
 }
