@@ -3,10 +3,10 @@ import Image from 'next/image'
 import CreatorIconHandle from "../ListCreator/CreatorIconHandle";
 import BidButton from "./BidButton";
 import Countdown from "./Countdown";
-import { ListArtworkProps } from "../ListArtwork/ListArtwork";
+import {ArtworkProp } from "../ListArtwork/ListArtwork";
 
 // TODO: REMOVE HARDCODED BACKGROUND IMAGE
-const Hero = (props: ListArtworkProps) => {
+const Hero = (props: ArtworkProp) => {
     let artwork = props.artwork;
     let cover = artwork.image || "/";
     return (
@@ -18,7 +18,7 @@ const Hero = (props: ListArtworkProps) => {
                     <section className= "song-header">
                         <div className= "title-handle">
                             <CreatorIconHandle image={artwork.creators[0].image} handle={artwork.creators[0].handle}/>
-                            <h1>{artwork.name}</h1>
+                            <h1>{artwork.title}</h1>
                         </div>
                         <div className= "play-button">
                             <div>
