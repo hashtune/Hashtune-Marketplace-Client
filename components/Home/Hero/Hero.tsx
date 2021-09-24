@@ -2,30 +2,23 @@ import React from "react";
 import Image from 'next/image'
 import CreatorIconHandle from "../ListCreator/CreatorIconHandle";
 import BidButton from "./BidButton";
+import Countdown from "./Countdown";
+import { ListArtworkProps } from "../ListArtwork/ListArtwork";
 
-interface HeroProps {
-    title: string,
-    background: string,
-    coverImage: string,
-    price: number, 
-    creatorImage: string,
-    creatorHandle: string,
-    hours: number,
-    minutes: number,
-    seconds: number,
-}
-
-const Hero = (props: HeroProps) => {
+// TODO: REMOVE HARDCODED BACKGROUND IMAGE
+const Hero = (props: ListArtworkProps) => {
+    let artwork = props.artwork;
+    let cover = artwork.image || "/";
     return (
         <div>
-            <Image src= {props.background} width = {1176} height= {640}/>
+            <Image src= {'/images/backgroundHome.jpg'} width = {1176} height= {640}/>
             <div className= "song-border">
-                <Image src= {props.coverImage} width = {424} height= {424}/>
+                <Image src= {cover} width = {424} height= {424}/>
                 <div className= "song-info">
                     <section className= "song-header">
                         <div className= "title-handle">
-                            <CreatorIconHandle image={props.creatorImage} handle={props.creatorHandle}/>
-                            <h1>{props.title}</h1>
+                            <CreatorIconHandle image={artwork.creators[0].image} handle={artwork.creators[0].handle}/>
+                            <h1>{artwork.name}</h1>
                         </div>
                         <div className= "play-button">
                             <div>
@@ -37,17 +30,9 @@ const Hero = (props: HeroProps) => {
                         <div>
                             <section>
                                 <h3>Current bid</h3>
-                                <h3>{props.price}</h3>
+                                <h3>{artwork.currentBid}</h3>
                             </section>
-                            <section>
-                                <h3>Auction ending in</h3>
-                                <h2 className= "hours">{props.hours}</h2>
-                                <h2 className= "minutes">{props.minutes}</h2>
-                                <h2 className= "seconds">{props.seconds}</h2>
-                                <h3>hours</h3>
-                                <h3>minutes</h3>
-                                <h3>seconds</h3>
-                            </section>  
+                            <Countdown liveAt= {artwork.liveAt} /> 
                         </div>
                         <BidButton/>
                     </section>
