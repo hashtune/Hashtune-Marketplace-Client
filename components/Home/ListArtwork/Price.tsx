@@ -7,7 +7,7 @@ import {ArtworkProp} from "./ListArtwork"
 const Price = (props: ArtworkProp) => {
     const artwork = props.artwork
     if (!artwork.listed){
-        return;
+        return(<div></div>);
     } else if (artwork.saleType === "fixed"){
         return( <div>
                     <h3>Buy for {artwork.price} BNB</h3>
