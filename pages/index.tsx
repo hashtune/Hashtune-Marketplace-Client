@@ -16,23 +16,28 @@ export const getStaticProps:  GetStaticProps = async() => {
   const {data} = await client.query({
       query: gql`
         query ExampleQuery {
-          listArtworks {
+          listArtworks{
             id
-            handle
-            kind
-            artworkType
-            description
-            owner {
-              id
-              image
+            title
+            saleType
+            reservePrice
+            price
+            creator {
               handle
+              image
+              fullName
+            }
+            latestAuction {
+              bids {
+                id
+              }
             }
           }
-          listTrendyCreators {
+          listCreators {
+            fullName
             image
             handle
             id
-            name 
             bio
           }
         }
@@ -41,16 +46,16 @@ export const getStaticProps:  GetStaticProps = async() => {
     return {
       props: {
         allArtworks: data.listArtworks.slice(0, 8),
-        allTrendyCreators: data.listTrendyCreators.slice(0,16),
+        allCreators: data.listCreators.slice(0,16),
         fallback: true
       },
    };
 }
 
 
-export default function Home ({allArtworks, allTrendyCreators}: {
+export default function Home ({allArtworks, allCreators}: {
   allArtworks: Artwork[],
-  allTrendyCreators: {
+  allCreators: {
     id: string,
     name: string
     handle: string,
@@ -58,7 +63,7 @@ export default function Home ({allArtworks, allTrendyCreators}: {
     bio:string
   }[]
 }) {
-
+  console.log("ARTWORKSs:" + allArtworks)
   
   return (
     <Layout home>
@@ -67,7 +72,7 @@ export default function Home ({allArtworks, allTrendyCreators}: {
     <Hero artwork = {allArtworks[0]}/>
     <MusicList title={'Trending Auctions'} viewAll={'Auctions'} artworks={allArtworks}/>
     <MusicList title={'Trending Music'} viewAll={'Music'} artworks={allArtworks}/>
-    <CreatorList title={'Trending Creators'} creators={allTrendyCreators}/>
+    <CreatorList creators={allCreators}/>
     </Layout>
   )
 }
