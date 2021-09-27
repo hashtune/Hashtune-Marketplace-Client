@@ -8,7 +8,7 @@ const ArtworkTitleCreator = (props: ArtworkProp) => {
     return (
         <div>
             <h3>{artwork.title}</h3>
-            <h3>{artwork.creators[0].name}</h3>
+            <h3>{artwork.creator.name}</h3>
         </div>
     )
 }
