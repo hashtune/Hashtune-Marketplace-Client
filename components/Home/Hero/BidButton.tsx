@@ -2,13 +2,9 @@ import React from "react";
 
 const BidButton = () => {
     return (
-        <div>
-            <div>
-                <button>
-                    <div>Bid</div>
-                </button>
-            </div>
-        </div>
+        <button>
+            <h2>Place a bid</h2>
+        </button>
     )
 }
 export default BidButton
