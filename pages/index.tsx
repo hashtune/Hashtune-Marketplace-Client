@@ -10,39 +10,49 @@ import Hero from '../components/Home/Hero/Hero'
 import MusicList from '../components/Home/ListContainer/MusicList'
 import CreatorList from '../components/Home/ListContainer/CreatorList'
 import {Artwork} from "../components/Home/ListArtwork/ListArtwork"
+import { useRouter } from 'next/dist/client/router'
 
 
 export const getStaticProps:  GetStaticProps = async() => {
   const {data} = await client.query({
-      query: gql`
-        query ExampleQuery {
-          listArtworks{
+    query: gql`
+    query ExampleQuery {
+      listArtworks{
+        id
+        title
+        saleType
+        image
+        description
+        listed
+        reservePrice
+        price
+        Auctions {
+          bids {
             id
-            title
-            saleType
-            reservePrice
-            price
-            creator {
-              handle
-              image
-              fullName
-            }
-            latestAuction {
-              bids {
-                id
-              }
-            }
           }
-          listCreators {
-            fullName
-            image
-            handle
+          currentHigh
+        }
+        creator {
+          handle
+          image
+          fullName
+        }
+        latestAuction {
+          bids {
             id
-            bio
           }
         }
-      `,
-    });
+      }
+      listCreators {
+        fullName
+        image
+        handle
+        id
+        bio
+      }
+    }
+  `,
+  });
     return {
       props: {
         allArtworks: data.listArtworks.slice(0, 8),
@@ -63,7 +73,7 @@ export default function Home ({allArtworks, allCreators}: {
     bio:string
   }[]
 }) {
-  console.log("ARTWORKSs:" + allArtworks)
+
   
   return (
     <Layout home>
