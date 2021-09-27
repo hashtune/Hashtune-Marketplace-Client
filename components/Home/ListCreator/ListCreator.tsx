@@ -4,15 +4,19 @@ import Image from "next/image"
 import FollowButton from "./FollowButton";
 import CreatorImageHandle from "./CreatorIconHandle";
 
-interface ListCreatorProps {
+export interface Creator {
   name: string,
+  id:string,
   handle: string
   image: string,
   bio: string,
 }
+export interface CreatorList {
+    creators: Creator[],
+}
 
 
-const ListCreator = (props: ListCreatorProps) => {
+const ListCreator = (props: Creator) => {
     return (
         <div>
             <div>
