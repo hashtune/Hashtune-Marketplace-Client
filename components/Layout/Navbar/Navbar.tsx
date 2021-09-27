@@ -2,23 +2,28 @@ import Link from 'next/link'
 import styles from './Navbar.module.scss'
 import Image from 'next/image'
 import MenuItem from '../MenuItem/MenuItem'
+import { useRouter } from 'next/dist/client/router'
+import Tab from './Tab'
 export const Navbar = () => {
+
+  const { query } = useRouter();
+  const isSongsTabSelected = !!query.songsTab;
+  const isArtistsTabSelected = !!query.artistsTab;
+
   return (
-    <>
     <div className = {styles.mainSidebar}>
-    <div className= {styles.sidebar}>
     <nav className= {styles.navbar}>
-      <ul>
-        <li className= "logo"><MenuItem name= "Hashtune" href = '/' iconsrc= "/images/logo.png"/></li>
-        <li><MenuItem name= "Home" href= '/home' iconsrc= '/images/ion_home-outline.png'/></li>
-        <li><MenuItem name= "Explore" href= '/explore' iconsrc= '/images/ion_compass-outline.png'/></li>
-        <li><MenuItem name= "Blog" href= '/blog' iconsrc= '/images/ion_document-text-outline.png'/></li>
-        <li><MenuItem name= "About" href= '/about' iconsrc= '/images/ion_glasses.png'/></li>
-        <li><MenuItem name= "Connect Wallet" href= '/connect-wallet' iconsrc=''/></li>
-      </ul>
+      <Link href= '/'>
+        <Image src= "/images/logo.png"/>
+        <a>Hashtune</a>
+      </Link>
+      <Tab href="/?songsTab=true" title="Tab One" isSelected={isSongsTabSelected} /> 
+      <Tab href="/?artistsTab=true" title="Tab Two" isSelected={isArtistsTabSelected} /> 
+      {/* SEARCH COMPONENT */}
+      <Link href= '/connect-wallet'><a>Connect Wallet</a></Link>
+      <Image src= "/"/> 
+      {/* ^^ THIS IS GOING TO BE SIDEBAR COMPONENT */}
     </nav>
     </div>
-    </div>
-    </>
   )
 }
