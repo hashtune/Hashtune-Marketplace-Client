@@ -6,20 +6,32 @@ import Price from "./Price";
 
 export interface Artwork {
     id: string,
-    title: string
-    handle: string,
-    image?: string,
-    artworkType: string,
+    title: string,
     saleType: string,
-    currentBid?: number,
-    fixedPrice: number,
+    image?: string,
+    description: string,
+    listed: boolean,
     reservePrice: number,
-    liveAt?: Date,
-    creators: {
+    price: number,
+    auctions:  {
+        bids : {
+            id : string,
+        }[],
+        currentHigh: number,
+    }[],
+    // artworkType: string,
+    // auctionWithNoReservePriceAndNoBids: boolean,
+    // liveAt?: Date,
+    latestAuction: {
+        bids: {
+            id: string;
+        }[]
+    },
+    creator: {
        handle: string,
        name: string,
        image: string 
-    }[],
+    },
 }
 export interface ArtworkProp {
     artwork: Artwork
@@ -38,16 +50,6 @@ const ListArtwork = (props: ArtworkProp) => {
                     <ArtworkTitleCreator artwork = {artwork}/> 
                     <Price artwork= {artwork}/>
                 </div>
-                
-                {/* Listed == false Show artwokrk creator
-                If auctionWithNoReservePriceAndNoBids -> Make an offer
-                If saleType == fixed Buy {price}
-                if latestAuction.bids == [] --> Bid {artwork.reservePrice}
-                else {
-                    Bid {currentHigh} BNB
-                }
-                
-                */}
             </div>
         </div>
     )
