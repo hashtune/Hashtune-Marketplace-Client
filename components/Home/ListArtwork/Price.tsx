@@ -13,23 +13,19 @@ const Price = (props: ArtworkProp) => {
                     <h3>Buy for {artwork.price} BNB</h3>
                 </div>)
              
-    } 
-    //Should be auctionWithNoReservePriceAndNoBids   
-    // const auctionLength: number = artwork.auctions.length;
-    // Should use last added auction
-    else if (artwork.saleType=== "auction" && artwork.reservePrice===null && artwork.auctions[0].bids === []){
+    } else if (artwork.auctionWithNoReservePriceAndNoBids){
         return ( <div>
                     <h3>Make an offer</h3>
                 </div>)
     } else if (artwork.latestAuction.bids=== []){
+        const lastIndex = artwork.auctions.length
         return (<div>
-                    <h3>Bid {artwork.auctions[0].currentHigh} BNB</h3>
+                    <h3>Bid {artwork.auctions[lastIndex].currentHigh} BNB</h3>
                 </div>)
     } else {
         return (<div>
                     <h3>Bid {artwork.reservePrice} BNB</h3>
                 </div>) 
     }
-    // TODO remove reserve price for currentHIgh
 }
 export default Price
