@@ -7,10 +7,11 @@ import { gql } from "@apollo/client";
 import { NextApiRequest, NextApiResponse } from 'next'
 import React from 'react'
 import Hero from '../components/Home/Hero/Hero'
-import MusicList from '../components/Home/ListContainer/MusicList'
-import CreatorList from '../components/Home/ListContainer/CreatorList'
 import {Artwork} from "../components/Home/ListArtwork/ListArtwork"
 import { useRouter } from 'next/dist/client/router'
+import ArtworkContainer from '../components/Home/ListContainer/ArtworkContainer'
+import CreatorContainer from '../components/Home/ListContainer/CreatorContainer'
+import { Creator } from '../components/Home/ListCreator/ListCreator'
 
 
 export const getStaticProps:  GetStaticProps = async() => {
@@ -55,36 +56,36 @@ export const getStaticProps:  GetStaticProps = async() => {
   });
     return {
       props: {
-        allArtworks: data.listArtworks.slice(0, 8),
-        allCreators: data.listCreators.slice(0,16),
+        allArtworks: data.listArtworks.slice(0, 10),
+        allCreators: data.listCreators.slice(0,20),
         fallback: true
       },
    };
 }
 
-
 export default function Home ({allArtworks, allCreators}: {
   allArtworks: Artwork[],
-  allCreators: {
-    id: string,
-    name: string
-    handle: string,
-    image: string,
-    bio:string
-  }[]
+  allCreators: Creator[],
 }) {
-
-  
-  return (
-    <Layout home>
-    {/* TODO: get price, cover img, from props. Calculate hours, minutes, seconds,
-    add string to creators.*/}
-    <Hero artwork = {allArtworks[0]}/>
-    <MusicList title={'Trending Auctions'} viewAll={'Auctions'} artworks={allArtworks}/>
-    <MusicList title={'Trending Music'} viewAll={'Music'} artworks={allArtworks}/>
-    <CreatorList creators={allCreators}/>
-    </Layout>
-  )
+  const { query } = useRouter();
+  const isArtistsTabSelected = !!query.artistsTab;
+  const isAllHashtunesSelected = !!query.allHashtunes;
+  // const isAuctionsSelected = !!query.auctions; STILL NEEDS TOBE IMPLEMENTED
+  // const isBuyNowSeleected = !!query.buyNow;
+  if (!isArtistsTabSelected && isAllHashtunesSelected){
+    return (
+      <Layout home>
+        <Hero artwork = {allArtworks[0]}/>
+        <ArtworkContainer artworks={allArtworks}/>
+      </Layout>
+    )
+  } else {
+    return (
+      <Layout home>
+        <CreatorContainer creators={allCreators}/>
+      </Layout>
+    )
+  }
 }
 
 
