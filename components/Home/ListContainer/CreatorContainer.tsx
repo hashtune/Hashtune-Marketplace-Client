@@ -1,18 +1,20 @@
 import React from "react";
 import { ArtworkProp } from "../ListArtwork/ListArtwork";
 import InfiniteScroll from "react-infinite-scroll-component";
-import fetchData from '../../../lib/artworks'
+// import fetchData from '../../../lib/artworks'
 import ListArtwork from "../ListArtwork/ListArtwork";
 import Tab from '../../Layout/Navbar/Tab'
 import { useRouter } from "next/dist/client/router";
-import ListCreator, {CreatorList} from '../ListCreator/ListCreator'
+import ListCreator, {CreatorsProp} from '../ListCreator/ListCreator'
+import SortDropDown from "./SortDropdown";
 
 
-const CreatorContainer = (props: CreatorList) => {
+const CreatorContainer = (props: CreatorsProp) => {
     return (
         <div>
-            <Tab href={""} isSelected={false} title={""}/>
-            <InfiniteScroll next={fetchData} hasMore={} children={fetchData} loader={undefined} dataLength={undefined}>
+            <h3>All Artists</h3>
+            <SortDropDown/>
+            {/* <InfiniteScroll next={fetchData} hasMore={} children={fetchData} loader={undefined} dataLength={undefined}> */}
                 <ul> 
                     {props.creators.map(creator => (
                         <li key={creator.id}>
@@ -20,7 +22,7 @@ const CreatorContainer = (props: CreatorList) => {
                         </li>
                 ))}
                 </ul>
-            </InfiniteScroll>
+            {/* </InfiniteScroll> */}
         </div>
     )
 }
