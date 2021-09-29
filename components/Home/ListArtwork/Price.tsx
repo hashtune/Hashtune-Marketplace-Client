@@ -1,10 +1,10 @@
 
 import React from "react";
+import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Countdown from '../Hero/Countdown'
-import {ArtworkProp} from "./ListArtwork"
 
 
-const Price = (props: ArtworkProp) => {
+const Price = (props: ListArtworkFieldsProp) => {
     const artwork = props.artwork;
     if (!artwork.listed){
         return(<div></div>);
@@ -17,14 +17,13 @@ const Price = (props: ArtworkProp) => {
         return ( <div>
                     <h3>Make an offer</h3>
                 </div>)
-    } else if (artwork.latestAuction.bids=== []){
-        const lastIndex = artwork.auctions.length
+    } else if (artwork.latestAuction === null || artwork.latestAuction.bids=== []){
         return (<div>
-                    <h3>Bid {artwork.auctions[lastIndex].currentHigh} BNB</h3>
+                    <h3>Bid {artwork.reservePrice} BNB</h3>
                 </div>)
     } else {
         return (<div>
-                    <h3>Bid {artwork.reservePrice} BNB</h3>
+                    <h3>Bid {artwork.latestAuction.currentHigh} BNB</h3>
                 </div>) 
     }
 }
