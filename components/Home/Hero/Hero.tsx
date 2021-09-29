@@ -3,9 +3,9 @@ import Image from 'next/image'
 import CreatorIconHandle from "../ListCreator/CreatorIconHandle";
 import BidButton from "./BidButton";
 import Countdown from "./Countdown";
-import {ArtworkProp } from "../ListArtwork/ListArtwork";
 import { GetServerSideProps } from "next";
 import ConvertedPrice, { Coin } from "./ConvertedPrice";
+import { ArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 
 
 export const getServerSideProps: GetServerSideProps = async () =>{
@@ -19,24 +19,26 @@ export const getServerSideProps: GetServerSideProps = async () =>{
     };
 }
 
-const Hero = (props: ArtworkProp, coin: Coin) => {
+const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
     let artwork = props.artwork;
-    let cover = artwork.image || "/";
+    // let cover = artwork.image || "/";
+    let coverImage = '/images/artwork.png' //Should be from database but that breaks it
+    let creatorImage = '/images/creator.png' 
     return (
         <div>
             <div className= "song-border">
                 <div className= "play-button">
                     {/* STILL NEED TO IMPORT CORRECT PLAY BUTTON */}
-                    <Image src= "/images/ion_play-circle.png" width={58.5} height={58.5}/>
+                    {/* <Image src= "/images/ion_play-circle.png" width={58.5} height={58.5}/> ADD HASHTUNE PLAY BUTTON*/}
                 </div>
-                <Image src= {cover} width = {424} height= {424}/>
+                <Image src= {coverImage} width = {424} height= {424}/>
                 <div className= "song-info">
                     <section className= "song-header">
                         <div className= "title-handle">
-                            <CreatorIconHandle image={artwork.creator.image} handle={artwork.creator.handle}/>
+                            <CreatorIconHandle image={creatorImage} handle={artwork.creator.handle}/>
                             <h1>{artwork.title}</h1>
-                            <Image src= '/'/> {/* Add small dot in between- export from zeplin*/}
-                            <h1>{artwork.artworkType}</h1>
+                            {/* <Image src= '/'/> Add small dot in between- export from zeplin */}
+                            <h1>{"Album"}</h1>
                         </div>
                         <div>
                             <p>{artwork.description}</p>
@@ -44,8 +46,10 @@ const Hero = (props: ArtworkProp, coin: Coin) => {
                     </section>
                     <section className= "auction-info">
                         <div>
-                            <ConvertedPrice currentHighInBnb={0} coin={coin}/>
-                            <Countdown liveAt= {artwork.liveAt} /> 
+                            {/* Have to make sure this is flexible and can also take Buy For Make an offer etc. For now hardcoded since there */}
+                            <ConvertedPrice currentHighInBnb={1} coin={coin}/>
+                            {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
+                            {/* <Countdown liveAt= {artwork.auctions[lastAuctionIndex].liveAt} />  */}
                         </div>
                     </section>
                     <BidButton/>

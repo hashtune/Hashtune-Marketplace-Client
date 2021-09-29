@@ -43,7 +43,7 @@ const Countdown = (props: CountdownProps) => {
     
     return (
         <div>
-            <h1>Countdown</h1>
+            <h1>Auction ending in</h1>
             <div className="countdown-wrapper">
                 <div className="countdown-item">
                     {hours}
