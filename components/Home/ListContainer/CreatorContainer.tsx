@@ -1,24 +1,23 @@
 import React from "react";
-import { ArtworkProp } from "../ListArtwork/ListArtwork";
 import InfiniteScroll from "react-infinite-scroll-component";
 // import fetchData from '../../../lib/artworks'
-import ListArtwork from "../ListArtwork/ListArtwork";
-import Tab from '../../Layout/Navbar/Tab'
-import { useRouter } from "next/dist/client/router";
-import ListCreator, {CreatorsProp} from '../ListCreator/ListCreator'
+import {ListCreatorFieldsProp} from '../../../lib/interfaces/CreatorInterfaces'
+import ListCreator from "../ListCreator/ListCreator";
 import SortDropDown from "./SortDropdown";
 
 
-const CreatorContainer = (props: CreatorsProp) => {
+const CreatorContainer = (props: ListCreatorFieldsProp) => {
+    let creatorImage = '/images/creator.png'; //Hardcoded for now
     return (
         <div>
             <h3>All Artists</h3>
             <SortDropDown/>
             {/* <InfiniteScroll next={fetchData} hasMore={} children={fetchData} loader={undefined} dataLength={undefined}> */}
+            
                 <ul> 
                     {props.creators.map(creator => (
                         <li key={creator.id}>
-                            <ListCreator name={creator.name} handle={creator.handle} image={creator.image} bio={creator.bio} id={creator.id} />
+                            <ListCreator fullName={creator.fullName} image={creatorImage} id={creator.id} />
                         </li>
                 ))}
                 </ul>

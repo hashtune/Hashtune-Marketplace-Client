@@ -7,16 +7,13 @@ interface TabProps {
     title: string,
 }
 const Tab = (props: TabProps) => (
-    <Link href={props.href}>
-      <a
+    <Link href={props.href}><a>{props.title}</a></Link>
+)
+export default Tab;
+
+
         // style={{ REMINDER TO CHANGE COLORS ON TAB SWITCH 
         //   padding: 5,
         //   margin: 5,
         //   backgroundColor: props.isSelected ? "grey" : "black",
         // }}
-      >
-        {props.title}
-      </a>
-    </Link>
-)
-export default Tab;

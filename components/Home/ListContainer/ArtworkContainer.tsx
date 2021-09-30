@@ -1,16 +1,12 @@
 import React from "react";
-import { ArtworkProp } from "../ListArtwork/ListArtwork";
 import InfiniteScroll from "react-infinite-scroll-component";
 // import fetchData from '../../../lib/artworks'
-import ListArtwork, {Artwork} from "../ListArtwork/ListArtwork";
+import ListArtwork from "../ListArtwork/ListArtwork";
 import Tab from '../../Layout/Navbar/Tab'
 import { useRouter } from "next/dist/client/router";
+import {ListArtworksFieldsProp} from '../../../lib/interfaces/ArtworkInterfaces'
 
-interface ArtworksProp{
-    artworks: Artwork[],
-}
-
-const ArtworkContainer = (props: ArtworksProp) => {
+const ArtworkContainer = (props: ListArtworksFieldsProp) => {
 const { query } = useRouter();
   const isAllHashtunesSelected = !!query.allHashtunes;
   const isAuctionsSelected = !!query.auctions;
