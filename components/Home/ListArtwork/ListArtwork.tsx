@@ -4,10 +4,13 @@ import Image from "next/image";
 import ArtworkTitleCreator from "./ArtworkTitleCreator";
 import Price from "./Price";
 import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import {randomMockMedia} from '../../../utils/index'
 
 const ListArtwork = (props: ListArtworkFieldsProp) => {
   const artwork = props.artwork;
-  const coverImage = "/images/artwork.png";
+  const coverImage = `/dist/images/mock/artworks/${randomMockMedia(16)}.png`;
+
+
   return (
     <div>
       <div>
