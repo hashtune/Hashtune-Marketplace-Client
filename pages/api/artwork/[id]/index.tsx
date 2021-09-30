@@ -22,18 +22,19 @@ const getStaticPaths: GetStaticPaths = async() => {
   return { paths, fallback: false }
 }
 
-async function getStaticProps(context: { params: { id: string; }; }) {
-  const artwork = await queryArtworkById(context.params.id)
-  return {
-    props: {
-      artwork
-    }
-  }
-}
+// const getStaticProps: GetStaticProps = async(context: { params: { id: string; }; }) =>  {
+//   const artwork = await queryArtworkById(context.params.id)
+//   return {
+//     props: {
+//       artwork
+//     }
+//   }
+// }
 
 
 export default function Artwork({artwork}: {artwork: ArtworkFields})
 {
+  console.log(artwork)
   return (
     <Layout>
       <h3>{artwork.title}</h3>

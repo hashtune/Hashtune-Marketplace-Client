@@ -11,16 +11,16 @@ import ArtworkContainer from '../components/Home/ListContainer/ArtworkContainer'
 import CreatorContainer from '../components/Home/ListContainer/CreatorContainer'
 import { ListCreatorFields, ListCreatorFieldsProp } from '../lib/interfaces/CreatorInterfaces'
 import { ArtworkFields, ListArtworksFieldsProp } from '../lib/interfaces/ArtworkInterfaces'
-import { queryListArtworks } from '../lib/apiQueries/ArtworkQueries'
+import { queryListArtworksListCreators } from '../lib/apiQueries/ArtworkQueries'
 
 export const getStaticProps:  GetStaticProps = async() => {
   const {data} = await client.query({
-    query: queryListArtworks,
+    query: queryListArtworksListCreators,
   });
     return {
       props: {
         allArtworks: data.listArtworks.slice(0, 10),
-        // allCreators: data.listCreators.slice(0,20),
+        allCreators: data.listCreators.slice(0,20),
         fallback: true
       },
    };
@@ -33,8 +33,6 @@ export default function Home ({allArtworks, allCreators}: {
   const { query } = useRouter();
   const isArtistsTabSelected = !!query.artistsTab;
   const isAllHashtunesSelected = !!query.allHashtunes;
-  // const isAuctionsSelected = !!query.auctions; STILL NEEDS TOBE IMPLEMENTED
-  // const isBuyNowSeleected = !!query.buyNow;
   if (!isArtistsTabSelected){
     return (
       <Layout home>
