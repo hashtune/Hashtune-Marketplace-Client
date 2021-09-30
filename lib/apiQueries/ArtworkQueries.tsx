@@ -5,6 +5,7 @@ import { gql } from "@apollo/client";
 export const queryListArtworks = gql`
   query ListArtworksQuery {
     listArtworks {
+      handle
       id
       title
       image
@@ -33,6 +34,7 @@ export const queryListArtworks = gql`
 export const queryListArtworksListCreators = gql`
   query ListArtworksQuery {
     listArtworks {
+      handle
       id
       title
       image
@@ -92,6 +94,7 @@ export function queryArtworkById(id: string) {
     query: gql`
       query FindArtworkByIdQuery(${id}: String!){
         findArtwork(id: ${id}) {
+          handle
           id
           title
           image

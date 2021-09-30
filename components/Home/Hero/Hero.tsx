@@ -7,6 +7,7 @@ import { GetServerSideProps } from "next";
 import styles from "./Hero.module.scss";
 import ConvertedPrice, { Coin } from "./ConvertedPrice";
 import { ArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const res = await fetch(`https://api.coingecko.com/api/v3/coins/binancecoin
@@ -42,6 +43,7 @@ const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
                 image={creatorImage}
                 handle={artwork.creator.handle}
               />
+
               <h1>{artwork.title}</h1>
               {/* <Image src= '/'/> Add small dot in between- export from zeplin */}
               <h1>{"Album"}</h1>

@@ -1,5 +1,6 @@
 export interface ArtworkFields {
   id: string;
+  handle: string;
   title: string;
   saleType: string;
   image?: string;
@@ -32,6 +33,7 @@ export interface ArtworkFieldsProp {
 }
 export interface ListArtworkFields {
   id: string;
+  handle: string;
   title: string;
   saleType: string;
   image?: string;
