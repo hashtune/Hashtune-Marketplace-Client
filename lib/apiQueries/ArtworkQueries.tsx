@@ -28,6 +28,38 @@ export const queryListArtworks = gql`
       }
     }
   `
+
+export const queryListArtworksListCreators = gql`
+    query ListArtworksQuery {
+      listArtworks{
+        id
+        title
+        image
+        creator {
+          fullName
+          id
+        }
+        saleType
+        listed
+        auctionWithNoReservePriceAndNoBids
+        reservePrice
+        price
+        Auctions {
+          bids {
+            id
+          }
+        }
+        latestAuction {
+          currentHigh
+        }
+      }
+      listCreators {
+        fullName
+        id
+        image
+      }
+    }
+  `
 const onlyAuctions = true;
 export function queryListAuctions(onlyAuctions: boolean) {
     return (gql`

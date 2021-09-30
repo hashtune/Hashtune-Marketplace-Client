@@ -10,9 +10,9 @@ export default function Layout({ children, home }: {
   home?: boolean
 })  {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-cy= "cont-layout">
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" data-cy= "hashtune-icon" />
         <meta
           name="description"
           content="Hashtune"
@@ -24,8 +24,8 @@ export default function Layout({ children, home }: {
         <meta name="og:title" content={siteTitle} />
         <link href="//db.onlinewebfonts.com/c/ace51fb0e489a977bed8a67511865c11?family=Averta+CY+W01" rel="stylesheet" type="text/css"/>
       </Head>
-      <Navbar/>
-      <main className= {styles.main}>{children}</main>
+      <Navbar data-cy="comp-navbar"/>
+      <main className= {styles.main} data-cy= "children-layout">{children}</main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/"><a>Home</a></Link>
