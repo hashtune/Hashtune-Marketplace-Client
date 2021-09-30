@@ -15,8 +15,8 @@ export default function Layout({
   return (
     <div className={styles.container} data-cy="cont-layout">
       <Head>
-        <link rel="icon" href="/favicon.ico" data-cy="hashtune-icon" />
-        <meta name="description" content="Hashtune" />
+        <link rel="icon" href="/favicon.ico" data-cy= "hashtune-icon" />
+        <meta name="description" content="Hashtune"/>
         {/* <link rel="manifest" href="/manifest.json" /> */}
         <meta name="theme-color" content="#F0D065" />
         <meta property="og:image" />
@@ -28,17 +28,8 @@ export default function Layout({
           type="text/css"
         />
       </Head>
-      <Navbar data-cy="comp-navbar" />
-      <main className={styles.main} data-cy="children-layout">
-        {children}
-      </main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </div>
-      )}
+      <Navbar/>
+      <main className= {styles.main} data-cy= "children-layout">{children}</main>
     </div>
   );
 }

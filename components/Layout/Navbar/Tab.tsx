@@ -7,7 +7,7 @@ interface TabProps {
     title: string,
 }
 const Tab = (props: TabProps) => (
-    <Link href={props.href}><a>{props.title}</a></Link>
+    <Link href={props.href}><a data-cy="tab-anchor">{props.title}</a></Link>
 )
 export default Tab;
 

@@ -42,18 +42,18 @@ const Countdown = (props: CountdownProps) => {
     }, [])
     
     return (
-        <div>
+        <div data-cy= "cont-main-countdown">
             <h1>Auction ending in</h1>
-            <div className="countdown-wrapper">
-                <div className="countdown-item">
+            <div data-cy="cont-countdown">
+                <div data-cy="countdown-hours">
                     {hours}
                     <span>hours</span>
                 </div>
-                <div className="countdown-item">
+                <div data-cy="countdown-minutes">
                     {minutes}
                     <span>minutes</span>
                 </div>
-                <div className="countdown-item">
+                <div data-cy="countdown-seconds">
                     {seconds}
                 <span>seconds</span>
             </div>

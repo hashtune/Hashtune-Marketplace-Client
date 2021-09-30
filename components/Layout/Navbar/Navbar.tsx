@@ -12,15 +12,15 @@ export const Navbar = () => {
   const isArtistsTabSelected = !!query.artistsTab;
 
   return (
-    <div className = {styles.mainSidebar}>
-    <nav className= {styles.navbar}>
+    <div className = {styles.mainNavbar} data-cy="cont-main-navbar">
+    <nav className= {styles.navbar} data-cy="main-navbar">
       <Link href= '/'>
         <Image src= "/images/logo@2x.png" width = {185.2} height= {43.6}/>
       </Link>
-      <Tab href="/?songsTab=true" title="Tab One" isSelected={isSongsTabSelected} /> 
-      <Tab href="/?artistsTab=true" title="Tab Two" isSelected={isArtistsTabSelected} /> 
+      <Tab href="/?songsTab=true" title="Songs" isSelected={isSongsTabSelected} /> 
+      <Tab href="/?artistsTab=true" title="Artists" isSelected={isArtistsTabSelected} /> 
       <Search/>
-      <Link href= '/connect-wallet'><a> Connect Wallet </a></Link>
+      <Link href= '/connect-wallet'><a>Connect Wallet</a></Link>
       {/* <Image src= "/"/> INSERT BURGERMENU ICON HERE*/ }
     </nav>
     </div>
