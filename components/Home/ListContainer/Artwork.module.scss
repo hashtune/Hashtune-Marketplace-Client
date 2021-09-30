@@ -1,0 +1,9 @@
+.artworkContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap; /* NEW */
+  .item {
+    flex: 1 0 1/8;
+    margin: 5px;
+  }
+}
