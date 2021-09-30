@@ -4,8 +4,10 @@ import styles from "./Artwork.module.scss";
 // import fetchData from '../../../lib/artworks'
 import ListArtwork from "../ListArtwork/ListArtwork";
 import Tab from "../../Layout/Navbar/Tab";
-import { useRouter } from "next/dist/client/router";
+import { Router, useRouter } from "next/dist/client/router";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import Link from "next/link";
+import { route } from "next/dist/server/router";
 
 const ArtworkContainer = (props: ListArtworksFieldsProp) => {
   const { query } = useRouter();
@@ -30,7 +32,11 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       <div className={styles.artworkContainer}>
         {props.artworks.map((artwork) => (
           <div key={artwork.id} className={styles.item}>
-            <ListArtwork artwork={artwork} />
+            <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
+              <a>
+                <ListArtwork artwork={artwork} />
+              </a>
+            </Link>
           </div>
         ))}
       </div>
