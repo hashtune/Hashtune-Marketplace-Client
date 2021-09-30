@@ -15,7 +15,7 @@ export const Navbar = () => {
     <div className = {styles.mainSidebar}>
     <nav className= {styles.navbar}>
       <Link href= '/'>
-        <Image src= "/images/logo@2x.png" width = {185.2} height= {43.6}/>
+        <Image src= "/images/logo.svg" width = {185.2} height= {43.6}/>
       </Link>
       <Tab href="/?songsTab=true" title="Tab One" isSelected={isSongsTabSelected} /> 
       <Tab href="/?artistsTab=true" title="Tab Two" isSelected={isArtistsTabSelected} /> 
