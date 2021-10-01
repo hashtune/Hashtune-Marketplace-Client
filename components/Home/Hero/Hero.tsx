@@ -26,8 +26,7 @@ const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
   let coverImage = "/images/artwork.png"; //Should be from database but that breaks it
   let creatorImage = "/images/creator.png";
   return (
-    <div>
-      <div className={styles.hero}>
+    <div className={styles.hero}>
         <div className="play-button">
           {/* STILL NEED TO IMPORT CORRECT PLAY BUTTON */}
           {/* <Image src= "/images/ion_play-circle.png" width={58.5} height={58.5}/> ADD HASHTUNE PLAY BUTTON*/}
@@ -62,7 +61,6 @@ const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
           </section>
           <BidButton />
         </div>
-      </div>
     </div>
   );
 };

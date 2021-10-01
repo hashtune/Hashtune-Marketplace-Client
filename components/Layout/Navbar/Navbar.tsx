@@ -28,7 +28,7 @@ export const Navbar = () => {
         </div>
       </div>
       <Search/>
-      <Link href= '/connect-wallet'><a className={styles["navbar__wallet"]}> Connect Wallet </a></Link>
+      <Link href= '/connect-wallet'><a className="btn"> Connect Wallet </a></Link>
       <div className={styles["navbar__sidebar-icon"]}>
         <svg fill="#fff" height="10" width="30">
           <use xlinkHref="dist/icons/sprite.svg#hashtune-menu"></use>

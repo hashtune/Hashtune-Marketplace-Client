@@ -3,12 +3,11 @@ import React from "react";
 
 interface TabProps {
     href: string,
-    isSelected: boolean,
     title: string,
     icon: string
 }
 const Tab = (props: TabProps) => (
-    <Link href={props.href}>
+    <Link href={props.href || "/"}>
         <a>
             <svg fill="#fff">
                 <use xlinkHref={`dist/icons/sprite.svg#hashtune-${props.icon}`}></use>
@@ -18,10 +17,3 @@ const Tab = (props: TabProps) => (
     </Link>
 )
 export default Tab;
-
-
-        // style={{ REMINDER TO CHANGE COLORS ON TAB SWITCH 
-        //   padding: 5,
-        //   margin: 5,
-        //   backgroundColor: props.isSelected ? "grey" : "black",
-        // }}

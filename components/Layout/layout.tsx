@@ -3,6 +3,7 @@ import styles from "./Layout.module.scss";
 import Link from "next/link";
 import { Navbar } from "./Navbar/Navbar";
 
+export const siteTitle = "Hashtune";
 
 export default function Layout({
   children,
@@ -13,17 +14,14 @@ export default function Layout({
 }) {
   return (
     <div className={styles.container} data-cy="cont-layout">
-      <Navbar data-cy="comp-navbar" />
-      <main className={styles.main} data-cy="children-layout">
-        {children}
-      </main>
-      {!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>Home</a>
-          </Link>
-        </div>
-      )}
+      <Head>
+        <meta name="description" content="Hashtune" />
+        <meta name="theme-color" content="#F0D065" />
+        <title>Hashtune</title>
+        <meta name="og:title" content={siteTitle} /> 
+      </Head>
+      <Navbar/>
+      <main className= {styles.main} data-cy= "children-layout">{children}</main>
     </div>
   );
 }
