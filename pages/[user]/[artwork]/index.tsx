@@ -2,15 +2,15 @@ import { gql } from "@apollo/client";
 import { GetServerSidePropsContext } from "next";
 import client from "../../../apollo-client";
 import React from "react";
-import Layout from "../../../components/Layout/layout";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { Navbar } from "../../../components/Layout/Navbar/Navbar";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  console.log(ctx);
-  console.log("GET SERVER SIDE PROPS CALLED");
+  // console.log(ctx);
+  // console.log("GET SERVER SIDE PROPS CALLED");
   const { user, artwork } = ctx.query;
-  console.log({ artwork });
+  // console.log({ artwork });
   const singleArtwork = await client.query({
     query: gql`
       query Query($findArtworkId: String!) {
@@ -37,11 +37,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
             currentHigh
           }
         }
-        listCreators {
-          fullName
-          id
-          image
-        }
       }
     `,
     variables: { findArtworkId: artwork },
@@ -54,7 +49,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       },
     };
   }
-
   return {
     props: {
       artwork: null,
@@ -78,9 +72,10 @@ export default function Artwork(singleArtwork: any) {
     setIsRefreshing(false);
   }, [singleArtwork]);
   return (
-    <Layout>
+    <div>
+      <Navbar/>
       {isRefreshing ? (
-        <h1>LODING</h1>
+        <h1>LOADING</h1>
       ) : (
         <>
           <button onClick={refreshData}>GET NEW DATA</button>
@@ -98,6 +93,6 @@ export default function Artwork(singleArtwork: any) {
           <h3>{singleArtwork.artwork.reservePrice}</h3>
         </>
       )}
-    </Layout>
+    </div>
   );
 }

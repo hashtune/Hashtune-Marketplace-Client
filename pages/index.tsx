@@ -1,4 +1,3 @@
-import Layout from "../components/Layout/layout";
 import { GetStaticProps } from "next";
 import client from "../apollo-client";
 import React from "react";
@@ -9,6 +8,7 @@ import CreatorContainer from "../components/Home/ListContainer/CreatorContainer"
 import { ListCreatorFields } from "../lib/interfaces/CreatorInterfaces";
 import { ArtworkFields } from "../lib/interfaces/ArtworkInterfaces";
 import { queryListArtworksListCreators } from "../lib/apiQueries/ArtworkQueries";
+import { Navbar } from "../components/Layout/Navbar/Navbar";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({
@@ -25,18 +25,17 @@ export const getStaticProps: GetStaticProps = async () => {
 
 export default function Home({
   allArtworks,
-  allCreators,
 }: {
   allArtworks: ArtworkFields[];
   allCreators: ListCreatorFields[];
 }) {
   return (
     <div className="app">
-    <Navbar/>
-    <main>
-      <Hero artwork={allArtworks[0]} />
-      <ArtworkContainer artworks={allArtworks} />
-    </main>
+      <Navbar/>
+      <main>
+        <Hero artwork={allArtworks[0]} />
+        <ArtworkContainer artworks={allArtworks} />
+      </main>
     </div>
   );
 }
