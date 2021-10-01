@@ -7,7 +7,7 @@ const ArtworkTitleCreator = (props: ListArtworkFieldsProp) => {
     return (
         <div data-cy = 'artwork-title-creator'>
             <h3 data-cy = 'artwork-title'>{artwork.title}</h3>
-            <h3 data-cy = 'artwork-fullName'>{artwork.creator.fullName}</h3>
+            <h3 data-cy = 'artwork-creator-fullName'>{artwork.creator.fullName}</h3>
         </div>
     )
 }
