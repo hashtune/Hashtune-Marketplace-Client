@@ -1,9 +1,7 @@
 .artworkContainer {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap; /* NEW */
+  grid-template-columns: repeat(4, 1fr);
+  display: grid;
   .item {
-    flex: 1 0 1/8;
-    margin: 5px;
+    // margin-top: 5rem;
   }
 }
