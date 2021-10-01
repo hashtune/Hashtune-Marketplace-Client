@@ -4,7 +4,7 @@ import client from "../apollo-client";
 import { ListCreatorFields, ListCreatorFieldsProp } from "../lib/interfaces/CreatorInterfaces";
 import React from "react";
 import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
-import Layout from "../components/Layout/layout";
+import { Navbar } from "../components/Layout/Navbar/Navbar";
 
 export async function getServerSideProps(){
   const { data } = await client.query({
@@ -19,9 +19,10 @@ export async function getServerSideProps(){
 };
 export default function Creators({allCreators}: {allCreators: ListCreatorFields[]}){
   return (
-    <Layout home>
+    <div>
+      <Navbar/>
       <CreatorContainer creators={allCreators} />
-    </Layout>
+    </div>
   )
 }
 

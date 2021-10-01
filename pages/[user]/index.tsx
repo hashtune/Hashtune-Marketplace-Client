@@ -2,11 +2,10 @@ import { gql } from "@apollo/client";
 import { GetServerSidePropsContext } from "next";
 import client from "../../apollo-client";
 import React from "react";
-import Layout from "../../components/Layout/layout";
+import { Navbar } from "../../components/Layout/Navbar/Navbar";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { user } = ctx.query;
-  console.log({ user });
   const singleUser = await client.query({
     query: gql`
       query Query($findUserHandle: String!) {
@@ -37,12 +36,13 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
 export default function User(singleUser: any) {
   return (
-    <Layout>
+    <div>
+      <Navbar/>
       <>
         <h3>{singleUser.singleUser.handle}</h3>
         <h3>{singleUser.singleUser.email}</h3>
         <h3>{singleUser.singleUser.fullName}</h3>
       </>
-    </Layout>
+    </div>
   );
 }
