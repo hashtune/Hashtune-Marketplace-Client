@@ -22,4 +22,17 @@
 //
 //
 // -- This will overwrite an existing command --
+
+import { operationName } from "@apollo/client"
+
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+// Cypress.Commands.add('interceptGQL', opName=> {
+//     cy.intercept('POST', 'http://localhost:5000/graphql', (req) => {
+//         // Queries
+//         // aliasQuery(req, 'listArtworks')
+//         const {listArtworks} = JSON.parse(req.body)
+//         if (operationName === opName){
+//             console.log(operationName);
+//             req.alias = opName;
+//         }
+// })})
