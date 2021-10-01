@@ -63,4 +63,3 @@ const Countdown = (props: CountdownProps) => {
 }
 
 export default Countdown
-
