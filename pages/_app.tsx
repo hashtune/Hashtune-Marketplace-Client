@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
          <meta content="./browserconfig.xml" name="msapplication-config" />
          <meta content="#" name="yandex-verification" />
          <meta content="#" name="google-site-verification"/>
-    
+         <title>Hashtune</title>
          <link rel="shortcut icon" type="image/png" href="./favicon.ico" />
          <link rel="apple-touch-icon" sizes="57x57" href="./favicons/apple-icon-57x57.png"/>
          <link rel="apple-touch-icon" sizes="60x60" href="./favicons/apple-icon-60x60.png"/>
