@@ -3,11 +3,18 @@ import React from "react";
 
 interface TabProps {
     href: string,
-    isSelected: boolean,
     title: string,
+    icon: string
 }
 const Tab = (props: TabProps) => (
-    <Link href={props.href}><a data-cy="tab-anchor">{props.title}</a></Link>
+    <Link href={props.href}>
+        <a>
+            <svg fill="#fff">
+                <use xlinkHref={`dist/icons/sprite.svg#hashtune-${props.icon}`}></use>
+            </svg>
+            {props.title}
+        </a>
+    </Link>
 )
 export default Tab;
 
