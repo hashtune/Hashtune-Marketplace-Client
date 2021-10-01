@@ -21,47 +21,43 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
-  let artwork = props.artwork;
-  // let cover = artwork.image || "/";
-  let coverImage = "/images/artwork.png"; //Should be from database but that breaks it
-  let creatorImage = "/images/creator.png";
-  return (
-    <div className={styles.hero}>
-        <div className="play-button">
-          {/* STILL NEED TO IMPORT CORRECT PLAY BUTTON */}
-          {/* <Image src= "/images/ion_play-circle.png" width={58.5} height={58.5}/> ADD HASHTUNE PLAY BUTTON*/}
-        </div>
-        <div className={styles.image}>
-          <Image src={coverImage} width={424} height={424} />
-        </div>
+    let artwork = props.artwork;
+    // let cover = artwork.image || "/";
+    let coverImage = '/images/artwork.png' //Should be from database but that breaks it
 
-        <div className={styles.songInfo}>
-          <section className="song-header">
-            <div className="title-handle">
-              <CreatorIconHandle
-                image={creatorImage}
-                handle={artwork.creator.handle}
-              />
-
-              <h1>{artwork.title}</h1>
-              {/* <Image src= '/'/> Add small dot in between- export from zeplin */}
-              <h1>{"Album"}</h1>
+    let datee = new Date("30 09 2021 13:00:00")
+    let creatorImage = '/images/creator.png' 
+    return (
+        <div data-cy="cont-hero">
+            <div className = {styles.hero} data-cy= "hero">
+                <div data-cy= "play-button">
+                    {/* STILL NEED TO IMPORT CORRECT PLAY BUTTON */}
+                    {/* <Image src= "/images/ion_play-circle.png" width={58.5} height={58.5}/> ADD HASHTUNE PLAY BUTTON*/}
+                </div>
+                <Image className= {styles.image} alt = "cover image"src= {coverImage} width = {424} height= {424}/>
+                <div className= {styles.songInfo} data-cy= "song-info">
+                    <section data-cy= "song-header">
+                        <div data-cy= "title-handle">
+                            <CreatorIconHandle image={creatorImage} handle={artwork.creator.handle}/>
+                            <h1>{artwork.title}</h1>
+                        </div>
+                        <div data-cy= "song-description">
+                            <p>{artwork.description}</p>
+                        </div>
+                    </section>
+                    <section data-cy= "auction-info">
+                        <div data-cy= "hero-price-cd">
+                            {/* Have to make sure this is flexible and can also take Buy For Make an offer etc. For now hardcoded since there */}
+                            <ConvertedPrice currentHighInBnb={1} coin={coin}/>
+                            {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
+                            {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
+                            <Countdown liveAt={datee}  />
+                        </div>
+                    </section>
+                    <BidButton/>
+                </div>
             </div>
-            <div>
-              <p>{artwork.description}</p>
-            </div>
-          </section>
-          <section className="auction-info">
-            <div>
-              {/* Have to make sure this is flexible and can also take Buy For Make an offer etc. For now hardcoded since there */}
-              <ConvertedPrice currentHighInBnb={1} coin={coin} />
-              {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
-              {/* <Countdown liveAt= {artwork.auctions[lastAuctionIndex].liveAt} />  */}
-            </div>
-          </section>
-          <BidButton />
         </div>
-    </div>
   );
 };
 export default Hero;

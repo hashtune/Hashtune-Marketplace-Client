@@ -3,13 +3,13 @@ import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces
 import Countdown from "../Hero/Countdown";
 
 const ArtworkTitleCreator = (props: ListArtworkFieldsProp) => {
-  const artwork = props.artwork;
-  return (
-    <div>
-      <h3>{artwork.title}</h3>
-      <h3>{artwork.creator.fullName}</h3>
-    </div>
-  );
-};
+    const artwork = props.artwork
+    return (
+        <div data-cy = 'artwork-title-creator'>
+            <h3 data-cy = 'artwork-title'>{artwork.title}</h3>
+            <h3 data-cy = 'artwork-creator-fullName'>{artwork.creator.fullName}</h3>
+        </div>
+    )
+}
 
 export default ArtworkTitleCreator;

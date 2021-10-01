@@ -1,5 +1,5 @@
 {
-   "baseUrl": "https://localhost:3000",
+   "baseUrl": "http://localhost:3000",
    "integrationFolder":  "tests/cypress/e2e",
    "chromeWebSecurity": false,
    "fixturesFolder": "tests/cypress/fixtures",
@@ -8,5 +8,8 @@
    "screenshotsFolder": "tests/cypress/screenshots",
    "videosFolder": "tests/cypress/videos",
    "downloadsFolder": "tests/cypress/downloads",
-   "supportFile": "tests/cypress/support/index.js"
+   "supportFile": "tests/cypress/support/index.js",
+   "ignoreTestFiles": "*/examples/**",
+    "viewportHeight": 1080,
+    "viewportWidth": 1920
  }

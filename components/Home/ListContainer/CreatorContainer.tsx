@@ -12,7 +12,6 @@ const CreatorContainer = (props: ListCreatorFieldsProp) => {
       <h3>All Artists</h3>
       <SortDropDown />
       {/* <InfiniteScroll next={fetchData} hasMore={} children={fetchData} loader={undefined} dataLength={undefined}> */}
-
       <ul>
         {props.creators.map((creator) => (
           <li key={creator.id}>

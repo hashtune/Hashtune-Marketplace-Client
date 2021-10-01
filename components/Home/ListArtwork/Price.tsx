@@ -7,22 +7,21 @@ import Countdown from '../Hero/Countdown'
 const Price = (props: ListArtworkFieldsProp) => {
     const artwork = props.artwork;
     if (!artwork.listed){
-        return(<div></div>);
+        return(<div data-cy ="not-listed-price" ></div>);
     } else if (artwork.saleType === "fixed"){
-        return( <div>
-                    <h3>Buy for {artwork.price} BNB</h3>
+        return( <div data-cy = "buy-for-price">
+                    <h3>Buy for s{artwork.price} BNB</h3>
                 </div>)
-             
     } else if (artwork.auctionWithNoReservePriceAndNoBids){
-        return ( <div>
+        return (<div data-cy = "make-offer-price">
                     <h3>Make an offer</h3>
                 </div>)
     } else if (artwork.latestAuction === null || artwork.latestAuction.bids=== []){
-        return (<div>
+        return (<div data-cy = "reserve-price">
                     <h3>Bid {artwork.reservePrice} BNB</h3>
                 </div>)
     } else {
-        return (<div>
+        return (<div data-cy = "current-high-price">
                     <h3>Bid {artwork.latestAuction.currentHigh} BNB</h3>
                 </div>) 
     }

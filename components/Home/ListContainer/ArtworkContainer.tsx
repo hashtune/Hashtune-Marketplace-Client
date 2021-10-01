@@ -32,11 +32,7 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       <div className={styles.artworkContainer}>
         {props.artworks.map((artwork) => (
           <div key={artwork.id} className={styles.item}>
-            <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
-              <a>
-                <ListArtwork artwork={artwork} />
-              </a>
-            </Link>
+            <Link href={`/${artwork.creator.handle}/${artwork.id}`}><ListArtwork artwork={artwork} /></Link>
           </div>
         ))}
       </div>
