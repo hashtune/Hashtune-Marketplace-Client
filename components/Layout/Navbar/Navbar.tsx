@@ -14,9 +14,9 @@ export const Navbar = () => {
   return (
     <div className = {styles.mainNavbar} data-cy="cont-main-navbar">
     <nav className= {styles.navbar} data-cy="main-navbar">
-      <Link href= '/'>
+      <Link href= '/'><a>
         <Image src= "/images/logo@2x.png" width = {185.2} height= {43.6}/>
-      </Link>
+      </a></Link>
       <Tab href="/?songsTab=true" title="Songs" isSelected={isSongsTabSelected} /> 
       <Tab href="/?artistsTab=true" title="Artists" isSelected={isArtistsTabSelected} /> 
       <Search/>
