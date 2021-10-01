@@ -30,21 +30,13 @@ export default function Home({
   allArtworks: ArtworkFields[];
   allCreators: ListCreatorFields[];
 }) {
-  const { query } = useRouter();
-  const isArtistsTabSelected = !!query.artistsTab;
-  const isAllHashtunesSelected = !!query.allHashtunes;
-  if (!isArtistsTabSelected) {
-    return (
-      <Layout home>
-        <Hero artwork={allArtworks[0]} />
-        <ArtworkContainer artworks={allArtworks} />
-      </Layout>
-    );
-  } else {
-    return (
-      <Layout home>
-        <CreatorContainer creators={allCreators} />
-      </Layout>
-    );
-  }
+  return (
+    <div className="app">
+    <Navbar/>
+    <main>
+      <Hero artwork={allArtworks[0]} />
+      <ArtworkContainer artworks={allArtworks} />
+    </main>
+    </div>
+  );
 }
