@@ -2,12 +2,12 @@ import Link from "next/link";
 import React from "react";
 
 interface TabProps {
-    href: string,
+    href?: string,
     title: string,
-    icon: string
+    icon?: string
 }
 const Tab = (props: TabProps) => (
-    <Link href={props.href}>
+    <Link href={props.href || "/"}>
         <a>
             <svg fill="#fff">
                 <use xlinkHref={`dist/icons/sprite.svg#hashtune-${props.icon}`}></use>
