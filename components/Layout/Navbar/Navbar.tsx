@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/dist/client/router'
 import Tab from './Tab'
 import Search from './Search'
+import classNames from 'classnames'
 export const Navbar = () => {
 
   const { query } = useRouter();
@@ -12,17 +13,27 @@ export const Navbar = () => {
   const isArtistsTabSelected = !!query.artistsTab;
 
   return (
-    <div className = {styles.mainSidebar}>
-    <nav className= {styles.navbar}>
-      <Link href= '/'>
-        <Image src= "/images/logo.svg" width = {185.2} height= {43.6}/>
-      </Link>
-      <Tab href="/?songsTab=true" title="Tab One" isSelected={isSongsTabSelected} /> 
-      <Tab href="/?artistsTab=true" title="Tab Two" isSelected={isArtistsTabSelected} /> 
+    <nav className= {styles["navbar"]}>
+      <div className={styles["navbar__logo"]}>
+        <Link href= '/'>
+          <Image src= "/images/logo.svg" width = {133} height= {32}/>
+        </Link>
+      </div>
+      <div className={styles["navbar__menu"]}>
+        <div className={styles["navbar__menu-item"]}>
+          <Tab href="/?songsTab=true" title="Songs" isSelected={isSongsTabSelected} icon="record" /> 
+        </div>
+        <div className={styles["navbar__menu-item"]}>
+          <Tab href="/?artistsTab=true" title="Artists" isSelected={isArtistsTabSelected} icon="music-note" /> 
+        </div>
+      </div>
       <Search/>
-      <Link href= '/connect-wallet'><a> Connect Wallet </a></Link>
-      {/* <Image src= "/"/> INSERT BURGERMENU ICON HERE*/ }
+      <Link href= '/connect-wallet'><a className={styles["navbar__wallet"]}> Connect Wallet </a></Link>
+      <div className={styles["navbar__sidebar-icon"]}>
+        <svg fill="#fff" height="10" width="30">
+          <use xlinkHref="dist/icons/sprite.svg#hashtune-menu"></use>
+        </svg>
+      </div>
     </nav>
-    </div>
   )
 }

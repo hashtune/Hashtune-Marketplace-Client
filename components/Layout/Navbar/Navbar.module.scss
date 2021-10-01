@@ -1,44 +1,84 @@
-.mainSidebar {
-  /* Auto Layout */
-  display: flex;
-  align-items: center;
-}
-.sidebar {
-  /* Auto Layout */
-
-  background: #000000;
-
-  /* Inside Auto Layout */
-}
-
 .navbar {
-  /* _prototype / molecule / sidebar */
-
-  /* Auto Layout */
   width: 100%;
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  background-color: #0d0d0d;
+  position: fixed;
+  height: 7.4rem;
+  padding: 0 3rem;
+  top: 0;
+  z-index: 1;
+  color: #fff;
+  border-bottom: 0.2rem solid #1b1b1b;
 
-  /* Inside Auto Layout */
-
-  ul {
-    li {
-      &:hover {
-        /* Black / 50 */
-
-        background: #222222;
-        border-radius: 999px;
+  &__logo {
+    display: flex;
+    align-items: center;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.2s;
+    }
+  }
+  &__menu {
+    flex: 0 0 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    &-item {
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        height: 100%;
+        transition: all 0.2s;
+        height: 100%;
+        padding: 2rem 4rem;
+        svg {
+          width: 2rem;
+          height: 2rem;
+          margin-right: 1rem;
+        }
+        &:hover {
+          background-color: #181818;
+        }
       }
-      /* Auto Layout */
+    }
+  }
+  &__sidebar-icon {
+    margin-top: 0.2rem;
+    svg {
+      fill: #fff;
+    }
+  }
 
-      position: static;
-
-      left: 0px;
-
-      /* Inside Auto Layout */
+  &__search {
+    height: 100%;
+    flex: 50% 0;
+    &--input {
+      height: 100%;
+      width: 54rem;
+      background-color: #000000;
+      border: none;
+      outline: none;
+      color: #818181;
+      padding: 0 4rem;
+      font-size: 1.5rem;
+      &:focus {
+        color: #ffffff;
+        &--icon {
+          opacity: 1;
+        }
+      }
+    }
+    &--icon {
+      position: absolute;
+      width: 1.2rem;
+      height: 7rem;
+      margin: 0.1rem 2rem;
+      opacity: 0.5;
     }
   }
 }
