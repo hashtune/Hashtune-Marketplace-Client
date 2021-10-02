@@ -9,6 +9,7 @@ import { ListCreatorFields } from "../lib/interfaces/CreatorInterfaces";
 import { ArtworkFields } from "../lib/interfaces/ArtworkInterfaces";
 import { queryListArtworksListCreators } from "../lib/apiQueries/ArtworkQueries";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
+import TabsListArtworks from "../components/Home/ListContainer/TabsListArtworks";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({
@@ -19,7 +20,7 @@ export const getStaticProps: GetStaticProps = async () => {
       allArtworks: data.listArtworks.slice(0, 10),
       allCreators: data.listCreators.slice(0, 20),
       fallback: true,
-    },
+    }, revalidate : 180
   };
 };
 
@@ -33,7 +34,7 @@ export default function Home({
     <main>
       <Navbar/>
       <Hero artwork={allArtworks[0]} />
-      <ArtworkContainer artworks={allArtworks} />
+      <TabsListArtworks artworks={allArtworks} type={"All Hashtunes"}/>
     </main>
   );
 }
