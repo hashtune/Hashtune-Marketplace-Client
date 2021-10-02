@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import {slide as Menu} from 'react-burger-menu'
 import {LinkIcon} from './LinkIcon'
 
-export const BurgerMenu = (state: {menuOpen:false}) => {
+export const BurgerMenu = () => {
     const [menuState, setMenuState] = useState(false);
     const handleStateChange = () => setMenuState(true);
     const closeMenu = () => setMenuState(false);
