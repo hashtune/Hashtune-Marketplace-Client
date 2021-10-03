@@ -1,16 +1,11 @@
 import Link from 'next/link'
 import styles from './Navbar.module.scss'
 import Image from 'next/image'
-// import MenuItem from '../MenuItem/MenuItem'
-import { useRouter } from 'next/dist/client/router'
 import Tab from './Tab'
 import Search from './Search'
-import classNames from 'classnames'
-export const Navbar = () => {
+import { BurgerMenu } from '../BurgerMenu/BurgerMenu'
 
-  const { query } = useRouter();
-  const isSongsTabSelected = !!query.songsTab;
-  const isArtistsTabSelected = !!query.artistsTab;
+export const Navbar = () => {
 
   return (
     <nav className= {styles["navbar"]} data-cy="navbar">
@@ -27,11 +22,12 @@ export const Navbar = () => {
       </div>
       <Search/>
       <Link href= '/connect-wallet'><a className={styles["navbar__wallet"]} data-cy="navbar-wallet"> Connect Wallet </a></Link>
-      <div className={styles["navbar__sidebar-icon"]} data-cy="navbar-sidebar-icon">
-        <svg fill="#fff" height="10" width="30">
-          <use xlinkHref="dist/icons/sprite.svg#hashtune-menu"></use>
-        </svg>
-      </div>
+      <BurgerMenu/>
+      {/* <div className={styles["navbar__sidebar-icon"]} data-cy="navbar-sidebar-icon">
+            <svg fill="#fff" height="10" width="30">
+                <use xlinkHref="dist/icons/sprite.svg#hashtune-menu"></use>
+            </svg>
+        </div> */}
     </nav>
   )
 }
