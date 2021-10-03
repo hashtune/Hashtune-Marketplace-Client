@@ -1,6 +1,5 @@
 
 import Link from 'next/link'
-import styles from './Navbar.module.scss'
 import Image from 'next/image'
 import { useState } from 'react'
 interface IconLinkProps {
@@ -12,7 +11,7 @@ export const LinkIcon = (props: IconLinkProps) => {
   const stylesStart = 'link__icon'
   return( 
     <Link href = {props.href} >
-      <svg className={styles['link__icon']}>
+      <svg width= {32.5} height= {32.5}>
         <use xlinkHref={hrefStart + props.icon}></use>
       </svg>
     </Link>
