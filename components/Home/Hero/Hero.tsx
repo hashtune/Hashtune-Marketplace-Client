@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import CreatorIconHandle from "../ListCreator/CreatorIconHandle";
 import BidButton from "./BidButton";
@@ -21,43 +21,57 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
-    let artwork = props.artwork;
-    // let cover = artwork.image || "/";
-    let coverImage = '/images/artwork.png' //Should be from database but that breaks it
+  let artwork = props.artwork;
+  // let cover = artwork.image || "/";
+  let coverImage = "/images/artwork.png"; //Should be from database but that breaks it
 
-    let datee = new Date("30 09 2021 13:00:00")
-    let creatorImage = '/images/creator.png' 
-    return (
-        <div data-cy="cont-hero">
-            <div className = {styles.hero} data-cy= "hero">
-                <div data-cy= "play-button">
-                    {/* STILL NEED TO IMPORT CORRECT PLAY BUTTON */}
-                    {/* <Image src= "/images/ion_play-circle.png" width={58.5} height={58.5}/> ADD HASHTUNE PLAY BUTTON*/}
-                </div>
-                <Image className= {styles.image} alt = "cover image"src= {coverImage} width = {424} height= {424}/>
-                <div className= {styles.songInfo} data-cy= "song-info">
-                    <section data-cy= "song-header">
-                        <div data-cy= "title-handle">
-                            <CreatorIconHandle image={creatorImage} handle={artwork.creator.handle}/>
-                            <h1>{artwork.title}</h1>
-                        </div>
-                        <div data-cy= "song-description">
-                            <p>{artwork.description}</p>
-                        </div>
-                    </section>
-                    <section data-cy= "auction-info">
-                        <div data-cy= "hero-price-cd">
-                            {/* Have to make sure this is flexible and can also take Buy For Make an offer etc. For now hardcoded since there */}
-                            <ConvertedPrice currentHighInBnb={1} coin={coin}/>
-                            {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
-                            {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
-                            <Countdown liveAt={datee}  />
-                        </div>
-                    </section>
-                    <BidButton/>
-                </div>
-            </div>
+  let date = new Date("30 10 2021 13:00:00");
+  let creatorImage = "/dist/images/mock/users/26.png";
+  let playButton = "/dist/play-button.svg";
+
+  return (
+    <div className={styles["hero"]}>
+      <div className={styles["hero__container"] + " container"}>
+        <div className={styles["hero__hashtune-artwork"]}>
+          <div className={styles["hero__hashtune-artwork--image"]}>
+            <Image
+              alt="cover image"
+              src={coverImage}
+              width={600}
+              height={600}
+            />
+          </div>
+          <div className={styles["hero__hashtune-artwork--play-button"]}>
+            <Image alt="cover image" src={playButton} width={60} height={60} />
+          </div>
         </div>
+        <div className={styles["hero__hashtune-details"]} data-cy="song-info">
+          <CreatorIconHandle
+            image={creatorImage}
+            handle={artwork.creator.handle}
+            containerStyle={styles["hero__hashtune-details--user-details"]}
+            // imageStyle={styles["hero__hashtune-details--user-details"]}
+          />
+          <h1 className={styles["hero__hashtune-details--title"]}>
+            {artwork.title}
+          </h1>
+          <div className={styles["hero__hashtune-details--description"]}>
+            <p>{artwork.description}</p>
+          </div>
+          <div
+            className={styles["hero__hashtune-auction-details"] + " mb-medium"}
+          >
+            {/* Have to make sure this is flexible and can also take Buy For Make an offer etc. For now hardcoded since there */}
+            <ConvertedPrice currentHighInBnb={1} coin={coin} />
+            <div className="vertical_divider"></div>
+            {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
+            {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
+            <Countdown liveAt={date} />
+          </div>
+          <BidButton />
+        </div>
+      </div>
+    </div>
   );
 };
 export default Hero;
