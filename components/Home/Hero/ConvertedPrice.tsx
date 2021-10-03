@@ -1,26 +1,28 @@
-
 import React from "react";
-
+import styles from "./Hero.module.scss";
 
 export interface Coin {
-    symbol : string,
-    currentPrice: number,
+  symbol: string;
+  currentPrice: number;
 }
 interface CoinProp {
-    currentHighInBnb : number,
-    coin : Coin
+  currentHighInBnb: number;
+  coin: Coin;
 }
-
 
 const ConvertedPrice = (props: CoinProp) => {
-    const priceInDollars = props.coin.currentPrice * props.currentHighInBnb;
-    return (
-        <div data-cy = "cont-hero-price">
-            <h2 data-cy = "hero-price-header">Current Bid</h2>
-            <h3 data-cy = "hero-price">{props.currentHighInBnb} BNB</h3>
-            <h2 data-cy = "hero-price-separator">|</h2>
-            <h2 data-cy = "hero-price-dollars">{priceInDollars} $</h2>
+  const priceInDollars = props.coin.currentPrice * props.currentHighInBnb;
+  return (
+    <div className="price_card">
+      <h3 className="hero_card_title">Current Bid</h3>
+      <div className="price_card-data">
+        <div className="price_card-data--crypto">
+          {props.currentHighInBnb} BNB
         </div>
-    )
-}
-export default ConvertedPrice
+        <div className="price_card-data--divider"></div>
+        <div className="price_card-data--fiat">{priceInDollars} $</div>
+      </div>
+    </div>
+  );
+};
+export default ConvertedPrice;
