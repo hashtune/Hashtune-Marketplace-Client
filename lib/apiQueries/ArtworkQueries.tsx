@@ -9,6 +9,7 @@ export const queryListArtworks = gql`
       id
       title
       image
+      description
       creator {
         fullName
         id
@@ -38,6 +39,8 @@ export const queryListArtworksListCreators = gql`
       id
       title
       image
+      description
+
       creator {
         fullName
         id
@@ -72,6 +75,8 @@ export function queryListAuctions(onlyAuctions: boolean) {
         id
         title
         image
+        description
+
         creator {
           fullName
           id
@@ -134,6 +139,7 @@ const getServerSideProps: GetServerSideProps = async () => {
           saleType
           image
           listed
+          description
           reservePrice
           price
           Auctions {
