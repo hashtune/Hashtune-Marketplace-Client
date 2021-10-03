@@ -14,7 +14,6 @@
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   cursor: pointer;
-  z-index: 2;
   &:hover {
     opacity: 0.5;
   }
@@ -55,4 +54,24 @@
 .input-group .input-group-append {
   position: relative;
   display: flex;
+}
+
+.music_action_button {
+  @extend .btn;
+  background-color: #000;
+  border: 2px solid #1b1d1c;
+
+  font-weight: 700;
+  font-size: 1.9rem;
+  // edit width from the correspending componenet
+  padding: 1.3rem 0rem;
+  &:hover {
+    background-color: #fff;
+    color: #000;
+    opacity: 1;
+  }
+}
+
+.hero_music_action_button {
+  width: 26.5rem;
 }
