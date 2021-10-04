@@ -64,7 +64,7 @@
   font-weight: 700;
   font-size: 1.9rem;
   // edit width from the correspending componenet
-  padding: 1.3rem 0rem;
+  padding: 1.8rem 0rem;
   &:hover {
     background-color: #fff;
     color: #000;
@@ -74,4 +74,7 @@
 
 .hero_music_action_button {
   width: 26.5rem;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+  }
 }

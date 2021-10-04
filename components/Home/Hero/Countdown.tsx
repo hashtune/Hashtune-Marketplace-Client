@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 const moment = require("moment");
+import styles from "./Hero.module.scss";
 
 interface CountdownProps {
   liveAt?: Date;
@@ -43,9 +44,9 @@ const Countdown = (props: CountdownProps) => {
   }, []);
 
   return (
-    <div className="countdown_card">
+    <div className={styles["countdown_card"] + " countdown_card"}>
       <h3 className="hero_card_title">Auction ending in</h3>
-      <div className="countdown_card-data">
+      <div className={styles["countdown_card-data"] + " countdown_card-data"}>
         <div className="countdown_card-data--item">
           <h3 className="countdown_card-data--item-title">6 </h3>
           {/* className="h3>6 </h-title" {hours} */}

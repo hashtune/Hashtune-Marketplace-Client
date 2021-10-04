@@ -62,8 +62,14 @@ const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
             className={styles["hero__hashtune-auction-details"] + " mb-medium"}
           >
             {/* Have to make sure this is flexible and can also take Buy For Make an offer etc. For now hardcoded since there */}
-            <ConvertedPrice currentHighInBnb={1} coin={coin} />
-            <div className="vertical_divider"></div>
+            <ConvertedPrice
+              currentHighInBnb={1}
+              coin={coin}
+              style={styles["price_card"]}
+            />
+            <div
+              className={styles["vertical_divider"] + " vertical_divider"}
+            ></div>
             {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
             {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
             <Countdown liveAt={date} />

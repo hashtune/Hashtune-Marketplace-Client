@@ -8,12 +8,13 @@ export interface Coin {
 interface CoinProp {
   currentHighInBnb: number;
   coin: Coin;
+  style: string;
 }
 
 const ConvertedPrice = (props: CoinProp) => {
   const priceInDollars = props.coin.currentPrice * props.currentHighInBnb;
   return (
-    <div className="price_card">
+    <div className={"price_card " + props.style}>
       <h3 className="hero_card_title">Current Bid</h3>
       <div className="price_card-data">
         <div className="price_card-data--crypto">
