@@ -6,44 +6,43 @@ import Link from "next/link";
 import client from "../../../apollo-client";
 import { queryListAuctions } from "../../../lib/apiQueries/ArtworkQueries";
 
+const ArtworkContainer = (props: ListArtworksFieldsProp) => {
+  const [artworks, setArtworks] = useState(props.artworks);
 
-const ArtworkContainer = (props: ListArtworksFieldsProp, ) => {
-    const [artworks, setArtworks] = useState(props.artworks)
+  const getAuctions = async () => {
+    const res = await client.query({
+      query: queryListAuctions,
+      variables: { listArtworksAuction: true, listArtworksListed: true },
+    });
+    setArtworks(res.data.listArtworks);
+  };
 
-    const getAuctions = async() => {
-        const res = await client.query({
-            query: queryListAuctions,
-            variables : {listArtworksAuction : true,
-                        listArtworksListed: true}
-        });
-        setArtworks(res.data.listArtworks)
+  const getBuyNow = async () => {
+    const res = await client.query({
+      query: queryListAuctions,
+      variables: { listArtworksAuction: false, listArtworksListed: true },
+    });
+    setArtworks(res.data.listArtworks);
+  };
+
+  useEffect(() => {
+    if (props.type === "Auctions") {
+      getAuctions();
+    } else if (props.type === "Buy Now") {
+      getBuyNow();
     }
-
-    const getBuyNow = async() => {
-        const res = await client.query({
-            query: queryListAuctions,
-            variables : {listArtworksAuction : false,
-                        listArtworksListed: true}
-        })
-        setArtworks(res.data.listArtworks);
-    }
-
-    useEffect(() => {
-      if (props.type === 'Auctions'){
-        getAuctions();
-      } else if (props.type ==='Buy Now'){
-        getBuyNow();
-      }
-      
-  }, [])
+  }, []);
   return (
-    <div>
-      <div className={styles.artworkContainer}>
-        {artworks.length>0 && artworks?.map((artwork) => (
-          <div key={artwork.id} className={styles.item}>
-            <Link href={`/${artwork.creator.handle}/${artwork.id}`}><ListArtwork artwork={artwork} /></Link>
-          </div>
-        ))}
+    <div className={styles["artworks"]}>
+      <div className={styles["artworks__container"] + " container"}>
+        {artworks.length > 0 &&
+          artworks?.map((artwork) => (
+            <div key={artwork.id} className={styles["artworks__artwork"]}>
+              <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
+                <ListArtwork artwork={artwork} />
+              </Link>
+            </div>
+          ))}
       </div>
     </div>
   );
