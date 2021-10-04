@@ -9,7 +9,9 @@
   padding: 1rem 2rem;
   background-color: #1a1a1a;
   align-items: center;
-
+  @media screen and (max-width: 970px) and (max-width: 1204px) {
+    padding: 1rem 2rem;
+  }
   height: 10rem;
   &-data {
     display: flex;
@@ -38,6 +40,12 @@
     display: flex;
     &--item {
       margin-right: 2.2rem;
+      @media screen and (max-width: 970px) and (max-width: 1204px) {
+        margin-right: 5rem;
+        span {
+          margin-top: 0.8rem !important;
+        }
+      }
       &-title {
         font-size: 3.2rem;
         font-weight: 600;

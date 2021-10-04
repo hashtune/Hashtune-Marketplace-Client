@@ -74,7 +74,11 @@
 
 .hero_music_action_button {
   width: 26.5rem;
+
   @media screen and (max-width: 500px) {
+    width: 100%;
+  }
+  @media only screen and (min-width: 700px) and (max-width: 1024px) {
     width: 100%;
   }
 }
