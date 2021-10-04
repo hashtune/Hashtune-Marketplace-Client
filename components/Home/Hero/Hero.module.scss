@@ -2,6 +2,8 @@
   width: 100%;
   height: 85rem;
   background-color: #090909;
+  margin-bottom: 15rem;
+
   @media screen and (max-width: 768px) {
     &__container {
       grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)) !important;
