@@ -5,7 +5,7 @@ const SortDropDown = () => {
     return (
         <select>
             <option value="latest">Latest</option>
-            <option value="earliest">earliest</option>
+            <option value="earliest">Earliest</option>
         </select>
     )
 }

@@ -9,6 +9,7 @@ export const queryListArtworks = gql`
       id
       title
       image
+      description
       creator {
         fullName
         id
@@ -38,6 +39,8 @@ export const queryListArtworksListCreators = gql`
       id
       title
       image
+      description
+
       creator {
         fullName
         id
@@ -64,31 +67,39 @@ export const queryListArtworksListCreators = gql`
     }
   }
 `;
-const onlyAuctions = true;
-export function queryListAuctions(onlyAuctions: boolean) {
-  return gql`
-    query ListAuctionsQuery(${onlyAuctions}: Boolean) {
-      listArtworks(auction: ${onlyAuctions}){
+export const queryListAuctions = gql`
+  query ExampleQuery(
+    $listArtworksAuction: Boolean
+    $listArtworksListed: Boolean
+  ) {
+    listArtworks(auction: $listArtworksAuction, listed: $listArtworksListed) {
+      id
+      handle
+      title
+      image
+      description
+      listed
+      price
+      reservePrice
+      saleType
+      Auctions {
         id
-        title
-        image
-        creator {
-          fullName
+        bids {
           id
-          handle
-        }
-        auctionWithNoReservePriceAndNoBids
-        latestAuction {
-          bids {
-            id
-          }
-          liveAt
-          currentHigh
         }
       }
+      latestAuction {
+        currentHigh
+      }
+      auctionWithNoReservePriceAndNoBids
+      creator {
+        fullName
+        id
+      }
     }
-    `;
-}
+  }
+`;
+
 export function queryArtworkById(id: string) {
   return client.query({
     query: gql`
@@ -123,47 +134,3 @@ export function queryArtworkById(id: string) {
     `,
   });
 }
-
-const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await client.query({
-    query: gql`
-      query ExampleQuery {
-        listArtworks {
-          id
-          title
-          saleType
-          image
-          listed
-          reservePrice
-          price
-          Auctions {
-            bids {
-              id
-            }
-            currentHigh
-          }
-          creator {
-            handle
-            image
-            fullName
-          }
-          latestAuction {
-            bids {
-              id
-            }
-          }
-        }
-        listCreators {
-          fullName
-        }
-      }
-    `,
-  });
-  return {
-    props: {
-      allArtworks: data.listArtworks,
-      allCreators: data.listCreators,
-      fallback: true,
-    },
-  };
-};

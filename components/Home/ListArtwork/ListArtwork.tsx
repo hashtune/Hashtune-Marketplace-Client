@@ -8,7 +8,7 @@ import {randomMockMedia} from '../../../utils/index'
 
 const ListArtwork = (props: ListArtworkFieldsProp) => {
     const artwork = props.artwork;
-    const coverImage = `/dist/images/mock/artworks/${randomMockMedia(18)}.png`;
+    const coverImage = `/dist/images/mock/artworks/${randomMockMedia(16)}.png`;
     return (
         <div data-cy= "cont-list-artwork">
             <div data-cy= "list-artwork">

@@ -1,42 +1,50 @@
-import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
+import React, { useEffect, useState } from "react";
 import styles from "./Artwork.module.scss";
-// import fetchData from '../../../lib/artworks'
 import ListArtwork from "../ListArtwork/ListArtwork";
-import Tab from "../../Layout/Navbar/Tab";
-import { Router, useRouter } from "next/dist/client/router";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
-import { route } from "next/dist/server/router";
+import client from "../../../apollo-client";
+import { queryListAuctions } from "../../../lib/apiQueries/ArtworkQueries";
 
-const ArtworkContainer = (props: ListArtworksFieldsProp) => {
-  const { query } = useRouter();
-  const isAllHashtunesSelected = !!query.allHashtunes;
-  const isAuctionsSelected = !!query.auctions;
-  const isBuyNowSelected = !!query.buyNow;
 
+const ArtworkContainer = (props: ListArtworksFieldsProp, ) => {
+    const [artworks, setArtworks] = useState(props.artworks)
+
+    const getAuctions = async() => {
+        const res = await client.query({
+            query: queryListAuctions,
+            variables : {listArtworksAuction : true,
+                        listArtworksListed: true}
+        });
+        setArtworks(res.data.listArtworks)
+    }
+
+    const getBuyNow = async() => {
+        const res = await client.query({
+            query: queryListAuctions,
+            variables : {listArtworksAuction : false,
+                        listArtworksListed: true}
+        })
+        setArtworks(res.data.listArtworks);
+    }
+
+    useEffect(() => {
+      if (props.type === 'Auctions'){
+        getAuctions();
+      } else if (props.type ==='Buy Now'){
+        getBuyNow();
+      }
+      
+  }, [])
   return (
     <div>
-      <Tab
-        href="/?allHashtunes=true"
-        title="All Hashtunes"
-        isSelected={isAllHashtunesSelected}
-      />
-      <Tab
-        href="/?auctions=true"
-        title="Auctions"
-        isSelected={isAuctionsSelected}
-      />
-      <Tab href="/?buyNow=true" title="Buy Now" isSelected={isBuyNowSelected} />
-      {/* <InfiniteScroll next={fetchData} hasMore={} children={fetchData} loader={undefined} dataLength={undefined}> */}
       <div className={styles.artworkContainer}>
-        {props.artworks.map((artwork) => (
+        {artworks.length>0 && artworks?.map((artwork) => (
           <div key={artwork.id} className={styles.item}>
             <Link href={`/${artwork.creator.handle}/${artwork.id}`}><ListArtwork artwork={artwork} /></Link>
           </div>
         ))}
       </div>
-      {/* </InfiniteScroll> */}
     </div>
   );
 };

@@ -64,4 +64,5 @@ export interface ListArtworkFieldsProp {
 }
 export interface ListArtworksFieldsProp {
   artworks: ListArtworkFields[];
+  type: string;
 }

@@ -1,22 +1,132 @@
 .hero {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  max-width: 100%;
-}
+  width: 100%;
+  height: 85rem;
+  background-color: #090909;
+  margin-bottom: 15rem;
 
-.songInfo {
-  color: gray;
-  flex: 1 0 50%;
-  margin: 10px;
-  overflow: hidden;
-}
+  @media screen and (max-width: 768px) {
+    &__container {
+      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)) !important;
+    }
+    height: 121rem;
+    margin-bottom: 1rem;
+  }
+  @media only screen and (max-width: 500px) {
+    height: 118rem !important;
+  }
 
-.image {
-  flex: 1 0 60%;
-  width: 175rem;
-  margin: 10px;
-  text-align: center;
+  @media only screen and (min-width: 700px) and (max-width: 1024px) {
+    height: 135rem;
+    margin-bottom: 1rem;
+  }
+  @media only screen and (min-width: 1024px) and (max-width: 1030px) {
+    height: 142rem;
+    margin-bottom: 1rem;
+  }
+
+  @media screen and (max-width: 970px) and (max-width: 1204px) {
+    height: 127rem;
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(48rem, 1fr));
+    justify-content: center;
+    align-items: center;
+  }
+  &__hashtune-artwork {
+    margin: 15rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media screen and (max-width: 970px) and (max-width: 1204px) {
+      margin: 10rem 0 2rem 0;
+    }
+    @media screen and (max-width: 768px) {
+      margin: 10rem 0 2rem 0;
+    }
+    &--image {
+      position: relative !important;
+    }
+    &--play-button {
+      position: absolute !important;
+      cursor: pointer;
+    }
+  }
+  &__hashtune-details {
+    margin-left: 4rem;
+    @media screen and (max-width: 768px) {
+      margin-left: 0;
+      &--description {
+        width: 100% !important;
+      }
+    }
+    &--user-details {
+      display: flex;
+      padding: 2rem;
+      background-color: #040404;
+      height: 5.3;
+      width: 15.3rem;
+      justify-content: center;
+      align-content: center;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
+      img {
+        border-radius: 50%;
+      }
+      a {
+        margin-left: 0.6rem;
+      }
+    }
+    &--title {
+      font-size: 4.5rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+    &--description {
+      font-size: 1.7rem;
+      color: #c2c2c2;
+      width: 80%;
+      margin-bottom: 2rem;
+    }
+    &--auction-info {
+    }
+  }
+  &__hashtune-auction-details {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    @media screen and (max-width: 768px) {
+      flex-wrap: wrap;
+      & .vertical_divider {
+        display: none !important;
+      }
+      .price_card {
+        width: 100%;
+        margin-bottom: 3rem;
+      }
+      .countdown_card {
+        width: 100%;
+      }
+      .countdown_card-data {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+    @media screen and (max-width: 970px) and (max-width: 1204px) {
+      // align-items: start;
+      .price_card {
+        // width: 50%;
+        margin-bottom: 3rem;
+      }
+      .countdown_card {
+        // width: 50%;
+      }
+      .countdown_card-data {
+        // margin-right: 5rem;
+      }
+    }
+  }
 }
