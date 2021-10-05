@@ -1,6 +1,6 @@
 
 
-import styles from './Menu.module.scss'
+import styles from './BurgerMenu.module.scss'
 interface MenuItemProps {
     text: string,
     href?: string,
