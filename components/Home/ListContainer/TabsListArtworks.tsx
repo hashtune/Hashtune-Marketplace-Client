@@ -3,6 +3,7 @@ import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterface
 import TabNav from "./Tabnav";
 import Tab from "./Tab"
 import ArtworkContainer from "./ArtworkContainer";
+import SortDropDown from "./SortDropdown";
 
 
 const TabsListArtworks = (props: ListArtworksFieldsProp) => {
@@ -10,6 +11,7 @@ const TabsListArtworks = (props: ListArtworksFieldsProp) => {
   const [tabState, setTabState] = useState("All Hashtunes")
   return (
     <div>
+      <SortDropDown/>
       <TabNav tabs={['All Hashtunes', 'Auctions', 'Buy Now']} selected={ tabState } setSelected={ setTabState}>
           <Tab isSelected={ tabState === 'All Hashtunes' }>
             <ArtworkContainer type = 'All Hashtunes'  artworks={props.artworks}/>

@@ -20,7 +20,8 @@ export const getStaticProps: GetStaticProps = async () => {
       allArtworks: data.listArtworks.slice(0, 10),
       allCreators: data.listCreators.slice(0, 20),
       fallback: true,
-    }, revalidate : 180
+    },
+    revalidate: 180,
   };
 };
 
@@ -31,10 +32,12 @@ export default function Home({
   allCreators: ListCreatorFields[];
 }) {
   return (
-    <main>
-      <Navbar/>
-      <Hero artwork={allArtworks[0]} />
-      <TabsListArtworks artworks={allArtworks} type={"All Hashtunes"}/>
-    </main>
+    <div className="app">
+      <Navbar />
+      <main>
+        <Hero artwork={allArtworks[0]} />
+        <TabsListArtworks artworks={allArtworks} type={"All Hashtunes"}/>
+      </main>
+    </div>
   );
 }

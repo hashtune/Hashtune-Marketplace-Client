@@ -1,7 +1,27 @@
-.artworkContainer {
-  grid-template-columns: repeat(4, 1fr);
-  display: grid;
-  .item {
-    // margin-top: 5rem;
+.artworks {
+  .artworks__container {
+    // grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+    display: grid;
+  }
+  &__artwork {
+    padding: 2rem;
+    &_data {
+      &--image {
+      }
+      &--image-container {
+      }
+      &--content {
+        display: flex;
+        justify-content: space-between;
+        h3 {
+          font-weight: 700;
+        }
+        p {
+          font-weight: 300;
+          color: #969696;
+        }
+      }
+    }
   }
 }

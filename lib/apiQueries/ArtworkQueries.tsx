@@ -9,6 +9,7 @@ export const queryListArtworks = gql`
       id
       title
       image
+      description
       creator {
         fullName
         id
@@ -38,6 +39,8 @@ export const queryListArtworksListCreators = gql`
       id
       title
       image
+      description
+
       creator {
         fullName
         id
@@ -65,34 +68,37 @@ export const queryListArtworksListCreators = gql`
   }
 `;
 export const queryListAuctions = gql`
-    query ExampleQuery($listArtworksAuction: Boolean, $listArtworksListed: Boolean) {
-      listArtworks(auction: $listArtworksAuction, listed: $listArtworksListed) {
+  query ExampleQuery(
+    $listArtworksAuction: Boolean
+    $listArtworksListed: Boolean
+  ) {
+    listArtworks(auction: $listArtworksAuction, listed: $listArtworksListed) {
+      id
+      handle
+      title
+      image
+      description
+      listed
+      price
+      reservePrice
+      saleType
+      Auctions {
         id
-        handle
-        title
-        image
-        description
-        listed
-        price
-        reservePrice
-        saleType
-        Auctions {
-          id
-          bids {
-            id
-          }
-        }
-        latestAuction {
-          currentHigh
-        }
-        auctionWithNoReservePriceAndNoBids
-        creator {
-          fullName
+        bids {
           id
         }
       }
+      latestAuction {
+        currentHigh
+      }
+      auctionWithNoReservePriceAndNoBids
+      creator {
+        fullName
+        id
+      }
     }
-  `;
+  }
+`;
 
 export function queryArtworkById(id: string) {
   return client.query({
