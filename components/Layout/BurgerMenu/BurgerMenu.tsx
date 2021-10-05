@@ -1,5 +1,5 @@
 
-import styles from './Menu.module.scss'
+import styles from './BurgerMenu.module.scss'
 import React, { ReactComponentElement, useEffect, useRef, useState } from 'react'
 import {LinkIcon} from './LinkIcon'
 import { MenuItem } from './MenuItem'
@@ -45,7 +45,7 @@ export const BurgerMenu = () => {
             <div className={styles["burger__line--down"]}></div>
         </button>
         <nav  className={styles["nav"]} id="js-nav">
-        	<ul className={styles["nav__menu nav__menu--main menu menu--main"]}>
+        	<ul className={styles["menu"]}>
                 <MenuItem text={'FAQ'}/>
                 <MenuItem text={'About'}/>
                 <MenuItem text={'Help'}/>
@@ -54,9 +54,7 @@ export const BurgerMenu = () => {
                 <MenuItem text={'Privacy Policy'}/>
                 <MenuItem text={'Community Guidelines'}/>
         	</ul>
-            {/* <div> */}
             <button className = {styles["nav__beArtist"]}><h2>Become an Artist</h2></button>
-            {/* </div> */}
             <div className= {styles["nav__socials"]}>
                 <LinkIcon icon={'instagram'} href={''}/>
                 <LinkIcon icon={'twitter'} href={''}/>
