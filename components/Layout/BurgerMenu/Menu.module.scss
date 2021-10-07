@@ -3,16 +3,11 @@ $light-black: #1b1b1b;
 $black: #000000;
 $white: #ffffff;
 
-body {
-  &.overflow {
-    overflow: hidden;
-  }
-}
 @mixin burger__line() {
   background-color: #fff;
   top: 1px;
-  height: 1px;
-  width: 20px;
+  height: 0.2rem;
+  width: 2rem;
   transition: transform 0.2s;
 }
 
@@ -54,7 +49,7 @@ body {
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 12px;
+      margin-bottom: 0.5rem;
     }
     &--down {
       @include burger__line();

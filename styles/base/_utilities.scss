@@ -65,3 +65,10 @@ section {
   height: 7rem;
   margin: 3rem;
 }
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
