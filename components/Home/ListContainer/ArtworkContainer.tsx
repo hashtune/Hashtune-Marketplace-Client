@@ -4,10 +4,15 @@ import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 import client from "../../../apollo-client";
-import { queryListAuctions } from "../../../lib/apiQueries/ArtworkQueries";
+import {
+  queryListAuctions,
+  queryListArtworks,
+} from "../../../lib/apiQueries/ArtworkQueries";
+import SortDropDown from "./SortDropdown";
 
 const ArtworkContainer = (props: ListArtworksFieldsProp) => {
   const [artworks, setArtworks] = useState(props.artworks);
+  const [tabState, setTabState] = useState("All Hashtunes");
 
   const getAuctions = async () => {
     const res = await client.query({
@@ -25,20 +30,60 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
     setArtworks(res.data.listArtworks);
   };
 
+  const getAllHashtunes = async () => {
+    const res = await client.query({
+      query: queryListArtworks,
+    });
+    setArtworks(res.data.listArtworks);
+  };
+
   useEffect(() => {
-    if (props.type === "Auctions") {
+    if (tabState === "Auctions") {
       getAuctions();
-    } else if (props.type === "Buy Now") {
+    } else if (tabState === "Buy Now") {
       getBuyNow();
+    } else {
+      getAllHashtunes();
     }
-  }, []);
+  }, [tabState]);
+
   return (
     <div className={styles["artworks"]}>
+      <div className={styles["tab-nav__sort--wrapper"]}></div>
+      <div className={styles["tab-nav__sort"]}>
+        <div className={styles["tab-nav"]}>
+          <button
+            className={styles["tab-nav__tab"]}
+            onClick={() => setTabState("All Hashtunes")}
+          >
+            All Hashtunes
+          </button>
+          <button
+            className={styles["tab-nav__tab"]}
+            onClick={() => setTabState("Auctions")}
+          >
+            Auctions
+          </button>
+          <button
+            className={styles["tab-nav__tab"]}
+            onClick={() => setTabState("Buy Now")}
+          >
+            Buy Now
+          </button>
+        </div>
+        <div>
+          <SortDropDown />
+        </div>
+      </div>
       <div className={styles["artworks__container"] + " container"}>
         {artworks.length > 0 &&
           artworks?.map((artwork) => (
             <div key={artwork.id} className={styles["artworks__artwork"]}>
-              <Link href={`/${artwork.creator.handle}/${artwork.id}`}><a><ListArtwork artwork={artwork} /></a></Link>
+              <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
+                <a>
+                  <ListArtwork artwork={artwork} />
+                </a>
+              </Link>
             </div>
           ))}
       </div>
