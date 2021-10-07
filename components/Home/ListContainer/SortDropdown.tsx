@@ -3,7 +3,10 @@ import styles from "./Artwork.module.scss";
 
 const SortDropDown = () => {
   return (
-    <select className={styles["tab-nav__sort-dropdown"]} id={"dropdown"}>
+    <select
+      className={styles["tab-nav__sort-dropdown"] + " select"}
+      id={"dropdown"}
+    >
       <option className={styles["tab-nav__sort-option"]} value="latest">
         Latest
       </option>

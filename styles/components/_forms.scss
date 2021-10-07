@@ -1,4 +1,4 @@
-styles/components/_forms.scss.select {
+.select {
   padding: 1rem 2rem;
   background: #090909;
   color: #fff;
@@ -6,4 +6,5 @@ styles/components/_forms.scss.select {
   border: 2px solid #2b2b2b;
   outline: none;
   position: relative;
+  width: 100%;
 }
