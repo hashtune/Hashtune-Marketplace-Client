@@ -2,6 +2,7 @@ $blue: #1da1f2;
 $light-black: #1b1b1b;
 $black: #000000;
 $white: #ffffff;
+$light-blue: #42a1f5;
 
 @mixin burger__line() {
   background-color: #fff;
@@ -9,6 +10,13 @@ $white: #ffffff;
   height: 0.2rem;
   width: 2rem;
   transition: transform 0.2s;
+}
+@mixin iconHover($colour) {
+  &:hover {
+    svg {
+      fill: $colour;
+    }
+  }
 }
 
 .burger {
@@ -108,6 +116,15 @@ $white: #ffffff;
       svg {
         fill: #fff;
       }
+      &:nth-child(1) {
+        @include iconHover(url("#insta-gradient") #d6249f);
+      }
+      &:nth-child(2) {
+        @include iconHover($light-blue);
+      }
+      &:nth-child(3) {
+        @include iconHover(red);
+      }
     }
   }
   &--visible {
@@ -133,6 +150,7 @@ $white: #ffffff;
 // Menus
 
 .menu {
+  margin-top: 100px;
   list-style-type: none;
   &__item {
     &--wrapper {
@@ -140,7 +158,7 @@ $white: #ffffff;
       height: 60px;
       border-color: white;
       border-width: 5px;
-      padding: 15px 50px;
+      padding: 30px 0px 60px 50px;
       &:hover {
         background-color: $light-black;
       }
