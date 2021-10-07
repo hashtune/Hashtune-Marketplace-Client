@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Tab.module.scss";
+import styles from "./Artwork.module.scss";
 
 const SortDropDown = () => {
   return (
