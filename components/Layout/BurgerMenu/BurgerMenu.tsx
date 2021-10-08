@@ -52,17 +52,6 @@ export const BurgerMenu = () => {
         <div className={styles["burger__line--up"]}></div>
         <div className={styles["burger__line--down"]}></div>
       </button>
-      {/* <svg
-        fill="#fff"
-        height="10"
-        width="30"
-        ref={burger}
-        onClick={handleClick}
-        className={styles["burger"]}
-        id="js-nav-button"
-      >
-        <use xlinkHref="dist/icons/sprite.svg#hashtune-menu"></use>
-      </svg> */}
       <nav className={styles["nav"]} id="js-nav">
         <ul className={styles["menu"]}>
           <MenuItem text={"FAQ"} />

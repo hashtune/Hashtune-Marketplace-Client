@@ -8,7 +8,7 @@ $light-blue: #42a1f5;
   background-color: #fff;
   top: 1px;
   height: 0.2rem;
-  width: 2rem;
+  width: 3rem;
   transition: transform 0.2s;
 }
 @mixin iconHover($colour) {
@@ -20,13 +20,7 @@ $light-blue: #42a1f5;
 }
 
 .burger {
-  width: 50px;
-  height: 50px;
-  position: fixed;
-  top: 11px;
-  right: 20px;
   border-radius: 4px;
-  z-index: 10;
   appearance: none;
   background: transparent;
   border: 0;
@@ -44,6 +38,12 @@ $light-blue: #42a1f5;
     }
   }
   &--active {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    top: 11px;
+    right: 20px;
+    z-index: 10;
     > .burger__line--up {
       transform-origin: left center;
       transform: rotate(45deg);
@@ -57,7 +57,7 @@ $light-blue: #42a1f5;
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
     }
     &--down {
       @include burger__line();

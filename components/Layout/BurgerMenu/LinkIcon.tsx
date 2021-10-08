@@ -1,31 +1,29 @@
-
-import Link from 'next/link'
-import Image from 'next/image'
-import { useState } from 'react'
-import styles from "./BurgerMenu.module.scss"
+import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
+import styles from "./BurgerMenu.module.scss";
 
 interface IconLinkProps {
   icon: string;
-  href:string;
+  href: string;
 }
 export const LinkIcon = (props: IconLinkProps) => {
-  const hrefStart = 'dist/icons/sprite.svg#hashtune-';
-  if (props.icon!== "instagram"){
-    return( 
-    <Link href = {props.href} >
-      <div className = {styles["nav__socials--linkIcon"]}>
-        <svg width= {32.5} height= {32.5}>
-          <use xlinkHref={hrefStart + props.icon}></use>
-        </svg>
-      </div>
-    </Link>
-  )
-
+  const hrefStart = "dist/icons/sprite.svg#hashtune-";
+  if (props.icon !== "instagram") {
+    return (
+      <Link href={props.href}>
+        <div className={styles["nav__socials--linkIcon"]}>
+          <svg width={32.5} height={32.5}>
+            <use xlinkHref={hrefStart + props.icon}></use>
+          </svg>
+        </div>
+      </Link>
+    );
   }
-  return( 
-    <Link href = {props.href} >
-      <div className = {styles["nav__socials--linkIcon"]}>
-        <svg width= {32.5} height= {32.5}>
+  return (
+    <Link href={props.href}>
+      <div className={styles["nav__socials--linkIcon"]}>
+        <svg width={32.5} height={32.5}>
           <use xlinkHref={hrefStart + props.icon}></use>
           <radialGradient id="insta-gradient" r="150%" cx="30%" cy="107%">
             <stop stop-color="#fdf497" offset="0" />
@@ -37,5 +35,5 @@ export const LinkIcon = (props: IconLinkProps) => {
         </svg>
       </div>
     </Link>
-  )
-}
+  );
+};
