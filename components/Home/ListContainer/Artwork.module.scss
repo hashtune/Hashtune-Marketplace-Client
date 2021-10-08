@@ -1,98 +1,51 @@
-.tabs {
-  &__item {
-    padding: 20px;
-  }
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  &__inner {
-  }
-}
-
-.main {
-  width: 100%;
-}
 .tab-nav {
   display: flex;
-  flex-direction: row;
-  align-content: flex-start;
 
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   border-width: 5px;
   border-color: white;
-  flex: 1 1 100%;
-  grid-column: tabnav;
-  &__sort {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    > *:nth-child(1) {
-      flex: 1 1 auto;
+
+  margin-bottom: 3rem;
+
+  &__container {
+    margin: 2rem 2rem 2rem 1rem;
+    border-bottom: 1px solid #202020;
+    padding-bottom: 2rem;
+    border-right: 3rem;
+  }
+
+  &__indicators {
+    &--element {
+      padding: 2rem;
+      cursor: pointer;
     }
-    > *:nth-child(2) {
-      flex: 1 1 auto;
+    @media screen and (max-width: 768px) {
+      &--element {
+        &:not(:last-child) {
+          padding: 1rem 4rem 0rem 1rem;
+          margin: 0 1rem 0 0;
+        }
+      }
+      margin-bottom: 2rem;
     }
-    &--wrapper {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      > *:nth-child(1) {
-        flex: 1 1 50%;
+  }
+  &__dropdown {
+    margin-right: 0;
+    @media screen and (max-width: 768px) {
+      flex: 1;
+      .select {
+        width: 100%;
       }
     }
-  }
-  &__tab {
-    padding: 20px;
-  }
-  &__artwork-container {
-    width: 100%;
-    flex: 1 1 100px;
-    min-width: 100px;
-  }
-  &__sort-dropdown {
-    flex: 1 1 50%;
-  }
-  &__sort-option {
-    width: 70px;
-    height: 23.5px;
-    font-family: Karla;
-    font-size: 20px;
-  }
-}
-
-.tab {
-  padding: 20px;
-  &__nav {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    &--inner {
-      width: 40%;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-    }
-  }
-  &__container {
-    width: 100%;
-    flex: 1 1 100px;
-  }
-  &__sort-dropdown {
-    right: 50 px;
-  }
-  &__sort-option {
-    width: 70px;
-    height: 23.5px;
-    font-family: Karla;
-    font-size: 20px;
   }
 }
 
 .artworks {
+  @media screen and (max-width: 768px) {
+    margin-top: 20rem;
+  }
   .artworks__container {
     // grid-template-columns: repeat(4, 1fr);
     grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));

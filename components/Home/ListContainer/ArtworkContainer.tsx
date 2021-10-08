@@ -48,34 +48,34 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
   }, [tabState]);
 
   return (
-    <div className={styles["artworks"]}>
-      <div className={styles["tab-nav__sort--wrapper"]}></div>
-      <div className={styles["tab-nav__sort"]}>
-        <div className={styles["tab-nav"]}>
-          <button
-            className={styles["tab-nav__tab"]}
+    <div className={styles["artworks"] + " container"}>
+      <div className={styles["tab-nav"] + " " + styles["tab-nav__container"]}>
+        <div className={styles["tab-nav__indicators"]}>
+          <a
+            className={styles["tab-nav__indicators--element"]}
             onClick={() => setTabState("All Hashtunes")}
           >
             All Hashtunes
-          </button>
-          <button
-            className={styles["tab-nav__tab"]}
+          </a>
+          <a
+            className={styles["tab-nav__indicators--element"]}
             onClick={() => setTabState("Auctions")}
           >
             Auctions
-          </button>
-          <button
-            className={styles["tab-nav__tab"]}
+          </a>
+          <a
+            className={styles["tab-nav__indicators--element"]}
             onClick={() => setTabState("Buy Now")}
           >
             Buy Now
-          </button>
+          </a>
         </div>
-        <div>
+        <div className={styles["tab-nav__dropdown"]}>
           <SortDropDown />
         </div>
       </div>
-      <div className={styles["artworks__container"] + " container"}>
+
+      <div className={styles["artworks__container"]}>
         {artworks.length > 0 &&
           artworks?.map((artwork) => (
             <div key={artwork.id} className={styles["artworks__artwork"]}>
