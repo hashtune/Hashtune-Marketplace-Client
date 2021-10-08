@@ -6,8 +6,8 @@ $light-blue: #42a1f5;
 
 @mixin burger__line() {
   background-color: #fff;
-  top: 1px;
-  height: 0.2rem;
+  top: 2px;
+  height: 0.1rem;
   width: 3rem;
   transition: transform 0.2s;
 }
@@ -35,10 +35,10 @@ $light-blue: #42a1f5;
   }
   &:hover {
     > .burger__line--up {
-      transform: translateY(2px);
+      transform: translateY(-3px);
     }
     > .burger__line--down {
-      transform: translateY(-2px);
+      transform: translateY(3px);
     }
   }
   &--active {
@@ -49,19 +49,20 @@ $light-blue: #42a1f5;
     right: 20px;
     z-index: 10;
     > .burger__line--up {
+      //
       transform-origin: left center;
-      transform: rotate(45deg);
+      transform: translateY(-4px) rotate(45deg);
     }
     > .burger__line--down {
       transform-origin: left center;
-      transform: rotate(-45deg);
+      transform: translateY(4px) rotate(-45deg);
     }
   }
 
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 2rem;
+      margin-bottom: 12px;
     }
     &--down {
       @include burger__line();
