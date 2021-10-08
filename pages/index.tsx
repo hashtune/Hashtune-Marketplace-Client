@@ -9,7 +9,6 @@ import { ListCreatorFields } from "../lib/interfaces/CreatorInterfaces";
 import { ArtworkFields } from "../lib/interfaces/ArtworkInterfaces";
 import { queryListArtworksListCreators } from "../lib/apiQueries/ArtworkQueries";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
-import TabsListArtworks from "../components/Home/ListContainer/TabsListArtworks";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({

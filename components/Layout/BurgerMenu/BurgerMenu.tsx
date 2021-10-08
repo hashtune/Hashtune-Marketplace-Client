@@ -37,12 +37,41 @@ export const BurgerMenu = () => {
   };
 
   const handleClick = () => {
+    if (isActive) {
+      window.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener("keydown", handleEscClick);
+    }
     setIsActive(!isActive);
     toggleMenu();
   };
 
+  const burgerMenu: React.RefObject<HTMLDivElement> = useRef(null);
+  const handleOutsideClick = (event: any) => {
+    if (
+      burgerMenu.current &&
+      !burgerMenu.current.contains(event.target) &&
+      burger.current &&
+      !burger.current.contains(event.target)
+    ) {
+      handleClick();
+    }
+  };
+  const handleEscClick = (event: any) => {
+    if (event.key === "Escape") {
+      handleClick();
+    }
+  };
+
+  useEffect(() => {
+    // only add the event listener when the dropdown is opened
+    if (isActive == false) return;
+
+    window.addEventListener("click", handleOutsideClick);
+    window.addEventListener("keydown", handleEscClick);
+  }, [isActive]);
+
   return (
-    <div>
+    <div className={styles["main"]}>
       <button
         ref={burger}
         onClick={handleClick}
@@ -52,27 +81,31 @@ export const BurgerMenu = () => {
         <div className={styles["burger__line--up"]}></div>
         <div className={styles["burger__line--down"]}></div>
       </button>
-      <nav className={styles["nav"]} id="js-nav">
-        <ul className={styles["menu"]}>
-          <MenuItem text={"FAQ"} />
-          <MenuItem text={"About"} />
-          <MenuItem text={"Help"} />
-          <MenuItem text={"Contact"} />
-          <MenuItem text={"Terms of Service"} />
-          <MenuItem text={"Privacy Policy"} />
-          <MenuItem text={"Community Guidelines"} />
-        </ul>
-        <button className={styles["nav__beArtist"]}>
-          <h2>Become an Artist</h2>
-        </button>
-        <div className={styles["nav__socials"]}>
-          <LinkIcon icon={"instagram"} href={""} />
-          <LinkIcon icon={"twitter"} href={""} />
-          <LinkIcon icon={"youtube"} href={""} />
+      <nav ref={burgerMenu} className={styles["nav"]} id="js-nav">
+        <div className={styles["nav__header"]}>
+          <ul className={styles["menu"]}>
+            <MenuItem text={"FAQ"} />
+            <MenuItem text={"About"} />
+            <MenuItem text={"Help"} />
+            <MenuItem text={"Contact"} />
+            <MenuItem text={"Terms of Service"} />
+            <MenuItem text={"Privacy Policy"} />
+            <MenuItem text={"Community Guidelines"} />
+          </ul>
+          <button className={styles["nav__beArtist"]}>
+            <h2>Become an Artist</h2>
+          </button>
         </div>
-        <p className={styles["nav__copyright"]}>
-          Hashtune 2021 Ⓒ. All Rights Reserved.
-        </p>
+        <div className={styles["nav__footer"]}>
+          <div className={styles["nav__socials"]}>
+            <LinkIcon icon={"instagram"} href={""} />
+            <LinkIcon icon={"twitter"} href={""} />
+            <LinkIcon icon={"youtube"} href={""} />
+          </div>
+          <p className={styles["nav__copyright"]}>
+            Hashtune 2021 &copy;. All Rights Reserved.
+          </p>
+        </div>
       </nav>
       <div
         ref={overlay}

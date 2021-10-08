@@ -6,17 +6,21 @@ $light-blue: #42a1f5;
 
 @mixin burger__line() {
   background-color: #fff;
-  top: 1px;
+  top: 2px;
   height: 0.2rem;
   width: 3rem;
   transition: transform 0.2s;
 }
-@mixin iconHover($colour) {
+@mixin iconHover() {
   &:hover {
     svg {
-      fill: $colour;
+      opacity: 0.5;
     }
   }
+}
+
+.main {
+  display: flex;
 }
 
 .burger {
@@ -31,10 +35,10 @@ $light-blue: #42a1f5;
   }
   &:hover {
     > .burger__line--up {
-      transform: translateY(2px);
+      transform: translateY(-3px);
     }
     > .burger__line--down {
-      transform: translateY(-2px);
+      transform: translateY(3px);
     }
   }
   &--active {
@@ -45,19 +49,21 @@ $light-blue: #42a1f5;
     right: 20px;
     z-index: 10;
     > .burger__line--up {
+      //
       transform-origin: left center;
-      transform: rotate(45deg);
+      transform: translateY(-4px) rotate(45deg);
     }
     > .burger__line--down {
       transform-origin: left center;
-      transform: rotate(-45deg);
+      transform: translateY(4px) rotate(-45deg);
+      margin-top: 1rem;
     }
   }
 
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 0.6rem;
+      margin-bottom: 7px;
     }
     &--down {
       @include burger__line();
@@ -70,60 +76,86 @@ $light-blue: #42a1f5;
 }
 
 // Nav
-
 .nav {
+  background: url("/images/burger-menu-background.png");
+  background-size: 400px 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   backdrop-filter: blur(11px);
   background-color: rgba(0, 0, 0, 0.42);
   position: fixed;
   z-index: 9;
   top: 0;
+  gap: 50px;
   right: 0;
   height: 100%;
-  max-width: 515px;
+  max-width: 350px;
   width: 100%;
   overflow-y: auto;
   transform: translateX(100%);
   transition: transform 0.55s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
   &__beArtist {
-    width: 380px;
-    height: 60px;
-    margin: 56.8px 0 80px 50px;
-    padding: 17px 30px 14px 80px;
-    opacity: 1;
-    mix-blend-mode: screen;
+    width: 250px;
+    min-height: 50px;
+    max-height: 70px;
+    flex: 1 1 100%;
+    display: flex;
+    align-self: center;
+
+    justify-content: center;
+    align-items: center;
     backdrop-filter: blur(25px);
     border-radius: 20px;
     h2 {
+      flex: 1 1 100%;
       width: 220px;
       height: 29.5px;
+      line-height: 25px;
       font-family: Karla;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: bold;
     }
   }
-  &__socials {
+  &__header {
+    width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 55px;
+  }
+  &__footer {
+    flex: 1 1 100%;
+    display: flex;
+    max-height: 5px;
+    width: 100%;
+    gap: 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__socials {
+    flex: 1 1 100%;
+    display: flex;
+    max-height: 20px;
     flex-direction: row;
-    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 20px;
 
-    justify-content: left;
-    padding: 150px 10px 40px 160px;
     &--linkIcon {
       width: 32.5px;
       height: 32.5px;
-      margin-right: 40px;
       svg {
         fill: #fff;
       }
       &:nth-child(1) {
-        @include iconHover(url("#insta-gradient") #d6249f);
+        @include iconHover();
       }
       &:nth-child(2) {
-        @include iconHover($light-blue);
+        @include iconHover();
       }
       &:nth-child(3) {
-        @include iconHover(red);
+        @include iconHover();
       }
     }
   }
@@ -140,7 +172,9 @@ $light-blue: #42a1f5;
     }
   }
   &__copyright {
-    padding-left: 100px;
+    flex: 1 1 100%;
+    font-size: small;
+    color: #989898;
   }
   @media (min-width: 667px) {
     padding: 44.8px 0px 70px 0px;
@@ -150,40 +184,24 @@ $light-blue: #42a1f5;
 // Menus
 
 .menu {
-  margin-top: 100px;
+  flex: 1 1 100%;
+  width: 100%;
   list-style-type: none;
+  padding-top: 20px;
   &__item {
+    transform: translateX(40px);
+    transition: all 0.3s ease;
     &--wrapper {
       width: 100%;
-      height: 60px;
       border-color: white;
-      border-width: 5px;
-      padding: 30px 0px 60px 50px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 50px;
+      flex: 1 1 100%;
       &:hover {
         background-color: $light-black;
       }
-    }
-    &--main {
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      transform: translateX(40px);
-      opacity: 0;
-      transition: all 0.3s ease;
-    }
-  }
-  &__link {
-    color: $white;
-    text-decoration: none;
-
-    transition: all 0.3s ease;
-    &--main {
-      letter-spacing: 5px;
-      font-weight: 600;
-      padding: 0;
-      text-transform: uppercase;
-      font-size: 1.5rem;
-      display: block;
     }
   }
 }
