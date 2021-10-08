@@ -7,7 +7,7 @@ $light-blue: #42a1f5;
 @mixin burger__line() {
   background-color: #fff;
   top: 2px;
-  height: 0.1rem;
+  height: 0.2rem;
   width: 3rem;
   transition: transform 0.2s;
 }
@@ -56,13 +56,14 @@ $light-blue: #42a1f5;
     > .burger__line--down {
       transform-origin: left center;
       transform: translateY(4px) rotate(-45deg);
+      margin-top: 1rem;
     }
   }
 
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 12px;
+      margin-bottom: 7px;
     }
     &--down {
       @include burger__line();
