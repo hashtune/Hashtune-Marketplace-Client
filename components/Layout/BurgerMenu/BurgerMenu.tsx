@@ -39,6 +39,7 @@ export const BurgerMenu = () => {
   const handleClick = () => {
     if (isActive) {
       window.removeEventListener("click", handleOutsideClick);
+      window.removeEventListener("keydown", handleEscClick);
     }
     setIsActive(!isActive);
     toggleMenu();
@@ -55,12 +56,18 @@ export const BurgerMenu = () => {
       handleClick();
     }
   };
+  const handleEscClick = (event: any) => {
+    if (event.key === "Escape") {
+      handleClick();
+    }
+  };
 
   useEffect(() => {
     // only add the event listener when the dropdown is opened
     if (isActive == false) return;
 
     window.addEventListener("click", handleOutsideClick);
+    window.addEventListener("keydown", handleEscClick);
   }, [isActive]);
 
   return (
