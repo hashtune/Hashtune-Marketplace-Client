@@ -61,7 +61,7 @@ $light-blue: #42a1f5;
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 0.6rem;
+      margin-bottom: 2rem;
     }
     &--down {
       @include burger__line();
