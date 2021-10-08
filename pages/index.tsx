@@ -36,7 +36,7 @@ export default function Home({
       <Navbar />
       <main>
         <Hero artwork={allArtworks[0]} />
-        <TabsListArtworks artworks={allArtworks} type={"All Hashtunes"}/>
+        <ArtworkContainer type={"All Hashtunes"} artworks={allArtworks} />
       </main>
     </div>
   );

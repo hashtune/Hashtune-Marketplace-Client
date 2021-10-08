@@ -37,6 +37,13 @@ export interface ListArtworkFields {
   title: string;
   saleType: string;
   image?: string;
+  description: string;
+  creator: {
+    fullName: string;
+    id: string;
+    handle: string;
+    image: string;
+  };
   listed: boolean;
   reservePrice: number;
   price: number;
@@ -46,17 +53,12 @@ export interface ListArtworkFields {
     }[];
   }[];
   auctionWithNoReservePriceAndNoBids: boolean;
+  // liveAt?: Date,
   latestAuction: {
     bids: {
       id: string;
     }[];
     currentHigh: number;
-    liveAt?: Date;
-  };
-  creator: {
-    id: string;
-    fullName: string;
-    handle: string;
   };
 }
 export interface ListArtworkFieldsProp {

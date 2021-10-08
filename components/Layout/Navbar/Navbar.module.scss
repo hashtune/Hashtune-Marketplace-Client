@@ -17,6 +17,8 @@
   &__logo {
     display: flex;
     align-items: center;
+    margin-top: 1rem;
+    justify-content: center;
     &:hover {
       cursor: pointer;
       opacity: 0.5;

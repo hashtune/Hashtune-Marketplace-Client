@@ -6,7 +6,7 @@ import Countdown from "./Countdown";
 import { GetServerSideProps } from "next";
 import styles from "./Hero.module.scss";
 import ConvertedPrice, { Coin } from "./ConvertedPrice";
-import { ArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const Hero = (props: ArtworkFieldsProp, coin: Coin) => {
+const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
   let artwork = props.artwork;
   // let cover = artwork.image || "/";
   let coverImage = "/images/artwork.png"; //Should be from database but that breaks it

@@ -1,0 +1,210 @@
+$blue: #1da1f2;
+$light-black: #1b1b1b;
+$black: #000000;
+$white: #ffffff;
+$light-blue: #42a1f5;
+
+@mixin burger__line() {
+  background-color: #fff;
+  top: 1px;
+  height: 0.2rem;
+  width: 3rem;
+  transition: transform 0.2s;
+}
+@mixin iconHover($colour) {
+  &:hover {
+    svg {
+      fill: $colour;
+    }
+  }
+}
+
+.burger {
+  border-radius: 4px;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  margin-top: 0.2rem;
+  cursor: pointer;
+  svg {
+    fill: #fff;
+  }
+  &:hover {
+    > .burger__line--up {
+      transform: translateY(2px);
+    }
+    > .burger__line--down {
+      transform: translateY(-2px);
+    }
+  }
+  &--active {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    top: 11px;
+    right: 20px;
+    z-index: 10;
+    > .burger__line--up {
+      transform-origin: left center;
+      transform: rotate(45deg);
+    }
+    > .burger__line--down {
+      transform-origin: left center;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__line {
+    &--up {
+      @include burger__line();
+      margin-bottom: 0.6rem;
+    }
+    &--down {
+      @include burger__line();
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Nav
+
+.nav {
+  backdrop-filter: blur(11px);
+  background-color: rgba(0, 0, 0, 0.42);
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  right: 0;
+  height: 100%;
+  max-width: 515px;
+  width: 100%;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.55s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+  &__beArtist {
+    width: 380px;
+    height: 60px;
+    margin: 56.8px 0 80px 50px;
+    padding: 17px 30px 14px 80px;
+    opacity: 1;
+    mix-blend-mode: screen;
+    backdrop-filter: blur(25px);
+    border-radius: 20px;
+    h2 {
+      width: 220px;
+      height: 29.5px;
+      font-family: Karla;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+  &__socials {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    justify-content: left;
+    padding: 150px 10px 40px 160px;
+    &--linkIcon {
+      width: 32.5px;
+      height: 32.5px;
+      margin-right: 40px;
+      svg {
+        fill: #fff;
+      }
+      &:nth-child(1) {
+        @include iconHover(url("#insta-gradient") #d6249f);
+      }
+      &:nth-child(2) {
+        @include iconHover($light-blue);
+      }
+      &:nth-child(3) {
+        @include iconHover(red);
+      }
+    }
+  }
+  &--visible {
+    transform: translateX(0px);
+    .menu__item--main {
+      transform: translateX(0px);
+      opacity: 1;
+      @for $i from 1 to 10 {
+        &:nth-child(#{$i}) {
+          transition-delay: $i * 0.15s;
+        }
+      }
+    }
+  }
+  &__copyright {
+    padding-left: 100px;
+  }
+  @media (min-width: 667px) {
+    padding: 44.8px 0px 70px 0px;
+  }
+}
+
+// Menus
+
+.menu {
+  margin-top: 100px;
+  list-style-type: none;
+  &__item {
+    &--wrapper {
+      width: 100%;
+      height: 60px;
+      border-color: white;
+      border-width: 5px;
+      padding: 30px 0px 60px 50px;
+      &:hover {
+        background-color: $light-black;
+      }
+    }
+    &--main {
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transform: translateX(40px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+  }
+  &__link {
+    color: $white;
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+    &--main {
+      letter-spacing: 5px;
+      font-weight: 600;
+      padding: 0;
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      display: block;
+    }
+  }
+}
+
+// Overlay
+
+.site-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease-in-out;
+  background-color: $black;
+  opacity: 0;
+  visibility: hidden;
+  appearance: none;
+  border: 0;
+  &--visible {
+    opacity: 0.5;
+    visibility: visible;
+  }
+}

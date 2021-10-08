@@ -4,10 +4,15 @@ import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 import client from "../../../apollo-client";
-import { queryListAuctions } from "../../../lib/apiQueries/ArtworkQueries";
+import {
+  queryListAuctions,
+  queryListArtworks,
+} from "../../../lib/apiQueries/ArtworkQueries";
+import SortDropDown from "./SortDropdown";
 
 const ArtworkContainer = (props: ListArtworksFieldsProp) => {
   const [artworks, setArtworks] = useState(props.artworks);
+  const [tabState, setTabState] = useState("All Hashtunes");
 
   const getAuctions = async () => {
     const res = await client.query({
@@ -25,21 +30,59 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
     setArtworks(res.data.listArtworks);
   };
 
+  const getAllHashtunes = async () => {
+    const res = await client.query({
+      query: queryListArtworks,
+    });
+    setArtworks(res.data.listArtworks);
+  };
+
   useEffect(() => {
-    if (props.type === "Auctions") {
+    if (tabState === "Auctions") {
       getAuctions();
-    } else if (props.type === "Buy Now") {
+    } else if (tabState === "Buy Now") {
       getBuyNow();
+    } else {
+      getAllHashtunes();
     }
-  }, []);
+  }, [tabState]);
+
   return (
-    <div className={styles["artworks"]}>
-      <div className={styles["artworks__container"] + " container"}>
+    <div className={styles["artworks"] + " container"}>
+      <div className={styles["tab-nav"] + " " + styles["tab-nav__container"]}>
+        <div className={styles["tab-nav__indicators"]}>
+          <a
+            className={styles["tab-nav__indicators--element"]}
+            onClick={() => setTabState("All Hashtunes")}
+          >
+            All Hashtunes
+          </a>
+          <a
+            className={styles["tab-nav__indicators--element"]}
+            onClick={() => setTabState("Auctions")}
+          >
+            Auctions
+          </a>
+          <a
+            className={styles["tab-nav__indicators--element"]}
+            onClick={() => setTabState("Buy Now")}
+          >
+            Buy Now
+          </a>
+        </div>
+        <div className={styles["tab-nav__dropdown"]}>
+          <SortDropDown />
+        </div>
+      </div>
+
+      <div className={styles["artworks__container"]}>
         {artworks.length > 0 &&
           artworks?.map((artwork) => (
             <div key={artwork.id} className={styles["artworks__artwork"]}>
               <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
-                <ListArtwork artwork={artwork} />
+                <a>
+                  <ListArtwork artwork={artwork} />
+                </a>
               </Link>
             </div>
           ))}
