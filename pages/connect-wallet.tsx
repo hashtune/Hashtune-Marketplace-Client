@@ -1,19 +1,15 @@
-import MetaMaskOnboarding from "@metamask/onboarding";
-import { ethers } from "ethers";
 import React from "react";
-import { useEffect } from "react";
-import * as abi from "../SongOrAlbumNFT.json";
 import { MetamaskContext } from "../hooks/connectWallet";
 export default function ConnectWallet() {
   // If metamask is installed then window.ethereum is available.
   // Also need to listen for account changes.
   const {
-    accounts,
+    account,
     network,
     chainId,
     walletConnected,
     networkConnected,
-    getAccounts,
+    getAccount,
     getNetwork,
     getChainId,
     changeTokenPrice,
@@ -26,7 +22,7 @@ export default function ConnectWallet() {
         id="connect"
         disabled={walletConnected}
         onClick={() => {
-          getAccounts();
+          getAccount();
           getNetwork();
           getChainId();
         }}
@@ -38,7 +34,7 @@ export default function ConnectWallet() {
           ? ""
           : "You need to connect to the binance test network"}
       </div>
-      <div>active account: {accounts[0]}</div>
+      <div>active account: {account}</div>
       <div>active network: {network}</div>
       <div>active chain Id: {chainId}</div>
       <button onClick={changeTokenPrice}>change price of existing token</button>

@@ -9,16 +9,16 @@ import React from "react";
 
 export const Navbar = () => {
   const {
-    accounts,
+    account,
     walletConnected,
     networkConnected,
-    fetchingAccounts,
+    fetchingAccount,
     fetchingChain,
     fetchingNetwork,
   } = React.useContext(MetamaskContext);
 
   const walletState = () => {
-    if (fetchingAccounts || fetchingChain || fetchingNetwork) {
+    if (fetchingAccount || fetchingChain || fetchingNetwork) {
       return <></>;
     } else if (!walletConnected) {
       return (
@@ -32,7 +32,7 @@ export const Navbar = () => {
     } else if (walletConnected && !networkConnected) {
       return <div>Binance testnet required</div>;
     } else {
-      return <div>Connected: {accounts[0]}</div>;
+      return <div>Connected: {account}</div>;
     }
   };
   return (

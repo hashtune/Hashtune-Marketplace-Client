@@ -5,18 +5,18 @@ import { useEffect } from "react";
 import * as abi from "../SongOrAlbumNFT.json";
 
 export type MetamaskContext = {
-  accounts: string[];
+  account: string;
   network: string;
   chainId: string;
   walletConnected: boolean;
   networkConnected: boolean;
-  fetchingAccounts: boolean;
+  fetchingAccount: boolean;
   fetchingNetwork: boolean;
   fetchingChain: boolean;
   setNetwork: (data: string) => void;
   setChainId: (id: string) => void;
-  setAccounts: (data: []) => void;
-  getAccounts: () => void;
+  setAccount: (data: string) => void;
+  getAccount: () => void;
   getNetwork: () => void;
   getChainId: () => void;
   setWalletConnected: (data: boolean) => void;
@@ -28,20 +28,20 @@ export type MetamaskContext = {
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
-  accounts: [],
+  account: "",
   network: "",
   chainId: "",
   walletConnected: false,
   networkConnected: false,
-  fetchingAccounts: false,
+  fetchingAccount: false,
   fetchingNetwork: false,
   fetchingChain: false,
-  setAccounts: () => {},
+  setAccount: () => {},
   setNetwork: () => {},
   setChainId: () => {},
   setWalletConnected: () => {},
   setNetworkConnected: () => {},
-  getAccounts: () => {},
+  getAccount: () => {},
   getNetwork: () => {},
   getChainId: () => {},
   getContract: () => ({} as { ethersProvider: any; contract: any }),
@@ -53,10 +53,10 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
 export const MetamaskContextProvider = ({ children }: any) => {
   const { isMetaMaskInstalled } = MetaMaskOnboarding;
 
-  const [accounts, setAccounts] = React.useState([]);
+  const [account, setAccount] = React.useState("");
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
-  const [fetchingAccounts, setFetchingAccounts] = React.useState(false);
+  const [fetchingAccount, setFetchingAccount] = React.useState(false);
   const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
   const [fetchingChain, setFetchingChain] = React.useState(false);
   const [walletConnected, setWalletConnected] = React.useState<any | null>(
@@ -65,17 +65,21 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [networkConnected, setNetworkConnected] = React.useState<any | null>(
     false
   );
-  const getAccounts = async () => {
+  const getAccount = async () => {
     try {
-      setFetchingAccounts(true);
+      setFetchingAccount(true);
       const newAccounts = await (window as any).ethereum.request({
         method: "eth_requestAccounts",
       });
-      setAccounts(newAccounts);
+      if (Array.isArray(newAccounts)) {
+        setAccount(newAccounts[0]);
+      } else {
+        setAccount(newAccounts);
+      }
     } catch (err) {
       console.error("Error on init when getting accounts", err);
     } finally {
-      setFetchingAccounts(false);
+      setFetchingAccount(false);
     }
   };
   const getNetwork = async () => {
@@ -106,12 +110,19 @@ export const MetamaskContextProvider = ({ children }: any) => {
   };
   useEffect(() => {
     if (isMetaMaskInstalled()) {
-      getAccounts();
+      getAccount();
       getChainId();
       getNetwork();
-      (window as any).ethereum.on("accountsChanged", (newAccounts: []) => {
-        setAccounts(newAccounts);
-      });
+      (window as any).ethereum.on(
+        "accountsChanged",
+        (newAccounts: string[] | string) => {
+          if (Array.isArray(newAccounts)) {
+            setAccount(newAccounts[0]);
+          } else {
+            setAccount(newAccounts);
+          }
+        }
+      );
       (window as any).ethereum.on("networkChanged", (newNetwork: string) => {
         setNetwork(newNetwork);
       });
@@ -128,12 +139,12 @@ export const MetamaskContextProvider = ({ children }: any) => {
     }
   }, [network, chainId]);
   useEffect(() => {
-    if (accounts.length > 0) {
+    if (account.length > 0) {
       setWalletConnected(true);
     } else {
       setWalletConnected(false);
     }
-  }, [accounts]);
+  }, [account]);
   const [provider, setProvider] = React.useState<any | null>(null);
   const [contract, setContract] = React.useState<any | null>(null);
 
@@ -176,20 +187,20 @@ export const MetamaskContextProvider = ({ children }: any) => {
   return (
     <MetamaskContext.Provider
       value={{
-        accounts,
+        account,
         network,
         chainId,
         walletConnected,
         networkConnected,
-        fetchingAccounts,
+        fetchingAccount,
         fetchingChain,
         fetchingNetwork,
-        setAccounts,
+        setAccount,
         setNetwork,
         setChainId,
         setWalletConnected,
         setNetworkConnected,
-        getAccounts,
+        getAccount,
         getChainId,
         getNetwork,
         getContract,
