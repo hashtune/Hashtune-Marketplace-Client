@@ -3,9 +3,13 @@ import styles from "./Navbar.module.scss";
 import Image from "next/image";
 import Tab from "./Tab";
 import Search from "./Search";
-import classNames from "classnames";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
+import { MetamaskContext } from "../../../pages/connect-wallet";
+import React from "react";
+
 export const Navbar = () => {
+  const { accounts, walletConnected } = React.useContext(MetamaskContext);
+
   return (
     <nav className={styles["navbar"]} data-cy="navbar">
       <div className={styles["navbar__logo"]} data-cy="navbar-logo">
@@ -25,13 +29,16 @@ export const Navbar = () => {
       </div>
       <Search />
       <Link href="/connect-wallet">
-        <a
-          className={styles["navbar__wallet"] + " btn"}
-          data-cy="navbar-wallet"
-        >
-          {" "}
-          Connect Wallet{" "}
-        </a>
+        {!walletConnected ? (
+          <a
+            className={styles["navbar__wallet"] + " btn"}
+            data-cy="navbar-wallet"
+          >
+            Connect Wallet
+          </a>
+        ) : (
+          <div>Connected: {accounts[0]}</div>
+        )}
       </Link>
       <BurgerMenu />
     </nav>
