@@ -6,8 +6,11 @@ import Search from "./Search";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MetamaskContext } from "../../../hooks/connectWallet";
 import React from "react";
+import ConnectWallet from "./ConnectWallet";
 
 export const Navbar = () => {
+  const [connectVisible, setConnectVisible] = React.useState(false);
+
   const {
     account,
     walletConnected,
@@ -22,12 +25,15 @@ export const Navbar = () => {
       return <></>;
     } else if (!walletConnected) {
       return (
-        <a
-          className={styles["navbar__wallet"] + " btn"}
-          data-cy="navbar-wallet"
-        >
-          Connect Wallet
-        </a>
+        <>
+          <a
+            className={styles["navbar__wallet"] + " btn"}
+            data-cy="navbar-wallet"
+            onClick={() => setConnectVisible(true)}
+          >
+            Connect Wallet
+          </a>
+        </>
       );
     } else if (walletConnected && !networkConnected) {
       return <div>Binance testnet required</div>;
@@ -53,8 +59,12 @@ export const Navbar = () => {
         </div>
       </div>
       <Search />
-      <Link href="/connect-wallet">{walletState()}</Link>
+      {walletState()}
+
       <BurgerMenu />
+      {connectVisible === true && (
+        <ConnectWallet closeModal={setConnectVisible}></ConnectWallet>
+      )}
     </nav>
   );
 };

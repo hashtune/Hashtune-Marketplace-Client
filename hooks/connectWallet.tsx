@@ -139,7 +139,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
     }
   }, [network, chainId]);
   useEffect(() => {
-    if (account.length > 0) {
+    if (account && account.length > 0) {
       setWalletConnected(true);
     } else {
       setWalletConnected(false);
