@@ -4,7 +4,7 @@ import Image from "next/image";
 import Tab from "./Tab";
 import Search from "./Search";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
-import { MetamaskContext } from "../../../pages/connect-wallet";
+import { MetamaskContext } from "../../../hooks/connectWallet";
 import React from "react";
 
 export const Navbar = () => {

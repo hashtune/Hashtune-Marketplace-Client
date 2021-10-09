@@ -1,7 +1,7 @@
 import "../styles/app.scss";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { MetamaskContextProvider } from "./connect-wallet";
+import { MetamaskContextProvider } from "../hooks/connectWallet";
 const GA_TRACKING_ID = "";
 
 function MyApp({ Component, pageProps }: AppProps) {
