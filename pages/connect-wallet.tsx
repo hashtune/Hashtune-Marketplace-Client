@@ -4,7 +4,6 @@ import React from "react";
 import { useEffect } from "react";
 import * as abi from "../SongOrAlbumNFT.json";
 export default function ConnectWallet() {
-  const { isMetaMaskInstalled } = MetaMaskOnboarding;
   // If metamask is installed then window.ethereum is available.
   // Also need to listen for account changes.
   const {
@@ -16,49 +15,8 @@ export default function ConnectWallet() {
     getAccounts,
     getNetwork,
     getChainId,
+    changeTokenPrice,
   } = React.useContext(MetamaskContext);
-  const [provider, setProvider] = React.useState<any | null>(null);
-  const [contract, setContract] = React.useState<any | null>(null);
-
-  const getContract = () => {
-    const ethersProvider = new ethers.providers.Web3Provider(
-      (window as any).ethereum,
-      "any"
-    );
-    // Temporary Binance testnet contract
-    const contract = new ethers.Contract(
-      "0xbdd597aa6ddeabbdba6acd9f864438737e11c8af",
-      abi.abi,
-      ethersProvider.getSigner()
-    );
-    return { ethersProvider, contract };
-  };
-  const changeTokenPrice = async () => {
-    try {
-      const result = await contract.setCurrentPrice(
-        ethers.utils.parseEther("0.005"),
-        1,
-        {
-          gasLimit: 100000,
-        }
-      );
-      console.log({ result });
-    } catch (e) {
-      console.log({ e });
-    }
-  };
-
-  useEffect(() => {
-    if (isMetaMaskInstalled()) {
-      // Call this on the ever page to
-      // get the active account as soon as the page loads
-      // getAccounts();
-      const { ethersProvider, contract } = getContract();
-      console.log(ethersProvider, contract);
-      setProvider(ethersProvider);
-      setContract(contract);
-    }
-  }, []);
 
   return (
     <>
@@ -89,34 +47,48 @@ export default function ConnectWallet() {
 
 export type MetamaskContext = {
   accounts: string[];
+  network: string;
+  chainId: string;
+  walletConnected: boolean;
+  networkConnected: boolean;
+  fetchingAccounts: boolean;
+  fetchingNetwork: boolean;
+  fetchingChain: boolean;
+  setNetwork: (data: string) => void;
+  setChainId: (id: string) => void;
   setAccounts: (data: []) => void;
   getAccounts: () => void;
   getNetwork: () => void;
   getChainId: () => void;
-  network: string;
-  setNetwork: (data: string) => void;
-  chainId: string;
-  setChainId: (id: string) => void;
-  walletConnected: boolean;
-  networkConnected: boolean;
   setWalletConnected: (data: boolean) => void;
   setNetworkConnected: (data: boolean) => void;
+  getContract: () => { ethersProvider: any; contract: any };
+  setProvider: (data: string) => void;
+  setContract: (data: string) => void;
+  changeTokenPrice: (e: any) => void;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
   accounts: [],
-  setAccounts: (data: []) => {},
   network: "",
-  setNetwork: (data: string) => {},
   chainId: "",
-  setChainId: (id: string) => {},
   walletConnected: false,
   networkConnected: false,
-  setWalletConnected: (data: boolean) => {},
-  setNetworkConnected: (data: boolean) => {},
+  fetchingAccounts: false,
+  fetchingNetwork: false,
+  fetchingChain: false,
+  setAccounts: () => {},
+  setNetwork: () => {},
+  setChainId: () => {},
+  setWalletConnected: () => {},
+  setNetworkConnected: () => {},
   getAccounts: () => {},
   getNetwork: () => {},
   getChainId: () => {},
+  getContract: () => ({} as { ethersProvider: any; contract: any }),
+  setProvider: () => {},
+  setContract: () => {},
+  changeTokenPrice: () => {},
 });
 
 export const MetamaskContextProvider = ({ children }: any) => {
@@ -125,6 +97,9 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [accounts, setAccounts] = React.useState([]);
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
+  const [fetchingAccounts, setFetchingAccounts] = React.useState(false);
+  const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
+  const [fetchingChain, setFetchingChain] = React.useState(false);
   const [walletConnected, setWalletConnected] = React.useState<any | null>(
     false
   );
@@ -133,36 +108,48 @@ export const MetamaskContextProvider = ({ children }: any) => {
   );
   const getAccounts = async () => {
     try {
+      setFetchingAccounts(true);
       const newAccounts = await (window as any).ethereum.request({
         method: "eth_requestAccounts",
       });
       setAccounts(newAccounts);
     } catch (err) {
       console.error("Error on init when getting accounts", err);
+    } finally {
+      setFetchingAccounts(false);
     }
   };
   const getNetwork = async () => {
     try {
+      setFetchingNetwork(true);
       const newNetwork = await (window as any).ethereum.request({
         method: "net_version",
       });
       setNetwork(newNetwork);
     } catch (err) {
       console.error("Error on init when getting network ID", err);
+    } finally {
+      setFetchingNetwork(false);
     }
   };
   const getChainId = async () => {
     try {
+      setFetchingChain(true);
       const newChainId = await (window as any).ethereum.request({
         method: "eth_chainId",
       });
       setChainId(newChainId);
     } catch (err) {
       console.error("Error on init when getting chain ID", err);
+    } finally {
+      setFetchingChain(false);
     }
   };
   useEffect(() => {
     if (isMetaMaskInstalled()) {
+      getAccounts();
+      getChainId();
+      getNetwork();
       (window as any).ethereum.on("accountsChanged", (newAccounts: []) => {
         setAccounts(newAccounts);
       });
@@ -188,22 +175,68 @@ export const MetamaskContextProvider = ({ children }: any) => {
       setWalletConnected(false);
     }
   }, [accounts]);
+  const [provider, setProvider] = React.useState<any | null>(null);
+  const [contract, setContract] = React.useState<any | null>(null);
+
+  const getContract = () => {
+    const ethersProvider = new ethers.providers.Web3Provider(
+      (window as any).ethereum,
+      "any"
+    );
+    // Temporary Binance testnet contract
+    const contract = new ethers.Contract(
+      "0xbdd597aa6ddeabbdba6acd9f864438737e11c8af",
+      abi.abi,
+      ethersProvider.getSigner()
+    );
+    return { ethersProvider, contract };
+  };
+  const changeTokenPrice = async () => {
+    try {
+      const result = await contract.setCurrentPrice(
+        ethers.utils.parseEther("0.005"),
+        1,
+        {
+          gasLimit: 100000,
+        }
+      );
+      console.log({ result });
+    } catch (e) {
+      console.log({ e });
+    }
+  };
+  useEffect(() => {
+    if (isMetaMaskInstalled()) {
+      const { ethersProvider, contract } = getContract();
+      console.log(ethersProvider, contract);
+      setProvider(ethersProvider);
+      setContract(contract);
+    }
+  }, []);
+
   return (
     <MetamaskContext.Provider
       value={{
         accounts,
-        setAccounts,
         network,
-        setNetwork,
         chainId,
-        setChainId,
         walletConnected,
-        setWalletConnected,
         networkConnected,
+        fetchingAccounts,
+        fetchingChain,
+        fetchingNetwork,
+        setAccounts,
+        setNetwork,
+        setChainId,
+        setWalletConnected,
         setNetworkConnected,
         getAccounts,
         getChainId,
         getNetwork,
+        getContract,
+        setProvider,
+        setContract,
+        changeTokenPrice,
       }}
     >
       {children}

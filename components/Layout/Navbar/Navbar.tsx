@@ -8,8 +8,33 @@ import { MetamaskContext } from "../../../pages/connect-wallet";
 import React from "react";
 
 export const Navbar = () => {
-  const { accounts, walletConnected } = React.useContext(MetamaskContext);
+  const {
+    accounts,
+    walletConnected,
+    networkConnected,
+    fetchingAccounts,
+    fetchingChain,
+    fetchingNetwork,
+  } = React.useContext(MetamaskContext);
 
+  const walletState = () => {
+    if (fetchingAccounts || fetchingChain || fetchingNetwork) {
+      return <></>;
+    } else if (!walletConnected) {
+      return (
+        <a
+          className={styles["navbar__wallet"] + " btn"}
+          data-cy="navbar-wallet"
+        >
+          Connect Wallet
+        </a>
+      );
+    } else if (walletConnected && !networkConnected) {
+      return <div>Binance testnet required</div>;
+    } else {
+      return <div>Connected: {accounts[0]}</div>;
+    }
+  };
   return (
     <nav className={styles["navbar"]} data-cy="navbar">
       <div className={styles["navbar__logo"]} data-cy="navbar-logo">
@@ -28,18 +53,7 @@ export const Navbar = () => {
         </div>
       </div>
       <Search />
-      <Link href="/connect-wallet">
-        {!walletConnected ? (
-          <a
-            className={styles["navbar__wallet"] + " btn"}
-            data-cy="navbar-wallet"
-          >
-            Connect Wallet
-          </a>
-        ) : (
-          <div>Connected: {accounts[0]}</div>
-        )}
-      </Link>
+      <Link href="/connect-wallet">{walletState()}</Link>
       <BurgerMenu />
     </nav>
   );
