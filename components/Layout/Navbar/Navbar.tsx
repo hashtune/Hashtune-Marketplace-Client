@@ -3,9 +3,44 @@ import styles from "./Navbar.module.scss";
 import Image from "next/image";
 import Tab from "./Tab";
 import Search from "./Search";
-import classNames from "classnames";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
+import { MetamaskContext } from "../../../hooks/connectWallet";
+import React from "react";
+import ConnectWallet from "./ConnectWallet";
+
 export const Navbar = () => {
+  const [connectVisible, setConnectVisible] = React.useState(false);
+
+  const {
+    account,
+    walletConnected,
+    networkConnected,
+    fetchingAccount,
+    fetchingChain,
+    fetchingNetwork,
+  } = React.useContext(MetamaskContext);
+
+  const walletState = () => {
+    if (fetchingAccount || fetchingChain || fetchingNetwork) {
+      return <></>;
+    } else if (!walletConnected) {
+      return (
+        <>
+          <a
+            className={styles["navbar__wallet"] + " btn"}
+            data-cy="navbar-wallet"
+            onClick={() => setConnectVisible(true)}
+          >
+            Connect Wallet
+          </a>
+        </>
+      );
+    } else if (walletConnected && !networkConnected) {
+      return <div>Binance testnet required</div>;
+    } else {
+      return <div>Connected: {account}</div>;
+    }
+  };
   return (
     <nav className={styles["navbar"]} data-cy="navbar">
       <div className={styles["navbar__logo"]} data-cy="navbar-logo">
@@ -24,16 +59,12 @@ export const Navbar = () => {
         </div>
       </div>
       <Search />
-      <Link href="/connect-wallet">
-        <a
-          className={styles["navbar__wallet"] + " btn"}
-          data-cy="navbar-wallet"
-        >
-          {" "}
-          Connect Wallet{" "}
-        </a>
-      </Link>
+      {walletState()}
+
       <BurgerMenu />
+      {connectVisible === true && (
+        <ConnectWallet closeModal={setConnectVisible}></ConnectWallet>
+      )}
     </nav>
   );
 };
