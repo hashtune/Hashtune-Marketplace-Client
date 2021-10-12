@@ -3,7 +3,7 @@ import styles from "./Artwork.module.scss";
 import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
-import client from "../../../apollo-client";
+import client from "../../../lib/apollo-client";
 import {
   queryListAuctions,
   queryListArtworks,

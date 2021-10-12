@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import client from "../apollo-client";
+import client from "../lib/apollo-client";
 import React from "react";
 import Hero from "../components/Home/Hero/Hero";
 import { useRouter } from "next/dist/client/router";

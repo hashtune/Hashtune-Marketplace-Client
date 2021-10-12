@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { GetServerSidePropsContext } from "next";
-import client from "../../apollo-client";
+import client from "../../lib/apollo-client";
 import React from "react";
 import { Navbar } from "../../components/Layout/Navbar/Navbar";
 
@@ -37,7 +37,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 export default function User(singleUser: any) {
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <>
         <h3>{singleUser.singleUser.handle}</h3>
         <h3>{singleUser.singleUser.email}</h3>

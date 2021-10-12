@@ -74,7 +74,7 @@ export default function ConnectWallet<ConnectWalletProps>({ closeModal }: any) {
           {/* <div>active account: {account}</div>
           <div>active network: {network}</div>
           <div>active chain Id: {chainId}</div> */}
-          <p> Don't have a wallet?</p>
+          <p> Don&apos;t have a wallet?</p>
           <p>Check our complete guide on wallets</p>
         </div>
       </div>

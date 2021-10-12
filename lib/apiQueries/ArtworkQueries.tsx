@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import client from "../../apollo-client";
+import client from "../apollo-client";
 import { gql } from "@apollo/client";
 
 export const queryListArtworks = gql`

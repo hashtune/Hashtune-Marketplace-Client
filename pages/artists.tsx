@@ -1,12 +1,19 @@
-import { GetServerSideProps, GetServerSidePropsContext, GetStaticProps } from "next";
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetStaticProps,
+} from "next";
 import { queryCreators } from "../lib/apiQueries/CreatorQueries";
-import client from "../apollo-client";
-import { ListCreatorFields, ListCreatorFieldsProp } from "../lib/interfaces/CreatorInterfaces";
+import client from "../lib/apollo-client";
+import {
+  ListCreatorFields,
+  ListCreatorFieldsProp,
+} from "../lib/interfaces/CreatorInterfaces";
 import React from "react";
 import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 
-export async function getServerSideProps(){
+export async function getServerSideProps() {
   const { data } = await client.query({
     query: queryCreators,
   });
@@ -16,13 +23,16 @@ export async function getServerSideProps(){
       fallback: true,
     },
   };
-};
-export default function Creators({allCreators}: {allCreators: ListCreatorFields[]}){
+}
+export default function Creators({
+  allCreators,
+}: {
+  allCreators: ListCreatorFields[];
+}) {
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <CreatorContainer creators={allCreators} />
     </div>
-  )
+  );
 }
-

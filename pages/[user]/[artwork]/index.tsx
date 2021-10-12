@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { GetServerSidePropsContext } from "next";
-import client from "../../../apollo-client";
+import client from "../../../lib/apollo-client";
 import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -73,7 +73,7 @@ export default function Artwork(singleArtwork: any) {
   }, [singleArtwork]);
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       {isRefreshing ? (
         <h1>LOADING</h1>
       ) : (
