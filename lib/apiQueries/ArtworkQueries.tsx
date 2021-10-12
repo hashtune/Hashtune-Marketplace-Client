@@ -33,68 +33,75 @@ export const queryListArtworks = gql`
 `;
 
 export const queryListArtworksListCreators = gql`
-  query ListArtworksQuery {
+  query queryListArtworksListCreators {
     listArtworks {
-      handle
-      id
-      title
-      image
-      description
-
-      creator {
-        fullName
+      ClientErrorArtworkNotFound {
+        message
+      }
+      ClientErrorArgumentsConflict {
+        message
+        path
+      }
+      ClientErrorUnknown {
+        message
+      }
+      ClientErrorUserUnauthorized {
+        message
+      }
+      Artworks {
         id
         handle
-      }
-      saleType
-      listed
-      auctionWithNoReservePriceAndNoBids
-      reservePrice
-      price
-      Auctions {
-        bids {
-          id
+        title
+        image
+        description
+        listed
+        price
+        reservePrice
+        auctionWithNoReservePriceAndNoBids
+        creator {
+          fullName
+          handle
+          email
+          bio
+          image
+          isApprovedCreator
         }
-      }
-      latestAuction {
-        currentHigh
+        Auctions {
+          bids {
+            id
+          }
+        }
+        latestAuction {
+          bids {
+            id
+          }
+          artworkId
+          liveAt
+          currentHigh
+        }
       }
     }
     listCreators {
-      fullName
-      id
-      image
-    }
-  }
-`;
-export const queryListAuctions = gql`
-  query ExampleQuery(
-    $listArtworksAuction: Boolean
-    $listArtworksListed: Boolean
-  ) {
-    listArtworks(auction: $listArtworksAuction, listed: $listArtworksListed) {
-      id
-      handle
-      title
-      image
-      description
-      listed
-      price
-      reservePrice
-      saleType
-      Auctions {
+      ClientErrorUserNotFound {
+        message
+      }
+      ClientErrorUnknown {
+        message
+      }
+      Users {
         id
-        bids {
-          id
-        }
-      }
-      latestAuction {
-        currentHigh
-      }
-      auctionWithNoReservePriceAndNoBids
-      creator {
         fullName
-        id
+        handle
+        email
+        bio
+        image
+        isApprovedCreator
+        wallet {
+          provider
+          publicKey
+          createdAt
+          updatedAt
+        }
       }
     }
   }
