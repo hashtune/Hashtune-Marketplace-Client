@@ -17,9 +17,10 @@ export async function getServerSideProps() {
   const { data } = await client.query({
     query: queryCreators,
   });
+
   return {
     props: {
-      allCreators: data.listCreators.slice(0, 20),
+      allCreators: data.listCreators.Users.slice(0, 20),
       fallback: true,
     },
   };
