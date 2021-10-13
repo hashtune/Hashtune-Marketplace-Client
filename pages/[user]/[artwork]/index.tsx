@@ -13,28 +13,61 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // console.log({ artwork });
   const singleArtwork = await client.query({
     query: gql`
-      query Query($findArtworkId: String!) {
+      query findArtwork($findArtworkId: String!) {
         findArtwork(id: $findArtworkId) {
-          title
-          handle
-          image
-          creator {
-            fullName
-            id
+          Artworks {
+            kind
             handle
-          }
-          saleType
-          listed
-          auctionWithNoReservePriceAndNoBids
-          reservePrice
-          price
-          Auctions {
-            bids {
+            title
+            image
+            description
+            listed
+            price
+            saleType
+            reservePrice
+            Auctions {
+              currentHigh
+              liveAt
+              artworkId
+              bids {
+                id
+              }
+            }
+            latestAuction {
+              currentHigh
+              bids {
+                id
+              }
+              artworkId
+              liveAt
+            }
+            auctionWithNoReservePriceAndNoBids
+            creator {
               id
+              fullName
+              handle
+              email
+              bio
+              image
+              isApprovedCreator
+              wallet {
+                provider
+                publicKey
+              }
             }
           }
-          latestAuction {
-            currentHigh
+          ClientErrorArtworkNotFound {
+            message
+          }
+          ClientErrorArgumentsConflict {
+            path
+            message
+          }
+          ClientErrorUserUnauthorized {
+            message
+          }
+          ClientErrorUnknown {
+            message
           }
         }
       }
@@ -42,10 +75,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     variables: { findArtworkId: artwork },
   });
   console.log({ singleArtwork });
-  if (singleArtwork.data.findArtwork) {
+  if (singleArtwork.data.findArtwork.Artworks[0]) {
     return {
       props: {
-        artwork: singleArtwork.data.findArtwork,
+        artwork: singleArtwork.data.findArtwork.Artworks[0],
       },
     };
   }

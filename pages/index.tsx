@@ -16,8 +16,8 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: {
-      allArtworks: data.listArtworks.slice(0, 10),
-      allCreators: data.listCreators.slice(0, 20),
+      allArtworks: data.listArtworks.Artworks.slice(0, 10),
+      allCreators: data.listCreators.Users.slice(0, 20),
       fallback: true,
     },
     revalidate: 180,
