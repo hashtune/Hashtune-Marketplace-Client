@@ -55,6 +55,7 @@ export const queryListArtworksListCreators = gql`
         image
         description
         listed
+	saleType
         price
         reservePrice
         auctionWithNoReservePriceAndNoBids
