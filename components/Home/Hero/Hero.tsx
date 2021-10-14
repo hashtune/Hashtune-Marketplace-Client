@@ -48,15 +48,15 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
         <div className={styles["hero__hashtune-details"]} data-cy="song-info">
           <CreatorIconHandle
             image={creatorImage}
-            handle={artwork.creator.handle}
+            handle={"artwork.creator.handle"}
             containerStyle={styles["hero__hashtune-details--user-details"]}
             // imageStyle={styles["hero__hashtune-details--user-details"]}
           />
           <h1 className={styles["hero__hashtune-details--title"]}>
-            {artwork.title}
+            {"artwork.title"}
           </h1>
           <div className={styles["hero__hashtune-details--description"]}>
-            <p>{artwork.description}</p>
+            <p>{"artwork.description"}</p>
           </div>
           <div
             className={styles["hero__hashtune-auction-details"] + " mb-medium"}
