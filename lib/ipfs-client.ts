@@ -13,15 +13,16 @@ export default class IPFSClient {
         const dataJson = JSON.stringify(data);
         try {
             const res = await IPFSClient.ipfsApi.add(dataJson);
+            return res;
         } catch (err) {
             console.error(err);
         }
     }
 
-    async addMusicFile( buffer: Buffer ) {
+    async addMusicFile( file: File ) {
         try {
-            const res = await IPFSClient.ipfsApi.add(buffer);
-            console.log(res.path);
+            const res = await IPFSClient.ipfsApi.add(file);
+            return res;
         } catch (err) {
             console.error(err);
         }

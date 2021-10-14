@@ -2,8 +2,7 @@ import MetaMaskOnboarding from "@metamask/onboarding";
 import { ethers } from "ethers";
 import React from "react";
 import { useEffect } from "react";
-import * as abi from "../SongOrAlbumNFT.json";
-
+import { HastuneMarketPlaceABI } from "../utils/ABI/HashtuneMarketplaceABI";
 export type MetamaskContext = {
   account: string;
   network: string;
@@ -156,7 +155,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
     // Temporary Binance testnet contract
     const contract = new ethers.Contract(
       "0xbdd597aa6ddeabbdba6acd9f864438737e11c8af",
-      abi.abi,
+      HastuneMarketPlaceABI,
       ethersProvider.getSigner()
     );
     return { ethersProvider, contract };
