@@ -49,8 +49,8 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   };
 }
 
-// const profilePicture = `/dist/images/mock/users/${randomMockMedia(12)}.png`;
-const profilePicture = `/dist/images/mock/users/15.png`;
+const profilePicture = `/dist/images/mock/users/${randomMockMedia(12)}.png`;
+// const profilePicture = `/dist/images/mock/users/15.png`;
 const coverImage = `/dist/cover.png`;
 
 export default function User(singleUser: any) {
@@ -69,7 +69,7 @@ export default function User(singleUser: any) {
           </div>
         </div>
 
-        <div className="container">
+        <div className="container_relative">
           <div className={styles["user-profile-details"]}>
             <div className={styles["user-profile-details__picture"]}>
               <Image src={profilePicture} width="180" height="180" alt="" />
@@ -100,6 +100,56 @@ export default function User(singleUser: any) {
                   @{singleUser.singleUser.handle}
                 </p>
               </div>
+            </div>
+            <a
+              href={`/${singleUser.singleUser.handle}/edit-profile`}
+              className={styles["user-profile-details--edit-button"] + " btn"}
+            >
+              Edit Profile
+            </a>
+          </div>
+
+          <div className={styles["user-profile-content"]}>
+            <aside className={styles["user-profile-content__sidebar"]}>
+              <div className={styles["user-profile-content__sidebar-section"]}>
+                <h3>Bio</h3>
+                {singleUser.singleUser.bio}
+              </div>
+              <div className={styles["user-profile-content__sidebar-section"]}>
+                <h3>Links</h3>
+                <div
+                  className={
+                    styles["user-profile-content__sidebar-section__socials"]
+                  }
+                >
+                  <a href="">
+                    <svg>
+                      <use xlinkHref="dist/icons/sprite.svg#hashtune-globe"></use>
+                    </svg>
+                  </a>
+                  <a href="">
+                    <svg>
+                      <use xlinkHref="dist/icons/sprite.svg#hashtune-twitter"></use>
+                    </svg>
+                  </a>
+                  <a href="">
+                    <svg>
+                      <use xlinkHref="dist/icons/sprite.svg#hashtune-instagram"></use>
+                    </svg>
+                  </a>
+                  <a href="">
+                    <svg>
+                      <use xlinkHref="dist/icons/sprite.svg#hashtune-youtube"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </aside>
+            <div className={styles["user-profile-content__artworks"]}>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint
+              necessitatibus excepturi quae modi saepe, a veniam iste sed nihil
+              beatae numquam sit aperiam? Dolor vero quas adipisci ducimus id
+              optio!
             </div>
           </div>
         </div>
