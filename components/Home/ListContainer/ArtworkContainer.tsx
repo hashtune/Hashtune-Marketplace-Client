@@ -4,10 +4,7 @@ import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 import client from "../../../lib/apollo-client";
-import {
-  queryListAuctions,
-  queryListArtworks,
-} from "../../../lib/apiQueries/ArtworkQueries";
+import { queryListArtworksListCreators } from "../../../lib/apiQueries/ArtworkQueries";
 import SortDropDown from "./SortDropdown";
 
 const ArtworkContainer = (props: ListArtworksFieldsProp) => {
@@ -16,7 +13,7 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
 
   const getAuctions = async () => {
     const res = await client.query({
-      query: queryListAuctions,
+      query: queryListArtworksListCreators,
       variables: { listArtworksAuction: true, listArtworksListed: true },
     });
     setArtworks(res.data.listArtworks);
@@ -24,7 +21,7 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
 
   const getBuyNow = async () => {
     const res = await client.query({
-      query: queryListAuctions,
+      query: queryListArtworksListCreators,
       variables: { listArtworksAuction: false, listArtworksListed: true },
     });
     setArtworks(res.data.listArtworks);
@@ -32,9 +29,9 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
 
   const getAllHashtunes = async () => {
     const res = await client.query({
-      query: queryListArtworks,
+      query: queryListArtworksListCreators,
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   useEffect(() => {
