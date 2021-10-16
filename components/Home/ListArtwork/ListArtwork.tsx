@@ -11,18 +11,17 @@ const ListArtwork = (props: ListArtworkFieldsProp) => {
   const artwork = props.artwork;
   const coverImage = `/dist/images/mock/artworks/${randomMockMedia(16)}.png`;
   return (
-    <div className="artworks__artwork_data">
-      <div className={styles["artworks__artwork_data--image-container"]}>
+    <div className={styles["artwork"]}>
+      <div>
         <Image
           alt="list cover image"
           src={coverImage}
           width={368}
           height={368}
-          className={styles["artworks__artwork_data--image"]}
         />
       </div>
-      <div className={styles["artworks__artwork_data--content"]}>
-        <div className={styles["artwork__title-creator"]}>
+      <div className={styles["artwork__content"]}>
+        <div className={styles["artwork__content--title-name"]}>
           <h3>{artwork.title}</h3>
           <p>{artwork.creator.fullName}</p>
         </div>
