@@ -4,12 +4,13 @@ import Countdown from "../Hero/Countdown";
 
 const Price = (props: ListArtworkFieldsProp) => {
   const artwork = props.artwork;
+
   if (!artwork.listed) {
     return <div data-cy="not-listed-price"></div>;
   } else if (artwork.saleType === "fixed") {
     return (
       <div className="sales-type-badge">
-        <h3>Buy for s{artwork.price} BNB</h3>
+        <h3>Buy for {artwork.price} BNB</h3>
       </div>
     );
   } else if (artwork.auctionWithNoReservePriceAndNoBids) {
