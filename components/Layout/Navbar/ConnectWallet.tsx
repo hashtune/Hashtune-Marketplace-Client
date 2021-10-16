@@ -33,73 +33,128 @@ const ConnectWallet = (props: ConnectWalletProps) => {
     showModal();
     props.toggleModal(!props.isActive);
   };
-  // const div : HTMLDivElement = <div></div>
+
+  const [isAuthenticatingMM, setAuthenticatingMM] = useState(false);
+  const [isAuthenticatingWC, setAuthenticatingWC] = useState(false);
+  const iconButtonOne: React.ReactNode = (
+    <IconButton
+      title={"Metamask"}
+      onClick={() => {
+        getAccount();
+        getNetwork();
+        getChainId();
+        setAuthenticatingMM(!isAuthenticatingMM);
+      }}
+      walletConnected={walletConnected}
+      isAuthenticating={isAuthenticatingMM}
+      class={styles["buttons__btn--two"]}
+    />
+  );
+  const iconButtonTwo: React.ReactNode = (
+    <IconButton
+      title={"WalletConnect"}
+      onClick={() => {
+        getAccount();
+        getNetwork();
+        getChainId();
+        setAuthenticatingWC(!isAuthenticatingWC);
+      }}
+      walletConnected={walletConnected}
+      isAuthenticating={isAuthenticatingWC}
+      class={styles["buttons__btn--two"]}
+    />
+  );
+  const connectingText = (walletName: string) => {
+    return (
+      <a className={styles["inActiveText"]}>
+        Confirm by signing in to authenticate with your {walletName} Wallet …
+      </a>
+    );
+  };
+
+  const wrongNetwork: React.RefObject<HTMLParagraphElement> = useRef(null);
+  const footer: React.RefObject<HTMLDivElement> = useRef(null);
+
+  const toggleWrongNetworkAndFooter = () => {
+    wrongNetwork.current?.classList.toggle(
+      styles["buttons__wrong-network--invisible"]
+    );
+    footer.current?.classList.toggle(styles["body__footer--invisible"]);
+  };
+
+  const toggleAuthenticatingMM = () => {
+    if (isAuthenticatingMM) {
+      setButtonOne(iconButtonOne);
+      setButtonTwo(connectingText("Metamask"));
+    } else {
+      setButtonOne(iconButtonOne);
+      setButtonTwo(iconButtonTwo);
+    }
+  };
+  useEffect(() => {
+    toggleAuthenticatingMM();
+    toggleWrongNetworkAndFooter();
+  }, [isAuthenticatingMM]);
+
+  useEffect(() => {
+    toggleAuthenticatingWC();
+    toggleWrongNetworkAndFooter();
+  }, [isAuthenticatingWC]);
+
+  const toggleAuthenticatingWC = () => {
+    if (isAuthenticatingWC) {
+      setButtonOne(iconButtonTwo);
+      setButtonTwo(connectingText("WalletConnect"));
+    } else {
+      setButtonOne(iconButtonOne);
+      setButtonTwo(iconButtonTwo);
+    }
+  };
+
+  const [buttonOne, setButtonOne] = useState(iconButtonOne);
+  const [buttonTwo, setButtonTwo] = useState(iconButtonTwo);
 
   return (
     <div>
-      <div className={styles["connectWallet"]}>
-        <div className={styles["card"]}>
-          <div className={styles["header"]}>
-            <div
-              className={styles["header__close"]}
-              onClick={() => handleClick()}
-            >
-              <div className={styles["header__close--up"]}></div>
-              <div className={styles["header__close--down"]}></div>
-            </div>
-            <a className={styles["title"]}>Connect Wallet</a>
-            <div className={styles["right"]}></div>
+      <div className={styles["connect-card"]}>
+        <div className={styles["header"]}>
+          <div
+            className={styles["header__close"]}
+            onClick={() => handleClick()}
+          >
+            <div className={styles["header__close--up"]}></div>
+            <div className={styles["header__close--down"]}></div>
           </div>
-
-          <div className={styles["cardBody"]}>
-            <p className={styles["policy"]}>
-              By connecting your wallet, you agree to our{" "}
-              <b>Terms of Service</b> and <b>Privacy Policy</b>
+          <a className={styles["header__title"]}>Connect Wallet</a>
+        </div>
+        <p className={styles["policy"]}>
+          By connecting your wallet, you agree to our <b>Terms of Service</b>{" "}
+          and <b>Privacy Policy</b>
+        </p>
+        <div className={styles["body"]}>
+          <div className={styles["body__buttons"]}>
+            {account ? (
+              <>{account}</>
+            ) : (
+              <div className={styles["buttons"]}>
+                {buttonOne}
+                {buttonTwo}
+              </div>
+            )}
+            <p ref={wrongNetwork} className={styles["buttons__wrong-network"]}>
+              {networkConnected
+                ? ""
+                : "You need to connect to the binance test network"}
             </p>
-            <div className={styles["buttons__wrapper"]}>
-              {account ? (
-                <>{account}</>
-              ) : (
-                <div className={styles["buttons"]}>
-                  <IconButton
-                    icon={"metamask"}
-                    title={"Metamask"}
-                    onClick={() => {
-                      getAccount();
-                      getNetwork();
-                      getChainId();
-                    }}
-                    walletConnected={walletConnected}
-                    class={"buttons__btn--one"}
-                  />
-                  <IconButton
-                    icon={"wallet-connect"}
-                    title={"WalletConnect"}
-                    onClick={() => {
-                      getAccount();
-                      getNetwork();
-                      getChainId();
-                    }}
-                    walletConnected={walletConnected}
-                    class={"buttons__btn--two"}
-                  />
-                </div>
-              )}
-              <p className={styles["wrongNetwork"]}>
-                {networkConnected
-                  ? ""
-                  : "You need to connect to the binance test network"}
-              </p>
-            </div>
-            {/* <div>active account: {account}</div>
+          </div>
+          {/* <div>active account: {account}</div>
           <div>active network: {network}</div>
           <div>active chain Id: {chainId}</div> */}
-            <div className={styles["footer"]}>
-              <p>
-                <b>Don't have a wallet?</b>
-              </p>
-              <p>Check our complete guide on wallets.</p>
-            </div>
+          <div ref={footer} className={styles["body__footer"]}>
+            <p>
+              <b>Don't have a wallet?</b>
+            </p>
+            <p>Check our complete guide on wallets.</p>
           </div>
         </div>
         {/* <button onClick={changeTokenPrice}>change price of existing token</button> */}
