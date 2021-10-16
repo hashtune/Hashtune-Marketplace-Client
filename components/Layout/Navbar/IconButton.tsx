@@ -9,7 +9,6 @@ interface IconButtonProps {
 
   isAuthenticating: boolean;
   class: string;
-  firstLoad: boolean;
 }
 
 export const IconButton = (props: IconButtonProps) => {
