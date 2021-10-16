@@ -1,5 +1,5 @@
 import { GetStaticProps } from "next";
-import client from "../apollo-client";
+import client from "../lib/apollo-client";
 import React from "react";
 import Hero from "../components/Home/Hero/Hero";
 import { useRouter } from "next/dist/client/router";
@@ -16,8 +16,8 @@ export const getStaticProps: GetStaticProps = async () => {
   });
   return {
     props: {
-      allArtworks: data.listArtworks.slice(0, 10),
-      allCreators: data.listCreators.slice(0, 20),
+      allArtworks: data.listArtworks.Artworks.slice(0, 10),
+      allCreators: data.listCreators.Users.slice(0, 20),
       fallback: true,
     },
     revalidate: 180,
