@@ -10,17 +10,6 @@ import { MenuItem } from "./MenuItem";
 
 export const BurgerMenu = () => {
   const [isActive, setIsActive] = useState(false);
-  let els: any;
-
-  useEffect(() => {
-    els = {
-      // navIcon: document.getElementById('js-nav-button'),
-      nav: document.getElementById("js-nav"),
-      overlay: document.getElementById("js-overlay"),
-    };
-  }, [isActive]);
-
-  const overlay = useRef<HTMLDivElement>(null);
 
   const burger = useRef<HTMLButtonElement>(null);
   const burgerCross = () => {
@@ -29,11 +18,14 @@ export const BurgerMenu = () => {
     }
   };
 
+  const overlay: React.RefObject<HTMLDivElement> = useRef(null);
+  const burgerMenu: React.RefObject<HTMLDivElement> = useRef(null);
+
   const toggleMenu = () => {
     burgerCross();
     document.body.classList.toggle(styles["overflow"]);
-    els.overlay?.classList.toggle(styles["site-overlay--visible"]);
-    els.nav?.classList.toggle(styles["nav--visible"]);
+    overlay.current?.classList.toggle("site-overlay--visible");
+    burgerMenu.current?.classList.toggle(styles["nav--visible"]);
   };
 
   const handleClick = () => {
@@ -44,8 +36,6 @@ export const BurgerMenu = () => {
     setIsActive(!isActive);
     toggleMenu();
   };
-
-  const burgerMenu: React.RefObject<HTMLDivElement> = useRef(null);
   const handleOutsideClick = (event: any) => {
     if (
       burgerMenu.current &&
@@ -109,7 +99,7 @@ export const BurgerMenu = () => {
       </nav>
       <div
         ref={overlay}
-        className={styles["site-overlay"]}
+        className={"site-overlay"}
         aria-hidden="true"
         id="js-overlay"
       ></div>
