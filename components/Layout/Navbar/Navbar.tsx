@@ -5,11 +5,13 @@ import Tab from "./Tab";
 import Search from "./Search";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MetamaskContext } from "../../../hooks/connectWallet";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import ConnectWallet from "./ConnectWallet";
 
 export const Navbar = () => {
   const [connectVisible, setConnectVisible] = React.useState(false);
+
+  const overlay: React.RefObject<HTMLDivElement> = useRef(null);
 
   const {
     account,
@@ -41,6 +43,7 @@ export const Navbar = () => {
       return <div>Connected: {account}</div>;
     }
   };
+
   return (
     <nav className={styles["navbar"]} data-cy="navbar">
       <div className={styles["navbar__logo"]} data-cy="navbar-logo">
@@ -60,10 +63,12 @@ export const Navbar = () => {
       </div>
       <Search />
       {walletState()}
-
       <BurgerMenu />
       {connectVisible === true && (
-        <ConnectWallet closeModal={setConnectVisible}></ConnectWallet>
+        <ConnectWallet
+          isActive={connectVisible}
+          toggleModal={setConnectVisible}
+        ></ConnectWallet>
       )}
     </nav>
   );
