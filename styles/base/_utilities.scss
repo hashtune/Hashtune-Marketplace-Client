@@ -47,6 +47,10 @@
   margin: 0 auto;
 }
 
+.container_relative {
+  @extend .container;
+  position: relative;
+}
 section {
   margin: 25rem 0;
   &__title {
