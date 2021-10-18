@@ -131,34 +131,20 @@
   flex: 74% 1;
 }
 .artworks {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   @media screen and (max-width: 768px) {
     margin-top: 20rem;
   }
-  .artworks__container {
-    // grid-template-columns: repeat(4, 1fr);
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+  &__container {
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    display: grid;
+    // gap: 8.5rem;
   }
-  &__artwork {
+  &__item {
     padding: 2rem;
-    flex: 28%;
-    &_data {
-      &--image {
-      }
-      &--image-container {
-      }
-      &--content {
-        display: flex;
-        justify-content: space-between;
-        h3 {
-          font-weight: 700;
-        }
-        p {
-          font-weight: 300;
-          color: #969696;
-        }
-      }
-    }
+    display: flex;
+    justify-content: center;
   }
 }
