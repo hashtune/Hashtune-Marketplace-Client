@@ -5,10 +5,14 @@ import Link from "next/link";
 import styles from "./User.module.scss";
 
 import client from "../../lib/apollo-client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Navbar } from "../../components/Layout/Navbar/Navbar";
 import { randomMockMedia } from "../../utils/index";
 import { CreatorFields } from "../../lib/interfaces/CreatorInterfaces";
+import ListArtwork from "../../components/Home/ListArtwork/ListArtwork";
+import { ListArtworkFields } from "../../lib/interfaces/ArtworkInterfaces";
+import UserFields from "../../lib/interfaces/UserInterface";
+import SortDropDown from "../../components/Home/ListContainer/SortDropdown";
 
 // TODO: Refactor page/query
 
@@ -19,6 +23,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       query Query($handle: String!) {
         findUser(handle: $handle) {
           Users {
+            id
             fullName
             handle
             email
@@ -45,6 +50,54 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
                 currentHigh
                 liveAt
                 artworkId
+              }
+              creator {
+                fullName
+              }
+              Auctions {
+                bids {
+                  id
+                }
+              }
+              auctionWithNoReservePriceAndNoBids
+              latestAuction {
+                bids {
+                  id
+                }
+                currentHigh
+              }
+            }
+            owned {
+              kind
+              handle
+              title
+              id
+              image
+              description
+              listed
+              price
+              reservePrice
+              saleType
+              Auctions {
+                id
+                currentHigh
+                liveAt
+                artworkId
+              }
+              creator {
+                fullName
+              }
+              Auctions {
+                bids {
+                  id
+                }
+              }
+              auctionWithNoReservePriceAndNoBids
+              latestAuction {
+                bids {
+                  id
+                }
+                currentHigh
               }
             }
           }
@@ -73,9 +126,19 @@ const profilePicture = `/dist/images/mock/users/${randomMockMedia(12)}.png`;
 // const profilePicture = `/dist/images/mock/users/15.png`;
 const coverImage = `/dist/cover.png`;
 
-const artworkImage = `/dist/images/mock/artworks/${randomMockMedia(20)}.png`;
+const artworkImage = `/dist/images/mock/artworks/${randomMockMedia(19)}.png`;
 export default function User(singleUser: any) {
-  console.log(singleUser.singleUser.created);
+  const artworkContainer: React.RefObject<HTMLDivElement> = useRef(null);
+
+  const [artworks, setArtworks] = useState(singleUser.singleUser.created);
+  const [tabState, setTabState] = useState("Created");
+  useEffect(() => {
+    if (tabState === "Created") {
+      setArtworks(singleUser.singleUser.created);
+    } else {
+      setArtworks(singleUser.singleUser.owned);
+    }
+  }, [tabState]);
   return (
     <div>
       <Navbar />
@@ -173,85 +236,45 @@ export default function User(singleUser: any) {
                   <div className="tab-nav__indicators">
                     <a
                       className="tab-nav__indicators--element"
-                      // onClick={() => setTabState("All Hashtunes")}
+                      onClick={() => setTabState("Created")}
                     >
                       Created
                     </a>
                     <a
                       className="tab-nav__indicators--element"
-                      // onClick={() => setTabState("Auctions")}
+                      onClick={() => setTabState("Collected")}
                     >
                       Collected
                     </a>
-                    <a
-                      className="tab-nav__indicators--element"
-                      // onClick={() => setTabState("Buy Now")}
-                    ></a>
                   </div>
                   <div className="tab-nav__dropdown">
-                    {/* <SortDropDown /> */}
+                    <SortDropDown />
                   </div>
                 </div>
 
-                <div className={styles["artworks__container"]}>
-                  {singleUser.singleUser.created.length > 0 &&
-                    singleUser.singleUser.created?.map(
-                      (userArtworks: CreatorFields) => (
-                        <div
-                          key={userArtworks.id}
-                          className={styles["artworks__artwork"]}
+                <div
+                  ref={artworkContainer}
+                  className={styles["artworks__container"]}
+                >
+                  {artworks.length > 0 &&
+                    artworks?.map((userArtwork: ListArtworkFields) => (
+                      <div
+                        key={userArtwork.id}
+                        className={styles["artworks__item"]}
+                      >
+                        <Link
+                          href={`/${singleUser.singleUser.handle}/${userArtwork.id}`}
                         >
-                          <Link
-                            href={`/${userArtworks.handle}/${userArtworks.id}`}
-                          >
-                            <a>
-                              <div className="artworks__artwork_data">
-                                <div
-                                  className={
-                                    styles[
-                                      "artworks__artwork_data--image-container"
-                                    ]
-                                  }
-                                >
-                                  <Image
-                                    alt="list cover image"
-                                    src={artworkImage}
-                                    width={280}
-                                    height={280}
-                                    className={
-                                      styles["artworks__artwork_data--image"]
-                                    }
-                                  />
-                                </div>
-                                <div
-                                  className={
-                                    styles["artworks__artwork_data--content"]
-                                  }
-                                >
-                                  <div
-                                    className={
-                                      styles["artworks__artwork_data--content"]
-                                    }
-                                  >
-                                    <div data-cy="artwork-title-creator">
-                                      <h3 data-cy="artwork-title">
-                                        {userArtworks.title}
-                                      </h3>
-                                      <p data-cy="artwork-creator-fullName">
-                                        {userArtworks.fullName}
-                                      </p>
-                                    </div>
-                                    <div className="sales-type-badge">
-                                      <h3>Make an offer</h3>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </a>
-                          </Link>
-                        </div>
-                      )
-                    )}
+                          <a>
+                            <ListArtwork
+                              userPage={true}
+                              imageSize={324}
+                              artwork={userArtwork}
+                            />
+                          </a>
+                        </Link>
+                      </div>
+                    ))}
                 </div>
               </div>
             </div>
