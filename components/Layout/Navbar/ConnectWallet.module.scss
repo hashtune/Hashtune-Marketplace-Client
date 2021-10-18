@@ -36,7 +36,7 @@ $light-black: #1b1b1b;
 }
 
 .connect-card {
-  width: 400px;
+  width: 45rem;
   height: min-content;
   position: fixed;
   top: 50%;
@@ -108,6 +108,7 @@ $light-black: #1b1b1b;
       display: flex;
       flex-direction: column;
       align-items: left;
+      cursor: pointer;
       .buttons {
         display: flex;
         height: 80%;
@@ -115,7 +116,7 @@ $light-black: #1b1b1b;
           &--one {
             @include btn();
             &--active {
-              transform: scale(0.8);
+              transform: scale(1.2);
             }
           }
           &--two {

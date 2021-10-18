@@ -7,7 +7,7 @@ $light-blue: #42a1f5;
 @mixin burger__line() {
   background-color: #fff;
   top: 2px;
-  height: 0.1rem;
+  height: 0.2rem;
   width: 3rem;
   transition: transform 0.2s;
 }
@@ -31,7 +31,7 @@ $light-blue: #42a1f5;
   margin-top: 0.2rem;
   cursor: pointer;
 
-  z-index: 10;
+  z-index: 1;
   svg {
     fill: #fff;
   }
@@ -45,7 +45,7 @@ $light-blue: #42a1f5;
   }
   &--active {
     position: fixed;
-    // top: 4rem;
+    top: 3rem;
     right: 3rem;
     z-index: 10;
     > .burger__line--up {
@@ -55,14 +55,14 @@ $light-blue: #42a1f5;
     > .burger__line--down {
       transform-origin: left center;
       transform: translateY(4px) rotate(-45deg);
-      // margin-top: 1rem;
+      margin-top: 1rem;
     }
   }
 
   &__line {
     &--up {
       @include burger__line();
-      margin-bottom: 12px;
+      margin-bottom: 0.7rem;
     }
     &--down {
       @include burger__line();
@@ -85,6 +85,7 @@ $light-blue: #42a1f5;
   background-color: rgba(0, 0, 0, 0.42);
   position: fixed;
   z-index: 9;
+  width: 40rem;
   top: 0;
   gap: 50px;
   right: 0;
@@ -142,6 +143,7 @@ $light-blue: #42a1f5;
     flex-direction: row;
     justify-content: center;
     gap: 20px;
+    cursor: pointer;
 
     &--linkIcon {
       width: 32.5px;
@@ -192,6 +194,7 @@ $light-blue: #42a1f5;
   &__item {
     transform: translateX(40px);
     transition: all 0.3s ease;
+    cursor: pointer;
     &--wrapper {
       width: 100%;
       border-color: white;
