@@ -10,7 +10,9 @@ const Price = (props: ListArtworkFieldsProp) => {
       <h3>Buy for {artwork.price} BNB</h3>
     ) : artwork.auctionWithNoReservePriceAndNoBids ? (
       <h3>Make an offer</h3>
-    ) : artwork.latestAuction === null || artwork.latestAuction.bids === [] ? (
+    ) : artwork.latestAuction === null ||
+      artwork.latestAuction === undefined ||
+      artwork.latestAuction.bids === [] ? (
       <h3>Bid {artwork.reservePrice} BNB</h3>
     ) : (
       <h3>Bid {artwork.latestAuction.currentHigh} BNB</h3>
