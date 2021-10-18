@@ -61,8 +61,11 @@ export interface ListArtworkFields {
     currentHigh: number;
   };
 }
+
 export interface ListArtworkFieldsProp {
   artwork: ListArtworkFields;
+  imageSize?: number;
+  userPage?: boolean;
 }
 export interface ListArtworksFieldsProp {
   artworks: ListArtworkFields[];

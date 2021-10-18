@@ -78,7 +78,7 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
             <div key={artwork.id} className={styles["artworks__item"]}>
               <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
                 <a>
-                  <ListArtwork artwork={artwork} />
+                  <ListArtwork imageSize={368} artwork={artwork} />
                 </a>
               </Link>
             </div>
