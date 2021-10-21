@@ -16,7 +16,7 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       query: queryListArtworks,
       variables: { listArtworksAuction: true, listArtworksListed: true },
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   const getBuyNow = async () => {
@@ -24,14 +24,14 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       query: queryListArtworks,
       variables: { listArtworksAuction: false, listArtworksListed: true },
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   const getAllHashtunes = async () => {
     const res = await client.query({
       query: queryListArtworks,
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   useEffect(() => {
