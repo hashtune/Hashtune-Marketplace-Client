@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta content="#" name="yandex-verification" />
         <meta content="#" name="google-site-verification" />
         <title>Hashtune</title>
-        <link rel="shortcut icon" type="image/png" href="./favicon.ico" />
+        {/* <link rel="shortcut icon" type="image/png" href="./favicon.ico" />
         <link
           rel="apple-touch-icon"
           sizes="57x57"
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           sizes="180x180"
           href="./favicons/apple-icon-180x180.png"
         />
-        <link href="./manifest.json" rel="manifest" />
+        <link href="./manifest.json" rel="manifest" /> */}
 
         <meta
           name="msapplication-TileImage"
