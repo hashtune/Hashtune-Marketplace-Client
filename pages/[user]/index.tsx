@@ -53,7 +53,7 @@ export default function User(singleUser: any) {
 		} else {
 			setArtworks(singleUser?.owned);
 		}
-	}, [tabState]);
+	}, [tabState, singleUser]);
 	return (
 		<div>
 			<Navbar />
