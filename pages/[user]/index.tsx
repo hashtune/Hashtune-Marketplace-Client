@@ -1,4 +1,3 @@
-import { gql } from '@apollo/client';
 import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,101 +7,17 @@ import client from '../../lib/apollo-client';
 import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from '../../components/Layout/Navbar/Navbar';
 import { randomMockMedia } from '../../utils/index';
-import { CreatorFields } from '../../lib/interfaces/CreatorInterfaces';
 import ListArtwork from '../../components/Home/ListArtwork/ListArtwork';
 import { ListArtworkFields } from '../../lib/interfaces/ArtworkInterfaces';
 import SortDropDown from '../../components/Home/ListContainer/SortDropdown';
+import { queryProfileData } from '../../lib/apiQueries/UserQueries';
 
 // TODO: Refactor page/query
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 	const { user } = ctx.query;
 	const singleUser = await client.query({
-		query: gql`
-			query Query($handle: String!) {
-				findUser(handle: $handle) {
-					Users {
-						id
-						fullName
-						handle
-						email
-						bio
-						image
-						isApprovedCreator
-						wallet {
-							provider
-							publicKey
-						}
-						created {
-							kind
-							handle
-							title
-							id
-							image
-							description
-							listed
-							price
-							reservePrice
-							saleType
-							Auctions {
-								id
-								currentHigh
-								liveAt
-								artworkId
-							}
-							creator {
-								fullName
-							}
-							Auctions {
-								bids {
-									id
-								}
-							}
-							auctionWithNoReservePriceAndNoBids
-							latestAuction {
-								bids {
-									id
-								}
-								currentHigh
-							}
-						}
-						owned {
-							kind
-							handle
-							title
-							id
-							image
-							description
-							listed
-							price
-							reservePrice
-							saleType
-							Auctions {
-								id
-								currentHigh
-								liveAt
-								artworkId
-							}
-							creator {
-								fullName
-							}
-							Auctions {
-								bids {
-									id
-								}
-							}
-							auctionWithNoReservePriceAndNoBids
-							latestAuction {
-								bids {
-									id
-								}
-								currentHigh
-							}
-						}
-					}
-				}
-			}
-		`,
+		query: queryProfileData,
 		variables: { handle: user }
 	});
 
