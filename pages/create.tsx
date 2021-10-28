@@ -5,6 +5,7 @@ import client from "../lib/apollo-client";
 import gql from "graphql-tag";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 import styles from "./Create.module.scss";
+import { checkHandleFree } from "../lib/apiQueries/ArtworkQueries";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // TODO: return the information about the user from metamask
@@ -34,6 +35,8 @@ export default function CreatePage() {
           title
           description
           saleType
+          txHash
+          pending
           creator {
             fullName
           }
@@ -57,17 +60,33 @@ export default function CreatePage() {
         ExternalChainError {
           message
         }
+        ExternalChainErrorStillPending {
+          message
+        }
       }
     }
   `;
   const createNFTSubmit = async () => {
+    const isHandleFree = await client.query({
+      query: checkHandleFree,
+      variables: {
+        handleHandle: "testtttt1123456",
+      },
+    });
+    console.log({ isHandleFree });
+    if (!isHandleFree || isHandleFree.data.handle === false) {
+      console.log(
+        "handle already exists, wont be able to create this NFT in our db"
+      );
+      return false;
+    }
     const txHash = await createNFT();
     console.log({ txHash });
     if (!txHash) throw new Error("");
     // Hardcoding this for now but should come from form
     const input: CreateInputType = {
       txHash: txHash,
-      handle: "NFTREAL2424", // Needs to be unique everytime
+      handle: "testtttt1123456", // Needs to be unique everytime
       title: "NFTREAL111",
       image: "NFTREAL111",
       description: "NFTREAL111",
@@ -78,6 +97,7 @@ export default function CreatePage() {
       saleType: "auction",
       reservePrice: 50,
     };
+
     const res = await client.mutate({
       mutation: createNFTMutation,
       variables: {
