@@ -11,6 +11,10 @@
   z-index: 1;
   color: #fff;
   border-bottom: 0.2rem solid #1b1b1b;
+
+  &__register {
+    justify-content: center !important;
+  }
   & .btn {
     font-size: 0.9rem;
   }
