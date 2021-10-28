@@ -46,7 +46,7 @@ export const Navbar = () => {
     }
   };
 
-  if(router.pathname !== "/register"){
+  if(router.pathname !== "/signup"){
     return (
       <nav className={styles["navbar"]} data-cy="navbar">
         <div className={styles["navbar__logo"]} data-cy="navbar-logo">
