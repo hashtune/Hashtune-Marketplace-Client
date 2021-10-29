@@ -19,26 +19,29 @@ export default function Signup() {
           <div className={styles["register__form"]}>
             <div className="input__group">
               <label htmlFor="">Wallet</label>
-              <input type="text" value="0x0adb6821bae3c60d2262753e90a0953ff" disabled/>
+              <input type="text" className="text_input" value="0x0adb6821bae3c60d2262753e90a0953ff60d22627" disabled/>
             </div>
-            <hr />
+            <hr className={styles["register__divider"]}/>
             <div className="input__group">
               <label htmlFor="">Full Name *</label>
-              <input type="text" placeholder="E.g Humam Abo Alraja"/>
+              <input type="text" className="text_input" placeholder="E.g Humam Abo Alraja"/>
             </div>
             <div className="input__group">
               <label htmlFor="">Username *</label>
-              <input type="text" placeholder="E.g humam"/>
+              <input type="text" className="text_input" placeholder="E.g humam"/>
             </div>
             <div className="input__group">
               <label htmlFor="">E-mail Address *</label>
-              <input type="email" placeholder="E.g humam@hashtune.co"/>
+              <input type="email" className="text_input" placeholder="E.g humam@hashtune.co"/>
             </div>
-            <div className="input__group">
-              <input type="checkbox" name="checkbox" value="check" id="agree" /> I have read and agree to the Terms and Conditions and Privacy Policy
+            <hr className={styles["register__divider"]}/>
+
+            <div className="input__group input__group-checkbox">
+              <input type="checkbox" name="checkbox" className="checkbox_input" value="check" id="accept" /> 
+              <label htmlFor="accept" className="checkbox_mark"> Check here to indicate that you agree to Hashtune’s <a href="">Terms of use</a></label>
             </div>
             
-            <button className="btn">Register</button>
+            <button className={styles["primary_button"] + " primary_button"}>Register</button>
           </div>
         </div>
       </main>
