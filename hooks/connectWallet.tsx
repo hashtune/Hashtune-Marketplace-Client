@@ -4,6 +4,14 @@ import React from "react";
 import { useEffect } from "react";
 import * as abi from "../SongOrAlbumNFT.json";
 
+export type SaleType = "auction" | "fixed";
+export type CreateNFTProps = {
+  saleType: SaleType;
+  price: string;
+  creatorsList: string[];
+  creatorsRoyalties: number[];
+};
+
 export type MetamaskContext = {
   account: string;
   network: string;
@@ -25,7 +33,7 @@ export type MetamaskContext = {
   setProvider: (data: string) => void;
   setContract: (data: string) => void;
   approveArtist: () => void;
-  createNFT: () => Promise<string>;
+  createNFT: (props: CreateNFTProps) => Promise<string>;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
@@ -176,17 +184,17 @@ export const MetamaskContextProvider = ({ children }: any) => {
       console.log({ e });
     }
   };
-  const createNFT = async () => {
+
+  const createNFT = async (props: CreateNFTProps) => {
+    // Should they be able to specify the gas limit?
+    const { saleType, price, creatorsList, creatorsRoyalties } = props;
     try {
       const result = await contract.create(
-        [
-          "0x1Ab754099c55731A994AFB6356F1d129CcAD2375",
-          "0xB11C1e1a4529293362979c99b05Ca97829da634B",
-        ], // test user hashtune (contract deployer - already approved) and test user 4 from chain .env
-        [90, 10],
-        0,
+        creatorsList, // test user hashtune (contract deployer - already approved) and test user 4 from chain .env
+        creatorsRoyalties,
+        saleType === "auction" ? 2 : 1,
         "0x6c00000000000000000000000000000000000000000000000000000000000000",
-        ethers.utils.parseEther("0.005"),
+        ethers.utils.parseEther(price),
         "0x6c00000000000000000000000000000000000000000000000000000000000000",
         "0x6c00000000000000000000000000000000000000000000000000000000000000",
         1,

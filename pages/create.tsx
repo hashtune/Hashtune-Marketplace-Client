@@ -6,7 +6,7 @@ import gql from "graphql-tag";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 import styles from "./Create.module.scss";
 import { checkHandleFree } from "../lib/apiQueries/ArtworkQueries";
-
+import { SaleType } from "../hooks/connectWallet";
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // TODO: return the information about the user from metamask
   return {
@@ -21,7 +21,8 @@ export type CreateInputType = {
   link: string;
   media: any;
   saleType: string;
-  reservePrice: number;
+  reservePrice?: string;
+  salePrice?: string;
   description: string;
   currentOwner: string;
   creator: string;
@@ -30,9 +31,12 @@ export default function CreatePage() {
   const { createNFT } = React.useContext(MetamaskContext);
   const [handle, setHandle] = React.useState<string>("");
   const [handleFree, setHandleFree] = React.useState<boolean>(true);
-  const [title, setTitle] = React.useState<string>("");
-  const [image, setImage] = React.useState<string>("");
-  const [description, setDescription] = React.useState<string>("");
+  const [title, setTitle] = React.useState<string>("default");
+  const [image, setImage] = React.useState<string>("default");
+  const [description, setDescription] = React.useState<string>("default");
+  const [saleType, setSaleType] = React.useState<SaleType>("fixed");
+  const [reservePrice, setReservePrice] = React.useState<string>("0");
+  const [salePrice, setSalePrice] = React.useState<string>("0");
 
   const createNFTMutation = gql`
     mutation Mutation($addArtworkInputType: CreateArtworkInput) {
@@ -73,7 +77,8 @@ export default function CreatePage() {
     }
   `;
   const createNFTSubmit = async () => {
-    // Change this query to validate the user, handle, title, image, description, link, media.
+    // Change this query to validate the user, that the user is approved to create
+    // handle, title, image, description, link, media.
 
     const isHandleFree = await client.query({
       query: checkHandleFree,
@@ -91,7 +96,15 @@ export default function CreatePage() {
     } else {
       setHandleFree(true);
     }
-    const txHash = await createNFT();
+    const txHash = await createNFT({
+      saleType: saleType,
+      price: saleType === "auction" ? reservePrice : salePrice,
+      creatorsList: [
+        "0x1Ab754099c55731A994AFB6356F1d129CcAD2375",
+        "0xB11C1e1a4529293362979c99b05Ca97829da634B",
+      ],
+      creatorsRoyalties: [90, 10],
+    });
     if (!txHash) return;
     const input: CreateInputType = {
       txHash: txHash,
@@ -101,10 +114,12 @@ export default function CreatePage() {
       description,
       link: "a.rt/",
       media: { data: [{ media: "lala", title: "amazingsongTitle" }] },
-      currentOwner: "ckv0qlov100074fw0kn6hev4g",
-      creator: "ckv0qlov100074fw0kn6hev4g",
-      saleType: "auction",
-      reservePrice: 50,
+      currentOwner: "ckvcffk0s0007fxw09dxfjrgz",
+      creator: "ckvcffk0s0007fxw09dxfjrgz",
+      saleType,
+      // Parse these to big int
+      reservePrice: saleType === "auction" ? reservePrice : undefined,
+      salePrice: saleType === "fixed" ? salePrice : undefined,
     };
 
     const res = await client.mutate({
@@ -130,12 +145,26 @@ export default function CreatePage() {
   const descriptionChange = (val: string) => {
     setDescription(val);
   };
+  const typeChange = (val: boolean) => {
+    setSaleType(val ? "auction" : "fixed");
+  };
+  const salePriceChange = (val: string) => {
+    // TODO make sure this doesn not have characters
+    setSalePrice(val);
+  };
+  const reservePriceChange = (val: string) => {
+    // TODO make sure this doesn not have characters
+    setReservePrice(val);
+  };
+
+  const creatorsListChange = (address: string[]) => {};
+  const creatorsRoyaltiesChange = (cuts: number[]) => {};
 
   return (
     <div>
       <Navbar />
       <main>
-        <div>
+        <div className={styles.form}>
           <input
             datatype="text"
             placeholder="my-first-nft"
@@ -159,6 +188,28 @@ export default function CreatePage() {
             onChange={(val) => descriptionChange(val.target.value)}
             defaultValue="default description"
           />
+
+          <label> Auction</label>
+          <input
+            type="checkbox"
+            onChange={(val) => typeChange(val.target.checked)}
+            id="auction"
+            name="auction"
+          />
+          {saleType === "fixed" ? (
+            <input
+              type="number"
+              placeholder="sale price"
+              onChange={(val) => salePriceChange(val.target.value)}
+            />
+          ) : (
+            <input
+              type="number"
+              placeholder="auction reserve price"
+              onChange={(val) => reservePriceChange(val.target.value)}
+            />
+          )}
+
           <button className={styles.button} onClick={() => createNFTSubmit()}>
             CREATE NFT
           </button>
