@@ -1,23 +1,36 @@
+.register__layout {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+   grid-auto-rows: minmax(min-content, max-content);
+ 
+}
 .register__hero {
    width: 100%;
-   height: 55rem;
-   background-color: #090909;
+   // height: 65rem;
+   // background-color: #090909;
    display: flex;
-   align-items: center;
-   justify-content: center;
-   margin-top: -8rem;
+   align-items: flex-start;
+   // justify-content: center;
+   justify-content: flex-start;
+   // margin-top: -11.5rem;
+   margin-top: 5rem;
+   
+   flex-wrap: wrap;
 }
 
 
 .register__form {
    display: flex;
-   position: absolute;
+   // position: absolute;
    flex-direction: column;
-   margin-top: 82rem;
-   width: 43.1rem;
-   background: #141414;
-   padding: 2rem 3.6rem;
-   align-items: center;
+   margin-top: 0; // 82rem
+   // width: 62.1rem;
+   width: 87%;
+   // background: #141414;
+   padding: 2rem 7rem;
+   // align-items: center;
+   align-items: flex-start;
+   justify-content: flex-start;
    .register__divider {
       margin: 2rem 0;
       // margin: 2.4rem 0;
@@ -29,17 +42,28 @@
    .primary_button {
       margin-top: 1rem;
    }
+
+
 }
 
 
 .register__content {
-   text-align: center;
+   // text-align: center;
+   // margin-left: 3rem;
+   padding-bottom: 5rem;
+   border-bottom: 1px solid #1c1c1c;
+   width: 100%;
+
    h2 {
+      margin-left: 5rem;
+
       font-size: 4.5rem;
       // font-size: 3.5rem;
       font-weight: 700;
    }
    p {
+      margin-left: 5rem;
+
       font-size: 1.8rem;
       color: #A8A8A8;
       margin-top: -0.9rem;
