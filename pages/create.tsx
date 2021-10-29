@@ -117,6 +117,7 @@ export default function CreatePage() {
       currentOwner: "ckvcffk0s0007fxw09dxfjrgz",
       creator: "ckvcffk0s0007fxw09dxfjrgz",
       saleType,
+      // Parse these to big int
       reservePrice: saleType === "auction" ? reservePrice : undefined,
       salePrice: saleType === "fixed" ? salePrice : undefined,
     };
