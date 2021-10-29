@@ -8,9 +8,8 @@ import styles from '../styles/pages/Signup.module.scss'
 
 export default function Signup() {
   return (
-    <div className="app">
+    <div className={"app " + styles["register__layout"]}>
       <Navbar />
-      <main>
         <div className={styles["register__hero"]}>
           <div className={styles["register__content"]}>
             <h2>Create an account</h2>
@@ -22,16 +21,18 @@ export default function Signup() {
               <input type="text" className="text_input" value="0x0adb6821bae3c60d2262753e90a0953ff60d22627" disabled/>
             </div>
             <hr className={styles["register__divider"]}/>
+            <div className="group_inputs__group">
             <div className="input__group">
-              <label htmlFor="">Full Name *</label>
+              <label htmlFor="">Full Name </label>
               <input type="text" className="text_input" placeholder="E.g Humam Abo Alraja"/>
             </div>
             <div className="input__group">
-              <label htmlFor="">Username *</label>
+              <label htmlFor="">Username </label>
               <input type="text" className="text_input" placeholder="E.g humam"/>
             </div>
+            </div>
             <div className="input__group">
-              <label htmlFor="">E-mail Address *</label>
+              <label htmlFor="">E-mail Address </label>
               <input type="email" className="text_input" placeholder="E.g humam@hashtune.co"/>
             </div>
             <hr className={styles["register__divider"]}/>
@@ -44,7 +45,6 @@ export default function Signup() {
             <button className={styles["primary_button"] + " primary_button"}>Register</button>
           </div>
         </div>
-      </main>
     </div>
   );
 }
