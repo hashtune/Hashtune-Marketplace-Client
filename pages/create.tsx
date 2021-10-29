@@ -28,6 +28,12 @@ export type CreateInputType = {
 };
 export default function CreatePage() {
   const { createNFT } = React.useContext(MetamaskContext);
+  const [handle, setHandle] = React.useState<string>("");
+  const [handleFree, setHandleFree] = React.useState<boolean>(true);
+  const [title, setTitle] = React.useState<string>("");
+  const [image, setImage] = React.useState<string>("");
+  const [description, setDescription] = React.useState<string>("");
+
   const createNFTMutation = gql`
     mutation Mutation($addArtworkInputType: CreateArtworkInput) {
       addArtwork(InputType: $addArtworkInputType) {
@@ -67,29 +73,32 @@ export default function CreatePage() {
     }
   `;
   const createNFTSubmit = async () => {
+    // Change this query to validate the user, handle, title, image, description, link, media.
+
     const isHandleFree = await client.query({
       query: checkHandleFree,
       variables: {
-        handleHandle: "testtttt1123456",
+        handleHandle: handle,
       },
     });
-    console.log({ isHandleFree });
+
     if (!isHandleFree || isHandleFree.data.handle === false) {
       console.log(
         "handle already exists, wont be able to create this NFT in our db"
       );
+      setHandleFree(false);
       return false;
+    } else {
+      setHandleFree(true);
     }
     const txHash = await createNFT();
-    console.log({ txHash });
-    if (!txHash) throw new Error("");
-    // Hardcoding this for now but should come from form
+    if (!txHash) return;
     const input: CreateInputType = {
       txHash: txHash,
-      handle: "testtttt1123456", // Needs to be unique everytime
-      title: "NFTREAL111",
-      image: "NFTREAL111",
-      description: "NFTREAL111",
+      handle,
+      title,
+      image,
+      description,
       link: "a.rt/",
       media: { data: [{ media: "lala", title: "amazingsongTitle" }] },
       currentOwner: "ckv0qlov100074fw0kn6hev4g",
@@ -109,11 +118,47 @@ export default function CreatePage() {
     console.log({ res }); // If there was an error then artworks will be empty
   };
 
+  const handleChange = (val: string) => {
+    setHandle(val);
+  };
+  const titleChange = (val: string) => {
+    setTitle(val);
+  };
+  const imageChange = (val: string) => {
+    setImage(val);
+  };
+  const descriptionChange = (val: string) => {
+    setDescription(val);
+  };
+
   return (
     <div>
       <Navbar />
       <main>
         <div>
+          <input
+            datatype="text"
+            placeholder="my-first-nft"
+            onChange={(val) => handleChange(val.target.value)}
+          />
+          <input
+            datatype="text"
+            placeholder="title"
+            onChange={(val) => titleChange(val.target.value)}
+            defaultValue="default title"
+          />
+          <input
+            datatype="text"
+            placeholder="image"
+            onChange={(val) => imageChange(val.target.value)}
+            defaultValue="default image link"
+          />
+          <input
+            datatype="text"
+            placeholder="description"
+            onChange={(val) => descriptionChange(val.target.value)}
+            defaultValue="default description"
+          />
           <button className={styles.button} onClick={() => createNFTSubmit()}>
             CREATE NFT
           </button>
