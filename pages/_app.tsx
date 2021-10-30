@@ -3,6 +3,9 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { MetamaskContextProvider } from "../hooks/connectWallet";
 const GA_TRACKING_ID = "";
+import { ApolloProvider } from "@apollo/client";
+import client from "../lib/apollo-client"
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -124,9 +127,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           }}
         />
       </Head>
+    <ApolloProvider client={client}>
       <MetamaskContextProvider>
         <Component {...pageProps} />
       </MetamaskContextProvider>
+      </ApolloProvider>
     </>
   );
 }
