@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import React from "react";
 import { useEffect } from "react";
 import * as abi from "../SongOrAlbumNFT.json";
+const axios = require("axios").default;
 
 export type SaleType = "auction" | "fixed";
 export type CreateNFTProps = {
@@ -21,6 +22,7 @@ export type MetamaskContext = {
   fetchingAccount: boolean;
   fetchingNetwork: boolean;
   fetchingChain: boolean;
+  signedMessage: string;
   setNetwork: (data: string) => void;
   setChainId: (id: string) => void;
   setAccount: (data: string) => void;
@@ -34,12 +36,14 @@ export type MetamaskContext = {
   setContract: (data: string) => void;
   approveArtist: () => void;
   createNFT: (props: CreateNFTProps) => Promise<string>;
+  getSignature: () => void;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
   account: "",
   network: "",
   chainId: "",
+  signedMessage: "",
   walletConnected: false,
   networkConnected: false,
   fetchingAccount: false,
@@ -58,6 +62,7 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
   setContract: () => {},
   approveArtist: () => {},
   createNFT: () => ({} as Promise<string>),
+  getSignature: () => {},
 });
 
 export const MetamaskContextProvider = ({ children }: any) => {
@@ -66,6 +71,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [account, setAccount] = React.useState("");
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
+  const [signedMessage, setSignedMessage] = React.useState("");
   const [fetchingAccount, setFetchingAccount] = React.useState(false);
   const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
   const [fetchingChain, setFetchingChain] = React.useState(false);
@@ -90,6 +96,54 @@ export const MetamaskContextProvider = ({ children }: any) => {
       console.error("Error on init when getting accounts", err);
     } finally {
       setFetchingAccount(false);
+    }
+  };
+  const getSignature = async () => {
+    try {
+      const msgParams = JSON.stringify({
+        domain: {
+          chainId: 0x61,
+          name: "bnctest",
+          verifyingContract: "0xbdd597aa6ddeabbdba6acd9f864438737e11c8af",
+          version: "",
+        },
+        message: {
+          contents: "Please sign so we can generate a jwt for you :)",
+          from: {
+            name: "Hashtune",
+          },
+        },
+        primaryType: "Mail",
+        types: {
+          EIP712Domain: [
+            { name: "name", type: "string" },
+            { name: "version", type: "string" },
+            { name: "chainId", type: "uint256" },
+            { name: "verifyingContract", type: "address" },
+          ],
+          // Not an EIP712Domain definition
+          Group: [
+            { name: "name", type: "string" },
+            { name: "members", type: "Person[]" },
+          ],
+          // Refer to PrimaryType
+          Mail: [{ name: "from", type: "Person" }],
+          Person: [{ name: "name", type: "string" }],
+        },
+      });
+      const signedMessage = await (window as any).web3.currentProvider.sendAsync(
+        {
+          method: "eth_signTypedData_v4",
+          params: [(window as any).ethereum.selectedAddress, msgParams],
+          from: (window as any).ethereum.selectedAddress,
+        },
+        function(err: any, result: any) {
+          if (result) setSignedMessage(result.result);
+          return result;
+        }
+      );
+    } catch (e) {
+      console.log(e);
     }
   };
   const getNetwork = async () => {
@@ -131,6 +185,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
           } else {
             setAccount(newAccounts);
           }
+          getSignature();
         }
       );
       (window as any).ethereum.on("networkChanged", (newNetwork: string) => {
@@ -155,6 +210,22 @@ export const MetamaskContextProvider = ({ children }: any) => {
       setWalletConnected(false);
     }
   }, [account]);
+  useEffect(() => {
+    if (account && signedMessage && signedMessage.length > 0) {
+      // try and generate a new jwt cookie
+      axios
+        .post("http://localhost:5000/login", {
+          signedMessage,
+          publicKey: account,
+        })
+        .then((data: any) => {
+          console.log(data);
+        })
+        .catch((er: any) => {
+          console.log("could not forge token");
+        });
+    }
+  }, [signedMessage]); // should accounts be in the dependencies?
   const [provider, setProvider] = React.useState<any | null>(null);
   const [contract, setContract] = React.useState<any | null>(null);
 
@@ -206,9 +277,10 @@ export const MetamaskContextProvider = ({ children }: any) => {
       console.log({ result });
       return result.hash;
     } catch (e) {
-      console.log({ e });
+      console.log("issue creating nft");
     }
   };
+
   useEffect(() => {
     if (isMetaMaskInstalled()) {
       const { ethersProvider, contract } = getContract();
@@ -229,6 +301,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
         fetchingAccount,
         fetchingChain,
         fetchingNetwork,
+        signedMessage,
         setAccount,
         setNetwork,
         setChainId,
@@ -242,6 +315,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
         setContract,
         approveArtist, // test function
         createNFT,
+        getSignature,
       }}
     >
       {children}

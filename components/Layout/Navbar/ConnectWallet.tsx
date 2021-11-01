@@ -20,7 +20,6 @@ const ConnectWallet = (props: ConnectWalletProps) => {
     getAccount,
     getNetwork,
     getChainId,
-    changeTokenPrice,
   } = React.useContext(MetamaskContext);
   useEffect(() => {
     showModal();
@@ -157,7 +156,6 @@ const ConnectWallet = (props: ConnectWalletProps) => {
             <p>Check our complete guide on wallets.</p>
           </div>
         </div>
-        {/* <button onClick={changeTokenPrice}>change price of existing token</button> */}
       </div>
       <div ref={overlay} className={"site-overlay"}></div>
     </div>
