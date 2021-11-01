@@ -5,7 +5,12 @@
 
 ---
 
+Generating type definition of smart contracts
+---
+Follow these steps to generate new type definitions when smart contract logic changes
 
+- copy/paste smart contract abi to the `./utils/ABI/` directory
+- use `npm run generate-contract-types` to generate type definitions from smart contract abi
 
 
 Setting up Testnet using [MetaMask](https://academy.binance.com/en/articles/connecting-metamask-to-binance-smart-chain)
