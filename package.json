@@ -10,7 +10,8 @@
     "test": "jest",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "prisma:studio": "dotenv -e .env.local prisma studio"
+    "prisma:studio": "dotenv -e .env.local prisma studio",
+    "generate-contract-types": "typechain --target ethers-v5 --out-dir utils/types/hashtune-contract-types 'utils/ABI/*.json'"
   },
   "dependencies": {
     "@apollo/client": "^3.4.12",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@metamask/onboarding": "^1.0.1",
+    "@typechain/ethers-v5": "^8.0.1",
     "@types/react": "17.0.20",
     "cypress": "^8.3.1",
     "eslint": "7.32.0",

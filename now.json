@@ -1,0 +1,5 @@
+{
+   "version": 1,
+   "name": "hashtune-marketplace-client",
+     "exclude": ["feat/*"]
+ }

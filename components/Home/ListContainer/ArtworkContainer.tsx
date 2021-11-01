@@ -4,10 +4,7 @@ import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 import client from "../../../lib/apollo-client";
-import {
-  queryListAuctions,
-  queryListArtworks,
-} from "../../../lib/apiQueries/ArtworkQueries";
+import { queryListArtworks } from "../../../lib/apiQueries/ArtworkQueries";
 import SortDropDown from "./SortDropdown";
 
 const ArtworkContainer = (props: ListArtworksFieldsProp) => {
@@ -16,25 +13,25 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
 
   const getAuctions = async () => {
     const res = await client.query({
-      query: queryListAuctions,
+      query: queryListArtworks,
       variables: { listArtworksAuction: true, listArtworksListed: true },
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   const getBuyNow = async () => {
     const res = await client.query({
-      query: queryListAuctions,
+      query: queryListArtworks,
       variables: { listArtworksAuction: false, listArtworksListed: true },
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   const getAllHashtunes = async () => {
     const res = await client.query({
       query: queryListArtworks,
     });
-    setArtworks(res.data.listArtworks);
+    setArtworks(res.data.listArtworks.Artworks);
   };
 
   useEffect(() => {
@@ -49,28 +46,28 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
 
   return (
     <div className={styles["artworks"] + " container"}>
-      <div className={styles["tab-nav"] + " " + styles["tab-nav__container"]}>
-        <div className={styles["tab-nav__indicators"]}>
+      <div className="tab-nav tab-nav__container">
+        <div className="tab-nav__indicators">
           <a
-            className={styles["tab-nav__indicators--element"]}
+            className="tab-nav__indicators--element"
             onClick={() => setTabState("All Hashtunes")}
           >
             All Hashtunes
           </a>
           <a
-            className={styles["tab-nav__indicators--element"]}
+            className="tab-nav__indicators--element"
             onClick={() => setTabState("Auctions")}
           >
             Auctions
           </a>
           <a
-            className={styles["tab-nav__indicators--element"]}
+            className="tab-nav__indicators--element"
             onClick={() => setTabState("Buy Now")}
           >
             Buy Now
           </a>
         </div>
-        <div className={styles["tab-nav__dropdown"]}>
+        <div className="tab-nav__dropdown">
           <SortDropDown />
         </div>
       </div>
@@ -78,10 +75,10 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       <div className={styles["artworks__container"]}>
         {artworks.length > 0 &&
           artworks?.map((artwork) => (
-            <div key={artwork.id} className={styles["artworks__artwork"]}>
+            <div key={artwork.id} className={styles["artworks__item"]}>
               <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
                 <a>
-                  <ListArtwork artwork={artwork} />
+                  <ListArtwork imageSize={368} artwork={artwork} />
                 </a>
               </Link>
             </div>

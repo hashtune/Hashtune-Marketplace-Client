@@ -4,6 +4,13 @@ export interface CreatorFields {
   handle: string;
   image: string;
   bio: string;
+  created: {
+    handle: string;
+    title: string;
+    saleType: string;
+    image?: string;
+    description: string;
+  };
 }
 export interface CreatorFieldsProp {
   creator: CreatorFields;

@@ -2,31 +2,41 @@ import { GetServerSideProps } from "next";
 import client from "../apollo-client";
 import { gql } from "@apollo/client";
 
+export const checkHandleFree = gql`
+  query Query($handleHandle: String) {
+    handle(handle: $handleHandle)
+  }
+`;
+
 export const queryListArtworks = gql`
-  query ListArtworksQuery {
-    listArtworks {
-      handle
-      id
-      title
-      image
-      description
-      creator {
-        fullName
+  query ListArtworksQuery(
+    $listArtworksListed: Boolean
+    $listArtworksAuction: Boolean
+  ) {
+    listArtworks(listed: $listArtworksListed, auction: $listArtworksAuction) {
+      Artworks {
         id
-        handle
-      }
-      saleType
-      listed
-      auctionWithNoReservePriceAndNoBids
-      reservePrice
-      price
-      Auctions {
-        bids {
+        title
+        image
+        description
+        creator {
+          fullName
           id
+          handle
         }
-      }
-      latestAuction {
-        currentHigh
+        saleType
+        listed
+        auctionWithNoReservePriceAndNoBids
+        reservePrice
+        price
+        Auctions {
+          bids {
+            id
+          }
+        }
+        latestAuction {
+          currentHigh
+        }
       }
     }
   }
@@ -55,7 +65,7 @@ export const queryListArtworksListCreators = gql`
         image
         description
         listed
-	saleType
+        saleType
         price
         reservePrice
         auctionWithNoReservePriceAndNoBids

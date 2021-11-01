@@ -10,7 +10,6 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // console.log(ctx);
   // console.log("GET SERVER SIDE PROPS CALLED");
   const { user, artwork } = ctx.query;
-  // console.log({ artwork });
   const singleArtwork = await client.query({
     query: gql`
       query findArtwork($findArtworkId: String!) {
@@ -74,8 +73,10 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     `,
     variables: { findArtworkId: artwork },
   });
-  console.log({ singleArtwork });
-  if (singleArtwork.data.findArtwork.Artworks[0]) {
+  if (
+    singleArtwork.data.findArtwork.Artworks &&
+    singleArtwork.data.findArtwork.Artworks[0]
+  ) {
     return {
       props: {
         artwork: singleArtwork.data.findArtwork.Artworks[0],
@@ -102,8 +103,9 @@ export default function Artwork(singleArtwork: any) {
   };
 
   React.useEffect(() => {
-    setIsRefreshing(false);
+    if (singleArtwork !== null) setIsRefreshing(false);
   }, [singleArtwork]);
+
   return (
     <div>
       <Navbar />

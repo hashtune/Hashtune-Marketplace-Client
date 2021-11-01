@@ -4,35 +4,19 @@ import Countdown from "../Hero/Countdown";
 
 const Price = (props: ListArtworkFieldsProp) => {
   const artwork = props.artwork;
-  if (!artwork.listed) {
-    return <div data-cy="not-listed-price"></div>;
-  } else if (artwork.saleType === "fixed") {
-    return (
-      <div className="sales-type-badge">
-        <h3>Buy for s{artwork.price} BNB</h3>
-      </div>
+
+  const text =
+    artwork.saleType === "fixed" ? (
+      <h3>Buy for {artwork.price} BNB</h3>
+    ) : artwork.auctionWithNoReservePriceAndNoBids ? (
+      <h3>Make an offer</h3>
+    ) : artwork.latestAuction === null ||
+      artwork.latestAuction === undefined ||
+      artwork.latestAuction.bids === [] ? (
+      <h3>Bid {artwork.reservePrice} BNB</h3>
+    ) : (
+      <h3>Bid {artwork.latestAuction.currentHigh} BNB</h3>
     );
-  } else if (artwork.auctionWithNoReservePriceAndNoBids) {
-    return (
-      <div className="sales-type-badge">
-        <h3>Make an offer</h3>
-      </div>
-    );
-  } else if (
-    artwork.latestAuction === null ||
-    artwork.latestAuction.bids === []
-  ) {
-    return (
-      <div className="sales-type-badge">
-        <h3>Bid {artwork.reservePrice} BNB</h3>
-      </div>
-    );
-  } else {
-    return (
-      <div className="sales-type-badge">
-        <h3>Bid {artwork.latestAuction.currentHigh} BNB</h3>
-      </div>
-    );
-  }
+  return <div className="sales-type-badge">{text}</div>;
 };
 export default Price;

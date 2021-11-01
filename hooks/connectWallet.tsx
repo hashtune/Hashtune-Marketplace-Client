@@ -1,8 +1,17 @@
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { ethers } from "ethers";
+import { ethers, Signer } from "ethers";
 import React from "react";
 import { useEffect } from "react";
-import { HastuneMarketPlaceABI } from "../utils/ABI/HashtuneMarketplaceABI";
+import { SongOrAlbumNFT__factory } from "../utils/types/hashtune-contract-types";
+
+export type SaleType = "auction" | "fixed";
+export type CreateNFTProps = {
+  saleType: SaleType;
+  price: string;
+  creatorsList: string[];
+  creatorsRoyalties: number[];
+};
+
 export type MetamaskContext = {
   account: string;
   network: string;
@@ -23,7 +32,9 @@ export type MetamaskContext = {
   getContract: () => { ethersProvider: any; contract: any };
   setProvider: (data: string) => void;
   setContract: (data: string) => void;
-  changeTokenPrice: (e: any) => void;
+  approveArtist: () => void;
+  createNFT: (props: CreateNFTProps) => Promise<string>;
+  signer: Signer;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
@@ -46,7 +57,9 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
   getContract: () => ({} as { ethersProvider: any; contract: any }),
   setProvider: () => {},
   setContract: () => {},
-  changeTokenPrice: () => {},
+  approveArtist: () => {},
+  createNFT: () => ({} as Promise<string>),
+  signer: {} as Signer,
 });
 
 export const MetamaskContextProvider = ({ children }: any) => {
@@ -146,6 +159,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
   }, [account]);
   const [provider, setProvider] = React.useState<any | null>(null);
   const [contract, setContract] = React.useState<any | null>(null);
+  const [signer, setSigner] = React.useState<Signer>({} as Signer);
 
   const getContract = () => {
     const ethersProvider = new ethers.providers.Web3Provider(
@@ -154,17 +168,16 @@ export const MetamaskContextProvider = ({ children }: any) => {
     );
     // Temporary Binance testnet contract
     const contract = new ethers.Contract(
-      "0xbdd597aa6ddeabbdba6acd9f864438737e11c8af",
-      HastuneMarketPlaceABI,
+      "0xAf266B3D45B11D8B3f28dc2427745c3970B0368C",
+      SongOrAlbumNFT__factory.abi,
       ethersProvider.getSigner()
     );
     return { ethersProvider, contract };
   };
-  const changeTokenPrice = async () => {
+  const approveArtist = async () => {
     try {
-      const result = await contract.setCurrentPrice(
-        ethers.utils.parseEther("0.005"),
-        1,
+      const result = await contract.approveArtist(
+        "0x1Ab754099c55731A994AFB6356F1d129CcAD2375",
         {
           gasLimit: 100000,
         }
@@ -174,9 +187,35 @@ export const MetamaskContextProvider = ({ children }: any) => {
       console.log({ e });
     }
   };
+  
+  const createNFT = async (props: CreateNFTProps) => {
+    // Should they be able to specify the gas limit?
+    const { saleType, price, creatorsList, creatorsRoyalties } = props;
+    try {
+      const result = await contract.create(
+        creatorsList, // test user hashtune (contract deployer - already approved) and test user 4 from chain .env
+        creatorsRoyalties,
+        saleType === "auction" ? 2 : 1,
+        "0x6c00000000000000000000000000000000000000000000000000000000000000",
+        ethers.utils.parseEther(price),
+        "0x6c00000000000000000000000000000000000000000000000000000000000000",
+        "0x6c00000000000000000000000000000000000000000000000000000000000000",
+        1,
+        1,
+        {
+          gasLimit: 1000000,
+        }
+      );
+      console.log({ result });
+      return result.hash;
+    } catch (e) {
+      console.log({ e });
+    }
+  };
   useEffect(() => {
     if (isMetaMaskInstalled()) {
       const { ethersProvider, contract } = getContract();
+      setSigner(new ethers.providers.Web3Provider((window as any).ethereum, "any").getSigner())
       console.log(ethersProvider, contract);
       setProvider(ethersProvider);
       setContract(contract);
@@ -205,7 +244,9 @@ export const MetamaskContextProvider = ({ children }: any) => {
         getContract,
         setProvider,
         setContract,
-        changeTokenPrice,
+        approveArtist, // test function
+        createNFT,
+        signer
       }}
     >
       {children}
