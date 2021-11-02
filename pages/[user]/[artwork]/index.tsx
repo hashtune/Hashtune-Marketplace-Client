@@ -153,16 +153,27 @@ export default function Artwork(singleArtwork: any) {
                   <div className="dot_divider"></div>
                   <a className={styles["hero__hashtune-details--creator-name"]}>
                     {artwork.creator.fullName}
-                  </a>
-                  <a href="">
-                    <svg>
-                      <use xlinkHref="dist/icons/sprite.svg#hashtune-logic-pro-x"></use>
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg>
-                      <use xlinkHref="dist/icons/sprite.svg#hashtune-wave-file"></use>
-                    </svg>
+                    <a href="">
+                      <div
+                        className={styles["hero__hashtune-details--tooltip-1"]}
+                      >
+                        Logic Pro X<span></span>
+                      </div>
+                      <svg>
+                        <use xlinkHref="../dist/icons/sprite.svg#hashtune-logic-pro-x"></use>
+                      </svg>
+                    </a>
+                    <a href="">
+                      <div
+                        className={styles["hero__hashtune-details--tooltip-2"]}
+                      >
+                        Wave File
+                        <span></span>
+                      </div>
+                      <svg>
+                        <use xlinkHref="../dist/icons/sprite.svg#hashtune-wave-file"></use>
+                      </svg>
+                    </a>
                   </a>
                 </div>
                 <div className={styles["hero__hashtune-details--description"]}>
@@ -247,22 +258,22 @@ export default function Artwork(singleArtwork: any) {
                 <div className={styles["artwork__creator--socials"]}>
                   <a href="">
                     <svg>
-                      <use xlinkHref="dist/icons/sprite.svg#hashtune-globe"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-globe"></use>
                     </svg>
                   </a>
                   <a href="">
                     <svg>
-                      <use xlinkHref="dist/icons/sprite.svg#hashtune-twitter"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-twitter"></use>
                     </svg>
                   </a>
                   <a href="">
                     <svg>
-                      <use xlinkHref="dist/icons/sprite.svg#hashtune-instagram"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-instagram"></use>
                     </svg>
                   </a>
                   <a href="">
                     <svg>
-                      <use xlinkHref="dist/icons/sprite.svg#hashtune-youtube"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-youtube"></use>
                     </svg>
                   </a>
                 </div>
