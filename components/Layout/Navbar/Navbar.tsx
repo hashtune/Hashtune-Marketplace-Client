@@ -30,7 +30,6 @@ export const Navbar = () => {
         <>
           <a
             className={styles["navbar__wallet"] + " btn"}
-            data-cy="navbar-wallet"
             onClick={() => setConnectVisible(true)}
           >
             Connect Wallet
@@ -45,19 +44,19 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className={styles["navbar"]} data-cy="navbar">
-      <div className={styles["navbar__logo"]} data-cy="navbar-logo">
+    <nav className={styles["navbar"]}>
+      <div className={styles["navbar__logo"]}>
         <Link href="/">
           <a>
             <Image src="/images/logo.svg" width={133} height={32} />
           </a>
         </Link>
       </div>
-      <div className={styles["navbar__menu"]} data-cy="navbar-menu">
-        <div className={styles["navbar__menu-item"]} data-cy="navbar-menu-item">
+      <div className={styles["navbar__menu"]}>
+        <div className={styles["navbar__menu-item"]}>
           <Tab href="/" title="Songs" icon="record" />
         </div>
-        <div className={styles["navbar__menu-item"]} data-cy="navbar-menu-item">
+        <div className={styles["navbar__menu-item"]}>
           <Tab href="/artists" title="Artists" icon="music-note" />
         </div>
       </div>
