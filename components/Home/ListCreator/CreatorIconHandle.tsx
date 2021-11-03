@@ -1,28 +1,28 @@
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import styles from "../Hero/Hero.module.scss";
 
 interface CreatorImageHandleProps {
   image: string;
   handle: string;
-  containerStyle: string;
-  // imageStyle: string;
 }
 
 const CreatorImageHandle = (props: CreatorImageHandleProps) => {
   return (
-    <div className={props.containerStyle}>
-      <Image
-        alt={"creator image"}
-        // className={props.imageStyle}
-        src={props.image}
-        width={30}
-        height={30}
-      />
-      <Link href={`/${props.handle}`}>
+    <Link href={`/${props.handle}`}>
+      <div className={styles["hero__hashtune-details--user-details"]}>
+        <div>
+          <Image
+            alt={"creator image"}
+            src={props.image}
+            width={30}
+            height={30}
+          />
+        </div>
         <a>@{props.handle}</a>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 export default CreatorImageHandle;

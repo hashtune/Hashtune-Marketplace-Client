@@ -4,6 +4,7 @@ import styles from "./Hero.module.scss";
 
 interface CountdownProps {
   liveAt?: Date;
+  style: string;
 }
 const timeFormat: string = "DD MM YYYY hh:mm:ss";
 
@@ -44,21 +45,23 @@ const Countdown = (props: CountdownProps) => {
   }, []);
 
   return (
-    <div className={styles["countdown_card"] + " countdown_card"}>
-      <h3 className="hero_card_title">Auction ending in</h3>
-      <div className={styles["countdown_card-data"] + " countdown_card-data"}>
-        <div className="countdown_card-data--item">
-          <h3 className="countdown_card-data--item-title">6 </h3>
+    <div className={styles["countdown_card"] + " " + props.style}>
+      <h3 className={props.style + "-title"}>Auction ending in</h3>
+      <div
+        className={styles["countdown_card-data"] + " " + props.style + "-data"}
+      >
+        <div className={props.style + "-data--item"}>
+          <h3 className={props.style + "-data--item-title"}>6 </h3>
           {/* className="h3>6 </h-title" {hours} */}
           <span>hours</span>
         </div>
-        <div className="countdown_card-data--item">
-          <h3 className="countdown_card-data--item-title">29</h3>{" "}
+        <div className={props.style + "-data--item"}>
+          <h3 className={props.style + "-data--item-title"}>29</h3>{" "}
           {/* {minutes} */}
           <span>minutes</span>
         </div>
-        <div className="countdown_card-data--item">
-          <h3 className="countdown_card-data--item-title">24</h3>{" "}
+        <div className={props.style + "-data--item"}>
+          <h3 className={props.style + "-data--item-title"}>24</h3>{" "}
           {/* {seconds} */}
           <span>seconds</span>
         </div>
