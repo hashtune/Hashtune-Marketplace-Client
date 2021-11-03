@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { MetamaskContext } from "../hooks/connectWallet";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import client from "../lib/apollo-client";
 import gql from "graphql-tag";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
@@ -9,6 +9,11 @@ import { checkHandleFree } from "../lib/apiQueries/ArtworkQueries";
 import { SaleType } from "../hooks/connectWallet";
 import { useContract } from "../hooks/useContract";
 import { SongOrAlbumNFT } from "../utils/types/hashtune-contract-types";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import { ethers, providers } from "ethers";
+import { CustomContext } from "../hooks/useCustomProvider";
+import { useWeb3Wallet } from "../hooks/useWeb3Wallet";
+
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // TODO: return the information about the user from metamask
   return {
@@ -30,7 +35,9 @@ export type CreateInputType = {
   creator: string;
 };
 export default function CreatePage() {
-  const { createNFT, signer } = React.useContext(MetamaskContext);
+  const { createNFT } = React.useContext(MetamaskContext);
+  const { signer, connectWallet, disconnectWallet } = React.useContext(CustomContext);
+  //const { signer, connectWallet, disconnectWallet } = useWeb3Wallet();
   const contract: SongOrAlbumNFT = useContract().connect(signer);
   const [handle, setHandle] = React.useState<string>("");
   const [handleFree, setHandleFree] = React.useState<boolean>(true);
@@ -80,10 +87,10 @@ export default function CreatePage() {
     }
   `;
 
-  const createNFTTransaction = async() => {
-    const a = await contract.deployed();
-    console.log(a);
+  const createNFTTransaction = async () => {
+    console.log(await signer.getAddress(), contract.create());
   }
+
   const createNFTSubmit = async () => {
     // Change this query to validate the user, that the user is approved to create
     // handle, title, image, description, link, media.
@@ -221,6 +228,8 @@ export default function CreatePage() {
           <button className={styles.button} onClick={() => createNFTTransaction()}>
             CREATE NFT
           </button>
+          <button className={styles.button} onClick={connectWallet}>Connect</button>
+          <button className={styles.button} onClick={disconnectWallet}>Disconnect</button>
         </div>
       </main>
     </div>
