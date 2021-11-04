@@ -1,4 +1,7 @@
+import router from "next/router";
 import React, { useEffect, useRef, useState } from "react";
+import { findUserByPublicKeyQuery } from "../../../graphql/findUserByPublicKey";
+import { useQueryQuery } from "../../../graphql/generated/apolloComponents";
 import { MetamaskContext } from "../../../hooks/connectWallet";
 import styles from "./ConnectWallet.module.scss";
 import { IconButton } from "./IconButton";
@@ -20,7 +23,6 @@ const ConnectWallet = (props: ConnectWalletProps) => {
     getAccount,
     getNetwork,
     getChainId,
-    changeTokenPrice,
   } = React.useContext(MetamaskContext);
   useEffect(() => {
     showModal();
@@ -108,8 +110,30 @@ const ConnectWallet = (props: ConnectWalletProps) => {
     } else {
       setButtonOne(iconButtonOne);
       setButtonTwo(iconButtonTwo);
+
     }
   };
+
+  // TODO figure out why this component mounts like 50 times and runs this query
+  const { data, loading, error } = useQueryQuery({
+    variables: {
+       findUserPublicKey: account
+    },
+  });
+
+  useEffect(() => {
+    if (account) {
+      // make query and decide to redirect to signup page or not based on public key
+      console.log({data})
+      if (data?.findUser.Users && data?.findUser.Users?.length > 0) {
+        // user was found so don't do anything
+        console.log("USER ALREADY EXISTS")
+      } else if (data && data?.findUser.ClientErrorUserNotFound) {
+        console.log("USER NON EXISTING")
+        router.replace("/signup")
+      }
+    }
+  }, [data?.findUser.Users])
 
   const [buttonOne, setButtonOne] = useState(iconButtonOne);
   const [buttonTwo, setButtonTwo] = useState(iconButtonTwo);
@@ -157,7 +181,6 @@ const ConnectWallet = (props: ConnectWalletProps) => {
             <p>Check our complete guide on wallets.</p>
           </div>
         </div>
-        {/* <button onClick={changeTokenPrice}>change price of existing token</button> */}
       </div>
       <div ref={overlay} className={"site-overlay"}></div>
     </div>
