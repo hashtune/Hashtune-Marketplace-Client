@@ -49,8 +49,6 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
           <CreatorIconHandle
             image={creatorImage}
             handle={artwork.creator.handle}
-            containerStyle={styles["hero__hashtune-details--user-details"]}
-            // imageStyle={styles["hero__hashtune-details--user-details"]}
           />
           <h1 className={styles["hero__hashtune-details--title"]}>
             {artwork.title}
@@ -72,7 +70,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
             ></div>
             {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
             {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
-            <Countdown liveAt={date} />
+            <Countdown liveAt={date} style="countdown_card" />
           </div>
           <BidButton />
         </div>

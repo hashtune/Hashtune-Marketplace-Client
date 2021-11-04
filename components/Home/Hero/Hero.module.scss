@@ -63,21 +63,28 @@
     }
     &--user-details {
       display: flex;
-      padding: 2rem;
-      background-color: #040404;
+      padding: 0.5rem 0.8rem;
+      background-color: #222;
       height: 5.3;
-      width: 15.3rem;
-      justify-content: center;
-      align-content: center;
+      width: max-content;
+      align-items: center;
       cursor: pointer;
+      border: 1px transparent;
+      border-radius: 10px;
+      gap: 10px;
       &:hover {
         opacity: 0.5;
+      }
+      div {
+        flex: 1 1 100%;
+        display: flex;
       }
       img {
         border-radius: 50%;
       }
       a {
-        margin-left: 0.6rem;
+        color: #fff;
+        font-size: 1.5rem;
       }
     }
     &--title {
