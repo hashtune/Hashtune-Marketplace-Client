@@ -2,6 +2,12 @@ import { GetServerSideProps } from "next";
 import client from "../apollo-client";
 import { gql } from "@apollo/client";
 
+export const checkHandleFree = gql`
+  query Query($handleHandle: String) {
+    handle(handle: $handleHandle)
+  }
+`;
+
 export const queryListArtworks = gql`
   query ListArtworksQuery(
     $listArtworksListed: Boolean

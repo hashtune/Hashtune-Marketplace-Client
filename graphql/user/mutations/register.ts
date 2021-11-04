@@ -15,6 +15,15 @@ export const registerUserMutation = gql`
           provider
         }
       }
+      ClientErrorHandleAlreadyExists {
+        message
+      }
+      ClientErrorInvalidHandle {
+        message
+      }
+      ClientErrorUnknown {
+        message
+      }
     }
   }
 `;

@@ -24,7 +24,6 @@ export const Navbar = () => {
   } = React.useContext(MetamaskContext);
 
   const walletState = () => {
-
     if (fetchingAccount || fetchingChain || fetchingNetwork) {
       return <></>;
     } else if (!walletConnected) {
@@ -32,7 +31,6 @@ export const Navbar = () => {
         <>
           <a
             className={styles["navbar__wallet"] + " btn"}
-            data-cy="navbar-wallet"
             onClick={() => setConnectVisible(true)}
           >
             Connect Wallet
@@ -46,7 +44,7 @@ export const Navbar = () => {
     }
   };
 
-  if(router.pathname !== "/signup"){
+  if (router.pathname !== "/signup") {
     return (
       <nav className={styles["navbar"]} data-cy="navbar">
         <div className={styles["navbar__logo"]} data-cy="navbar-logo">
@@ -57,10 +55,16 @@ export const Navbar = () => {
           </Link>
         </div>
         <div className={styles["navbar__menu"]} data-cy="navbar-menu">
-          <div className={styles["navbar__menu-item"]} data-cy="navbar-menu-item">
+          <div
+            className={styles["navbar__menu-item"]}
+            data-cy="navbar-menu-item"
+          >
             <Tab href="/" title="Songs" icon="record" />
           </div>
-          <div className={styles["navbar__menu-item"]} data-cy="navbar-menu-item">
+          <div
+            className={styles["navbar__menu-item"]}
+            data-cy="navbar-menu-item"
+          >
             <Tab href="/artists" title="Artists" icon="music-note" />
           </div>
         </div>
@@ -71,13 +75,21 @@ export const Navbar = () => {
           <ConnectWallet
             isActive={connectVisible}
             toggleModal={setConnectVisible}
-          ></ConnectWallet>
+          />
         )}
       </nav>
     );
   } else {
     return (
-      <nav className={styles["navbar"] + " " + styles["register__navbar"] + " flex-content-center"} data-cy="navbar">
+      <nav
+        className={
+          styles["navbar"] +
+          " " +
+          styles["register__navbar"] +
+          " flex-content-center"
+        }
+        data-cy="navbar"
+      >
         <div className={styles["navbar__logo"]} data-cy="navbar-logo">
           <Link href="/">
             <a>
@@ -95,6 +107,6 @@ export const Navbar = () => {
           ></ConnectWallet>
         )} */}
       </nav>
-    )
+    );
   }
 };

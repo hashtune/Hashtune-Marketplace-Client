@@ -5,6 +5,7 @@ import { Formik, Field } from "formik";
 import { InputField } from "../components/Fields/InputField";
 import { useRegisterUserMutation } from "../graphql/generated/apolloComponents";
 import { MetamaskContext } from "../hooks/connectWallet";
+import router from "next/router";
 
 export default function Signup() {
   const [
@@ -36,7 +37,7 @@ export default function Signup() {
         </div>
         <Formik
           onSubmit={async (_data) => {
-            await registerUserMutation({
+           const res = await registerUserMutation({
               variables: {
                 inputType: {
                   email: _data.email,
@@ -49,10 +50,9 @@ export default function Signup() {
                 },
               },
             });
-            // TODO on success redirect to profile page
-            // TODO make sure the back end validates that the required fields are NOT empty strings
-            // TODO make sure the back end returns a proper error instead of throwing what it currently does
-            // when the unique fields are invalid
+            if (res.data?.registerUser.Users && res.data?.registerUser.Users.length > 0) {
+              router.replace(`/${res.data.registerUser.Users[0].handle}`)
+            }
           }}
           initialValues={{
             email: "",
@@ -127,7 +127,10 @@ export default function Signup() {
                   <a href="">Terms of use</a>
                 </label>
               </div>
-              {registerError && <p>{registerError.message}</p>}
+              {data?.registerUser.ClientErrorHandleAlreadyExists && <p>{data?.registerUser.ClientErrorHandleAlreadyExists.message}</p>}
+              {data?.registerUser.ClientErrorInvalidHandle && <p>{data?.registerUser.ClientErrorInvalidHandle.message}</p>}
+              {data?.registerUser.ClientErrorUnknown && <p>{data?.registerUser.ClientErrorUnknown.message}</p>}
+
               <button
                 type="submit"
                 className={styles["primary_button"] + " primary_button"}
