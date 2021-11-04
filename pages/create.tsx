@@ -9,10 +9,8 @@ import { checkHandleFree } from "../lib/apiQueries/ArtworkQueries";
 import { SaleType } from "../hooks/connectWallet";
 import { useContract } from "../hooks/useContract";
 import { SongOrAlbumNFT } from "../utils/types/hashtune-contract-types";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers, providers } from "ethers";
-import { CustomContext } from "../hooks/useCustomProvider";
-import { useWeb3Wallet } from "../hooks/useWeb3Wallet";
+import { WalletContext } from "../context/WalletContext";
+import { Signer } from "@ethersproject/abstract-signer";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // TODO: return the information about the user from metamask
@@ -36,9 +34,8 @@ export type CreateInputType = {
 };
 export default function CreatePage() {
   const { createNFT } = React.useContext(MetamaskContext);
-  const { signer, connectWallet, disconnectWallet } = React.useContext(CustomContext);
-  //const { signer, connectWallet, disconnectWallet } = useWeb3Wallet();
-  const contract: SongOrAlbumNFT = useContract().connect(signer);
+  const { signer, disconnectMobileWallet, connectExtensionWallet } = React.useContext(WalletContext);
+  const contract: SongOrAlbumNFT | null = useContract(signer);
   const [handle, setHandle] = React.useState<string>("");
   const [handleFree, setHandleFree] = React.useState<boolean>(true);
   const [title, setTitle] = React.useState<string>("default");
@@ -88,7 +85,7 @@ export default function CreatePage() {
   `;
 
   const createNFTTransaction = async () => {
-    console.log(await signer.getAddress(), contract.create());
+    console.log((window as any).ethereum.isConnected());
   }
 
   const createNFTSubmit = async () => {
@@ -228,8 +225,8 @@ export default function CreatePage() {
           <button className={styles.button} onClick={() => createNFTTransaction()}>
             CREATE NFT
           </button>
-          <button className={styles.button} onClick={connectWallet}>Connect</button>
-          <button className={styles.button} onClick={disconnectWallet}>Disconnect</button>
+          <button className={styles.button} onClick={connectExtensionWallet}>Connect</button>
+          <button className={styles.button} onClick={disconnectMobileWallet}>Disconnect</button>
         </div>
       </main>
     </div>

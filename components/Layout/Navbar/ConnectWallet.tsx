@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { MetamaskContext } from "../../../hooks/connectWallet";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { WalletContext } from "../../../context/WalletContext";
 import styles from "./ConnectWallet.module.scss";
 import { IconButton } from "./IconButton";
 
@@ -11,17 +11,8 @@ export type ConnectWalletProps = {
 const ConnectWallet = (props: ConnectWalletProps) => {
   // If metamask is installed then window.ethereum is available.
   // Also need to listen for account changes.
-  const {
-    account,
-    network,
-    chainId,
-    walletConnected,
-    networkConnected,
-    getAccount,
-    getNetwork,
-    getChainId,
-    changeTokenPrice,
-  } = React.useContext(MetamaskContext);
+
+  const { connectMobileWallet, connectExtensionWallet } = useContext(WalletContext);
   useEffect(() => {
     showModal();
   }, [close]);
@@ -40,13 +31,11 @@ const ConnectWallet = (props: ConnectWalletProps) => {
     <IconButton
       title={"Metamask"}
       onClick={() => {
-        getAccount();
-        getNetwork();
-        getChainId();
-        setAuthenticatingMM(!isAuthenticatingMM);
+        connectExtensionWallet();
+        setAuthenticatingMM(true);
       }}
-      walletConnected={walletConnected}
-      isAuthenticating={isAuthenticatingMM}
+      walletConnected={false}
+      isAuthenticating={false}
       class={styles["buttons__btn--two"]}
     />
   );
@@ -54,13 +43,11 @@ const ConnectWallet = (props: ConnectWalletProps) => {
     <IconButton
       title={"WalletConnect"}
       onClick={() => {
-        getAccount();
-        getNetwork();
-        getChainId();
-        setAuthenticatingWC(!isAuthenticatingWC);
+        connectMobileWallet();
+        setAuthenticatingWC(true);
       }}
-      walletConnected={walletConnected}
-      isAuthenticating={isAuthenticatingWC}
+      walletConnected={false}
+      isAuthenticating={false}
       class={styles["buttons__btn--two"]}
     />
   );
@@ -133,18 +120,12 @@ const ConnectWallet = (props: ConnectWalletProps) => {
         </p>
         <div className={styles["body"]}>
           <div className={styles["body__buttons"]}>
-            {account ? (
-              <>{account}</>
-            ) : (
-              <div className={styles["buttons"]}>
-                {buttonOne}
-                {buttonTwo}
-              </div>
-            )}
+            <div className={styles["buttons"]}>
+              {buttonOne}
+              {buttonTwo}
+            </div>
             <p ref={wrongNetwork} className={styles["buttons__wrong-network"]}>
-              {networkConnected
-                ? ""
-                : "You need to connect to the binance test network"}
+              You need to connect to the binance test network
             </p>
           </div>
           {/* <div>active account: {account}</div>

@@ -2,7 +2,7 @@ import "../styles/app.scss";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { MetamaskContextProvider } from "../hooks/connectWallet";
-import { CustomContextProvider } from "../hooks/useCustomProvider";
+import { WalletContextProvider } from "../context/WalletContext";
 const GA_TRACKING_ID = "";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -125,9 +125,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           }}
         />
       </Head>
-      <CustomContextProvider>
+      <WalletContextProvider>
         <Component {...pageProps} />
-      </CustomContextProvider>
+      </WalletContextProvider>
     </>
   );
 }
