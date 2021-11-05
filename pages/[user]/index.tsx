@@ -8,9 +8,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from '../../components/Layout/Navbar/Navbar';
 import { randomMockMedia } from '../../utils/index';
 import ListArtwork from '../../components/Home/ListArtwork/ListArtwork';
-import { ListArtworkFields } from '../../lib/interfaces/ArtworkInterfaces';
 import SortDropDown from '../../components/Home/ListContainer/SortDropdown';
 import { queryProfileData } from '../../graphql/user/queries/profileData';
+import { Artwork, User } from '../../graphql/generated/apolloComponents';
 
 // TODO: Refactor page/query
 
@@ -42,19 +42,19 @@ const profilePicture = `/dist/images/mock/users/${randomMockMedia(12)}.png`;
 const coverImage = `/dist/cover.png`;
 
 const artworkImage = `/dist/images/mock/artworks/${randomMockMedia(19)}.png`;
-export default function User(singleUser: any) {
+export default function Profile(singleUser: any) {
 	// TODO: If this user does not exist then return 404
 	const artworkContainer: React.RefObject<HTMLDivElement> = useRef(null);
-	singleUser = singleUser.singleUser;
+	const creator : User = singleUser.singleUser;
 	const [artworks, setArtworks] = useState(singleUser?.created);
 	const [tabState, setTabState] = useState('Created');
 	useEffect(() => {
 		if (tabState === 'Created') {
-			setArtworks(singleUser?.created);
+			setArtworks(creator.created);
 		} else {
-			setArtworks(singleUser?.owned);
+			setArtworks(creator.owned);
 		}
-	}, [tabState, singleUser]);
+	}, [tabState, creator]);
 	return (
 		<div>
 			<Navbar />
@@ -78,8 +78,8 @@ export default function User(singleUser: any) {
 						<div className={styles['user-profile-details__content']}>
 							<div className={styles['user-profile-details__content-primary']}>
 								<div className={styles['user-profile-details__content--name-status']}>
-									{singleUser?.fullName}
-									{singleUser?.isApprovedCreator ? (
+									{creator.fullName}
+									{creator.isApprovedCreator ? (
 										<div className={styles['user-profile-details__content-status']}>
 											<svg fill="#fff">
 												<use xlinkHref="dist/icons/sprite.svg#hashtune-check"></use>
@@ -89,11 +89,11 @@ export default function User(singleUser: any) {
 										<></>
 									)}
 								</div>
-								<p className={styles['user-profile-details__content--username']}>@{singleUser?.handle}</p>
+								<p className={styles['user-profile-details__content--username']}>@{creator.handle}</p>
 							</div>
 						</div>
 						<a
-							href={`/${singleUser?.handle}/edit-profile`}
+							href={`/${creator.handle}/edit-profile`}
 							className={styles['user-profile-details--edit-button'] + ' btn'}
 						>
 							Edit Profile
@@ -104,7 +104,7 @@ export default function User(singleUser: any) {
 						<aside className={styles['user-profile-content__sidebar']}>
 							<div className={styles['user-profile-content__sidebar-section']}>
 								<h3>Bio</h3>
-								{singleUser?.bio}
+								{creator.bio}
 							</div>
 							<div className={styles['user-profile-content__sidebar-section']}>
 								<h3>Links</h3>
@@ -151,9 +151,9 @@ export default function User(singleUser: any) {
 								<div ref={artworkContainer} className={styles['artworks__container']}>
 									{artworks &&
 										artworks.length > 0 &&
-										artworks?.map((userArtwork: ListArtworkFields) => (
+										artworks?.map((userArtwork: Artwork) => (
 											<div key={userArtwork.id} className={styles['artworks__item']}>
-												<Link href={`/${singleUser?.handle}/${userArtwork.id}`}>
+												<Link href={`/${creator.handle}/${userArtwork.id}`}>
 													<a>
 														<ListArtwork userPage={true} imageSize={280} artwork={userArtwork} />
 													</a>

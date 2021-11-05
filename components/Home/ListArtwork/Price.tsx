@@ -1,8 +1,8 @@
 import React from "react";
-import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import { ListArtworkProps } from "../../../lib/interfaces/ArtworkInterfaces";
 import Countdown from "../Hero/Countdown";
 
-const Price = (props: ListArtworkFieldsProp) => {
+const Price = (props: ListArtworkProps) => {
   const artwork = props.artwork;
 
   const text =

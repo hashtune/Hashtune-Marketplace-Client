@@ -1,18 +1,15 @@
-import { gql } from "@apollo/client";
 import { GetServerSidePropsContext } from "next";
 import client from "../../../lib/apollo-client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { Navbar } from "../../../components/Layout/Navbar/Navbar";
 import styles from "./SingleArtwork.module.scss";
 import Image from "next/dist/client/image";
 import CreatorIconHandle from "../../../components/Home/ListCreator/CreatorIconHandle";
-import ConvertedPrice from "../../../components/Home/Hero/ConvertedPrice";
-import Price from "../../../components/Home/ListArtwork/Price";
 import Countdown from "../../../components/Home/Hero/Countdown";
 import ArtworkHistoryItem from "../../../components/Artwork/ArtworkHistoryItem";
 import { artworkQuery } from "../../../graphql/artwork/queries/artwork";
+import { Artwork } from "../../../graphql/generated/apolloComponents";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // console.log(ctx);
@@ -39,10 +36,9 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   };
 }
 
-export default function Artwork(singleArtwork: any) {
+export default function Artwork(artwork: Artwork) {
   const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const artwork = singleArtwork.artwork;
 
   // Call this function whenever you want to
   // refresh props!
@@ -53,11 +49,10 @@ export default function Artwork(singleArtwork: any) {
   };
 
   useEffect(() => {
-    if (singleArtwork !== null) setIsRefreshing(false);
-  }, [singleArtwork]);
-
-  // let cover = artwork.image || "/";
-  let coverImage = "/images/artwork.png"; //Should be from database but that breaks it
+    if (artwork !== null) setIsRefreshing(false);
+  }, [artwork]);
+  // Should be from database but that breaks it
+  let coverImage = "/images/artwork.png";
 
   let date = new Date("30 10 2021 13:00:00");
   let creatorImage = "/dist/images/mock/users/26.png";

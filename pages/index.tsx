@@ -2,13 +2,10 @@ import { GetStaticProps } from "next";
 import client from "../lib/apollo-client";
 import React from "react";
 import Hero from "../components/Home/Hero/Hero";
-import { useRouter } from "next/dist/client/router";
 import ArtworkContainer from "../components/Home/ListContainer/ArtworkContainer";
-import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
-import { ListCreatorFields } from "../lib/interfaces/CreatorInterfaces";
-import { ArtworkFields } from "../lib/interfaces/ArtworkInterfaces";
 import { listArtworkQuery } from "../graphql/artwork/queries/listArtworks";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
+import { Artwork } from "../graphql/generated/apolloComponents";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({
@@ -23,11 +20,7 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default function Home({
-  allArtworks,
-}: {
-  allArtworks: ArtworkFields[];
-}) {
+export default function Home({ allArtworks }: { allArtworks: Artwork[] }) {
   return (
     <div className="app">
       <Navbar />

@@ -15,11 +15,7 @@ const CreatorContainer = (props: ListCreatorFieldsProp) => {
       <ul>
         {props.creators.map((creator) => (
           <li key={creator.id}>
-            <ListCreator
-              fullName={creator.fullName}
-              image={creatorImage}
-              id={creator.id}
-            />
+            <ListCreator user={creator} />
           </li>
         ))}
       </ul>

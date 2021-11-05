@@ -6,7 +6,7 @@ import Countdown from "./Countdown";
 import { GetServerSideProps } from "next";
 import styles from "./Hero.module.scss";
 import ConvertedPrice, { Coin } from "./ConvertedPrice";
-import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import { ListArtworkProps } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   };
 };
 
-const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
+const Hero = (props: ListArtworkProps, coin: Coin) => {
   let artwork = props.artwork;
   // let cover = artwork.image || "/";
   let coverImage = "/images/artwork.png"; //Should be from database but that breaks it
@@ -45,7 +45,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
             <Image alt="cover image" src={playButton} width={60} height={60} />
           </div>
         </div>
-        <div className={styles["hero__hashtune-details"]} data-cy="song-info">
+        <div className={styles["hero__hashtune-details"]}>
           <CreatorIconHandle
             image={creatorImage}
             handle={artwork.creator.handle}
@@ -65,9 +65,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
               coin={coin}
               style={styles["price_card"]}
             />
-            <div
-              className={styles["vertical_divider"] + " vertical_divider"}
-            ></div>
+            <div className={styles["vertical_divider"] + " vertical_divider"} />
             {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
             {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
             <Countdown liveAt={date} style="countdown_card" />

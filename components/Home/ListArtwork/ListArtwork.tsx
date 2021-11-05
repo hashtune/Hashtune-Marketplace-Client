@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import Price from "./Price";
-import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
+import { ListArtworkProps } from "../../../lib/interfaces/ArtworkInterfaces";
 import { randomMockMedia } from "../../../utils/index";
 import styles from "../ListContainer/Artwork.module.scss";
 
-const ListArtwork = (props: ListArtworkFieldsProp) => {
+const ListArtwork = (props: ListArtworkProps) => {
   const artwork = props.artwork;
   const coverImage = `/dist/images/mock/artworks/${randomMockMedia(16)}.png`;
   const artworkContent: React.RefObject<HTMLDivElement> = useRef(null);

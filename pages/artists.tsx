@@ -1,17 +1,9 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetStaticProps,
-} from "next";
 import { listCreatorsQuery } from "../graphql/user/queries/listApprovedCreators";
 import client from "../lib/apollo-client";
-import {
-  ListCreatorFields,
-  ListCreatorFieldsProp,
-} from "../lib/interfaces/CreatorInterfaces";
 import React from "react";
 import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
+import { User } from "../graphql/generated/apolloComponents";
 
 export async function getServerSideProps() {
   const { data } = await client.query({
@@ -25,11 +17,7 @@ export async function getServerSideProps() {
     },
   };
 }
-export default function Creators({
-  allCreators,
-}: {
-  allCreators: ListCreatorFields[];
-}) {
+export default function Creators({ allCreators }: { allCreators: User[] }) {
   return (
     <div>
       <Navbar />
