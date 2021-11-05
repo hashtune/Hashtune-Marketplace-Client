@@ -1,26 +1,8 @@
-export interface CreatorFields {
-  fullName: string;
-  id: string;
-  handle: string;
-  image: string;
-  bio: string;
-  created: {
-    handle: string;
-    title: string;
-    saleType: string;
-    image?: string;
-    description: string;
-  };
-}
-export interface CreatorFieldsProp {
-  creator: CreatorFields;
-}
+import { User } from "../../graphql/generated/apolloComponents";
 export interface ListCreatorFields {
-  fullName: string;
-  id: string;
-  image: string;
+  user: User;
 }
 
 export interface ListCreatorFieldsProp {
-  creators: ListCreatorFields[];
+  creators: User[];
 }
