@@ -10,7 +10,7 @@ import { randomMockMedia } from '../../utils/index';
 import ListArtwork from '../../components/Home/ListArtwork/ListArtwork';
 import { ListArtworkFields } from '../../lib/interfaces/ArtworkInterfaces';
 import SortDropDown from '../../components/Home/ListContainer/SortDropdown';
-import { queryProfileData } from '../../lib/apiQueries/UserQueries';
+import { queryProfileData } from '../../graphql/user/queries/profileData';
 
 // TODO: Refactor page/query
 

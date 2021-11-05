@@ -12,72 +12,14 @@ import ConvertedPrice from "../../../components/Home/Hero/ConvertedPrice";
 import Price from "../../../components/Home/ListArtwork/Price";
 import Countdown from "../../../components/Home/Hero/Countdown";
 import ArtworkHistoryItem from "../../../components/Artwork/ArtworkHistoryItem";
+import { artworkQuery } from "../../../graphql/artwork/queries/artwork";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // console.log(ctx);
   // console.log("GET SERVER SIDE PROPS CALLED");
   const { user, artwork } = ctx.query;
   const singleArtwork = await client.query({
-    query: gql`
-      query findArtwork($findArtworkId: String!) {
-        findArtwork(id: $findArtworkId) {
-          Artworks {
-            kind
-            handle
-            title
-            image
-            description
-            listed
-            price
-            saleType
-            reservePrice
-            Auctions {
-              currentHigh
-              liveAt
-              artworkId
-              bids {
-                id
-              }
-            }
-            latestAuction {
-              currentHigh
-              bids {
-                id
-              }
-              artworkId
-              liveAt
-            }
-            auctionWithNoReservePriceAndNoBids
-            creator {
-              id
-              fullName
-              handle
-              email
-              bio
-              image
-              isApprovedCreator
-              wallet {
-                provider
-                publicKey
-              }
-            }
-          }
-          ClientErrorArtworkNotFound {
-            message
-          }
-          ClientErrorArgumentsConflict {
-            path
-            message
-          }
-          ClientErrorUserUnauthorized {
-            message
-          }
-          ClientErrorUnknown {
-            message
-          }
-        }
-      }
-    `,
+    query: artworkQuery,
     variables: { findArtworkId: artwork },
   });
   if (
@@ -150,17 +92,17 @@ export default function Artwork(singleArtwork: any) {
                   <a className={styles["hero__hashtune-details--title"]}>
                     {artwork.title}
                   </a>
-                  <div className="dot_divider"></div>
+                  <div className="dot_divider" />
                   <a className={styles["hero__hashtune-details--creator-name"]}>
                     {artwork.creator.fullName}
                     <a href="">
                       <div
                         className={styles["hero__hashtune-details--tooltip-1"]}
                       >
-                        Logic Pro X<span></span>
+                        Logic Pro X<span />
                       </div>
                       <svg>
-                        <use xlinkHref="../dist/icons/sprite.svg#hashtune-logic-pro-x"></use>
+                        <use xlinkHref="../dist/icons/sprite.svg#hashtune-logic-pro-x" />
                       </svg>
                     </a>
                     <a href="">
@@ -168,10 +110,10 @@ export default function Artwork(singleArtwork: any) {
                         className={styles["hero__hashtune-details--tooltip-2"]}
                       >
                         Wave File
-                        <span></span>
+                        <span />
                       </div>
                       <svg>
-                        <use xlinkHref="../dist/icons/sprite.svg#hashtune-wave-file"></use>
+                        <use xlinkHref="../dist/icons/sprite.svg#hashtune-wave-file" />
                       </svg>
                     </a>
                   </a>
@@ -209,7 +151,7 @@ export default function Artwork(singleArtwork: any) {
                   className={
                     styles["hero__hashtune-auction-details"] + " mb-medium"
                   }
-                ></div>
+                />
               </div>
             </div>
           </div>
@@ -241,7 +183,7 @@ export default function Artwork(singleArtwork: any) {
                       </a>
                       {artwork.creator.isApprovedCreator ? (
                         <svg>
-                          <use xlinkHref="dist/icons/sprite.svg#hashtune-check"></use>
+                          <use xlinkHref="dist/icons/sprite.svg#hashtune-check" />
                         </svg>
                       ) : (
                         <></>
@@ -258,22 +200,22 @@ export default function Artwork(singleArtwork: any) {
                 <div className={styles["artwork__creator--socials"]}>
                   <a href="">
                     <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-globe"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-globe" />
                     </svg>
                   </a>
                   <a href="">
                     <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-twitter"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-twitter" />
                     </svg>
                   </a>
                   <a href="">
                     <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-instagram"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-instagram" />
                     </svg>
                   </a>
                   <a href="">
                     <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-youtube"></use>
+                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-youtube" />
                     </svg>
                   </a>
                 </div>

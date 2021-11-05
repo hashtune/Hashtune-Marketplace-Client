@@ -7,17 +7,16 @@ import ArtworkContainer from "../components/Home/ListContainer/ArtworkContainer"
 import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
 import { ListCreatorFields } from "../lib/interfaces/CreatorInterfaces";
 import { ArtworkFields } from "../lib/interfaces/ArtworkInterfaces";
-import { queryListArtworksListCreators } from "../lib/apiQueries/ArtworkQueries";
+import { listArtworkQuery } from "../graphql/artwork/queries/listArtworks";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({
-    query: queryListArtworksListCreators,
+    query: listArtworkQuery,
   });
   return {
     props: {
       allArtworks: data.listArtworks.Artworks.slice(0, 10),
-      allCreators: data.listCreators.Users.slice(0, 20),
       fallback: true,
     },
     revalidate: 180,
@@ -28,7 +27,6 @@ export default function Home({
   allArtworks,
 }: {
   allArtworks: ArtworkFields[];
-  allCreators: ListCreatorFields[];
 }) {
   return (
     <div className="app">
