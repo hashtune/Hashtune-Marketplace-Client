@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "yarn generate && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "prisma:studio": "dotenv -e .env.local prisma studio"
+    "prisma:studio": "dotenv -e .env.local prisma studio",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@apollo/client": "^3.4.12",
@@ -18,7 +19,8 @@
     "@testing-library/cypress": "^8.0.1",
     "classnames": "^2.3.1",
     "dotenv": "^10.0.0",
-    "graphql": "^15.5.3",
+    "formik": "^2.2.9",
+    "graphql": "^15.7.2",
     "gray-matter": "^4.0.3",
     "moment": "^2.29.1",
     "next": "11.1.2",
@@ -28,12 +30,18 @@
     "sass": "^1.40.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.2.2",
+    "@graphql-codegen/typescript": "2.3.0",
+    "@graphql-codegen/typescript-operations": "2.2.0",
+    "@graphql-codegen/typescript-react-apollo": "3.2.0",
     "@metamask/onboarding": "^1.0.1",
+    "@types/graphql": "^14.5.0",
     "@types/react": "17.0.20",
     "cypress": "^8.3.1",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "ethers": "^5.4.7",
+    "graphql-code-generator": "^0.18.2",
     "jest": "^27.1.1",
     "postcss": "^8.3.8",
     "ts-jest": "^27.0.5",

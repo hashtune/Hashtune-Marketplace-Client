@@ -43,6 +43,7 @@ const coverImage = `/dist/cover.png`;
 
 const artworkImage = `/dist/images/mock/artworks/${randomMockMedia(19)}.png`;
 export default function User(singleUser: any) {
+	// TODO: If this user does not exist then return 404
 	const artworkContainer: React.RefObject<HTMLDivElement> = useRef(null);
 	singleUser = singleUser.singleUser;
 	const [artworks, setArtworks] = useState(singleUser?.created);
