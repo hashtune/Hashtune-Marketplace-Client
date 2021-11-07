@@ -1,0 +1,15 @@
+.upload__hero {
+  width: 100%;
+  background-color: #090909;
+  height: 55vh;
+  position: absolute;
+  &-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 5rem;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+}
