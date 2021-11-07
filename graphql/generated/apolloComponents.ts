@@ -185,6 +185,8 @@ export type Mutation = {
   deleteAuction: AuctionResult;
   /** Register a user after they authenticate with the correct chain network */
   registerUser: UserResult;
+  /** edit the price or reserve price of an artwork */
+  updateArtwork: ArtworkResult;
 };
 
 
@@ -208,8 +210,15 @@ export type MutationRegisterUserArgs = {
   InputType?: Maybe<RegisterUserInput>;
 };
 
+
+export type MutationUpdateArtworkArgs = {
+  InputType?: Maybe<UpdateArtworkInput>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  /** Returns cookie if signing */
+  cookie: Scalars['String'];
   /** Find an artwork by id */
   findArtwork: ArtworkResult;
   /** Find an user by handle or public key */
@@ -255,6 +264,13 @@ export type RegisterUserInput = {
   wallet: Scalars['String'];
 };
 
+/** Artwork input */
+export type UpdateArtworkInput = {
+  artworkId: Scalars['String'];
+  reservePrice?: Maybe<Scalars['BigInt']>;
+  salePrice?: Maybe<Scalars['BigInt']>;
+};
+
 export type User = {
   __typename?: 'User';
   bio: Scalars['String'];
@@ -287,6 +303,13 @@ export type Wallet = {
   updatedAt: Scalars['String'];
 };
 
+export type RegisterUserMutationVariables = Exact<{
+  inputType?: Maybe<RegisterUserInput>;
+}>;
+
+
+export type RegisterUserMutation = { __typename?: 'Mutation', registerUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', fullName: string, handle: string, email: string, bio: string, wallet: { __typename?: 'Wallet', id: string, publicKey: string, createdAt: string, provider: string } }> | null | undefined, ClientErrorHandleAlreadyExists?: { __typename?: 'ClientErrorHandleAlreadyExists', message?: string | null | undefined } | null | undefined, ClientErrorInvalidHandle?: { __typename?: 'ClientErrorInvalidHandle', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+
 export type QueryQueryVariables = Exact<{
   findUserHandle?: Maybe<Scalars['String']>;
   findUserPublicKey?: Maybe<Scalars['String']>;
@@ -295,58 +318,12 @@ export type QueryQueryVariables = Exact<{
 
 export type QueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', handle: string }> | null | undefined, ClientErrorUserNotFound?: { __typename?: 'ClientErrorUserNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
 
-export type RegisterUserMutationVariables = Exact<{
-  inputType?: Maybe<RegisterUserInput>;
-}>;
+export type LoginQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RegisterUserMutation = { __typename?: 'Mutation', registerUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', fullName: string, handle: string, email: string, bio: string, wallet: { __typename?: 'Wallet', id: string, publicKey: string, createdAt: string, provider: string } }> | null | undefined, ClientErrorHandleAlreadyExists?: { __typename?: 'ClientErrorHandleAlreadyExists', message?: string | null | undefined } | null | undefined, ClientErrorInvalidHandle?: { __typename?: 'ClientErrorInvalidHandle', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+export type LoginQuery = { __typename?: 'Query', cookie: string };
 
 
-export const QueryDocument = gql`
-    query Query($findUserHandle: String, $findUserPublicKey: String) {
-  findUser(handle: $findUserHandle, publicKey: $findUserPublicKey) {
-    Users {
-      handle
-    }
-    ClientErrorUserNotFound {
-      message
-    }
-    ClientErrorUnknown {
-      message
-    }
-  }
-}
-    `;
-
-/**
- * __useQueryQuery__
- *
- * To run a query within a React component, call `useQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useQueryQuery({
- *   variables: {
- *      findUserHandle: // value for 'findUserHandle'
- *      findUserPublicKey: // value for 'findUserPublicKey'
- *   },
- * });
- */
-export function useQueryQuery(baseOptions?: Apollo.QueryHookOptions<QueryQuery, QueryQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
-      }
-export function useQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryQuery, QueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
-        }
-export type QueryQueryHookResult = ReturnType<typeof useQueryQuery>;
-export type QueryLazyQueryHookResult = ReturnType<typeof useQueryLazyQuery>;
-export type QueryQueryResult = Apollo.QueryResult<QueryQuery, QueryQueryVariables>;
 export const RegisterUserDocument = gql`
     mutation RegisterUser($inputType: RegisterUserInput) {
   registerUser(InputType: $inputType) {
@@ -400,3 +377,79 @@ export function useRegisterUserMutation(baseOptions?: Apollo.MutationHookOptions
 export type RegisterUserMutationHookResult = ReturnType<typeof useRegisterUserMutation>;
 export type RegisterUserMutationResult = Apollo.MutationResult<RegisterUserMutation>;
 export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUserMutation, RegisterUserMutationVariables>;
+export const QueryDocument = gql`
+    query Query($findUserHandle: String, $findUserPublicKey: String) {
+  findUser(handle: $findUserHandle, publicKey: $findUserPublicKey) {
+    Users {
+      handle
+    }
+    ClientErrorUserNotFound {
+      message
+    }
+    ClientErrorUnknown {
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useQueryQuery__
+ *
+ * To run a query within a React component, call `useQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryQuery({
+ *   variables: {
+ *      findUserHandle: // value for 'findUserHandle'
+ *      findUserPublicKey: // value for 'findUserPublicKey'
+ *   },
+ * });
+ */
+export function useQueryQuery(baseOptions?: Apollo.QueryHookOptions<QueryQuery, QueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+      }
+export function useQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryQuery, QueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+        }
+export type QueryQueryHookResult = ReturnType<typeof useQueryQuery>;
+export type QueryLazyQueryHookResult = ReturnType<typeof useQueryLazyQuery>;
+export type QueryQueryResult = Apollo.QueryResult<QueryQuery, QueryQueryVariables>;
+export const LoginDocument = gql`
+    query Login {
+  cookie
+}
+    `;
+
+/**
+ * __useLoginQuery__
+ *
+ * To run a query within a React component, call `useLoginQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoginQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoginQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLoginQuery(baseOptions?: Apollo.QueryHookOptions<LoginQuery, LoginQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
+      }
+export function useLoginLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginQuery, LoginQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
+        }
+export type LoginQueryHookResult = ReturnType<typeof useLoginQuery>;
+export type LoginLazyQueryHookResult = ReturnType<typeof useLoginLazyQuery>;
+export type LoginQueryResult = Apollo.QueryResult<LoginQuery, LoginQueryVariables>;
