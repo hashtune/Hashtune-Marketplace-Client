@@ -1,9 +1,10 @@
-import { Navbar } from "../components/Layout/Navbar/Navbar";
+import { Navbar } from "../../components/Layout/Navbar/Navbar";
 import { Formik, Field } from "formik";
-import { useRegisterUserMutation } from "../graphql/generated/apolloComponents";
+import { useRegisterUserMutation } from "../../graphql/generated/apolloComponents";
 import router from "next/router";
 import Image from "next/image";
-import styles from "../styles/pages/Upload.module.scss";
+import Link from "next/link";
+import styles from "../../styles/pages/Upload.module.scss";
 
 export default function Upload() {
   return (
@@ -28,14 +29,15 @@ export default function Upload() {
                   alt=""
                   draggable="false"
                 />
-                <a
-                  href=""
-                  className={
-                    "primary_button " + styles["upload__variant-type--button"]
-                  }
-                >
-                  Upload Single
-                </a>
+                <Link href="/upload/single">
+                  <a
+                    className={
+                      "primary_button " + styles["upload__variant-type--button"]
+                    }
+                  >
+                    Upload Single
+                  </a>
+                </Link>
               </div>
               <div className={styles["upload__variant-type"]}>
                 <Image
