@@ -40,7 +40,14 @@ export const Navbar = () => {
     } else if (walletConnected && !networkConnected) {
       return <div>Binance testnet required</div>;
     } else {
-      return <div>Connected: {account}</div>;
+      return (
+        <>
+          {/* <div>Connected: {account}</div> */}
+          <Link href="/upload">
+            <a className={styles["navbar__wallet"] + " btn"}>Upload Music</a>
+          </Link>
+        </>
+      );
     }
   };
 
