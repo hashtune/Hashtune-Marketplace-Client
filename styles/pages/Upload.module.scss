@@ -13,3 +13,23 @@
     flex-direction: column;
   }
 }
+
+.upload__content {
+  text-align: center;
+  margin-top: 10rem;
+  padding-bottom: 5rem;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    font-size: 4.1rem;
+    font-weight: 700;
+  }
+  p {
+    font-size: 1.8rem;
+    color: #a8a8a8;
+    line-height: 2.5rem;
+    display: inline-block;
+    max-width: 56rem;
+  }
+}
