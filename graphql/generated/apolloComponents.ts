@@ -181,6 +181,8 @@ export type Mutation = {
   addArtwork: ArtworkResult;
   /** Create an auction for a given artwork */
   addAuction: AuctionResult;
+  /** Returns cookie if signing */
+  cookie: Scalars['String'];
   /** delete an Auction if it has no bids */
   deleteAuction: AuctionResult;
   /** Register a user after they authenticate with the correct chain network */
@@ -197,6 +199,13 @@ export type MutationAddArtworkArgs = {
 
 export type MutationAddAuctionArgs = {
   InputType?: Maybe<AddAuctionInput>;
+};
+
+
+export type MutationCookieArgs = {
+  publicKey: Scalars['String'];
+  signedMessage: Scalars['String'];
+  typedData: Scalars['String'];
 };
 
 
@@ -217,8 +226,6 @@ export type MutationUpdateArtworkArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  /** Returns cookie if signing */
-  cookie: Scalars['String'];
   /** Find an artwork by id */
   findArtwork: ArtworkResult;
   /** Find an user by handle or public key */
@@ -303,6 +310,15 @@ export type Wallet = {
   updatedAt: Scalars['String'];
 };
 
+export type SignupMutationVariables = Exact<{
+  signedMessage: Scalars['String'];
+  publicKey: Scalars['String'];
+  typedData: Scalars['String'];
+}>;
+
+
+export type SignupMutation = { __typename?: 'Mutation', cookie: string };
+
 export type RegisterUserMutationVariables = Exact<{
   inputType?: Maybe<RegisterUserInput>;
 }>;
@@ -318,12 +334,44 @@ export type QueryQueryVariables = Exact<{
 
 export type QueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', handle: string }> | null | undefined, ClientErrorUserNotFound?: { __typename?: 'ClientErrorUserNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
 
-export type LoginQueryVariables = Exact<{ [key: string]: never; }>;
 
+export const SignupDocument = gql`
+    mutation Signup($signedMessage: String!, $publicKey: String!, $typedData: String!) {
+  cookie(
+    signedMessage: $signedMessage
+    publicKey: $publicKey
+    typedData: $typedData
+  )
+}
+    `;
+export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
 
-export type LoginQuery = { __typename?: 'Query', cookie: string };
-
-
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      signedMessage: // value for 'signedMessage'
+ *      publicKey: // value for 'publicKey'
+ *      typedData: // value for 'typedData'
+ *   },
+ * });
+ */
+export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
+      }
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
+export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
 export const RegisterUserDocument = gql`
     mutation RegisterUser($inputType: RegisterUserInput) {
   registerUser(InputType: $inputType) {
@@ -421,35 +469,3 @@ export function useQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Quer
 export type QueryQueryHookResult = ReturnType<typeof useQueryQuery>;
 export type QueryLazyQueryHookResult = ReturnType<typeof useQueryLazyQuery>;
 export type QueryQueryResult = Apollo.QueryResult<QueryQuery, QueryQueryVariables>;
-export const LoginDocument = gql`
-    query Login {
-  cookie
-}
-    `;
-
-/**
- * __useLoginQuery__
- *
- * To run a query within a React component, call `useLoginQuery` and pass it any options that fit your needs.
- * When your component renders, `useLoginQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLoginQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLoginQuery(baseOptions?: Apollo.QueryHookOptions<LoginQuery, LoginQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
-      }
-export function useLoginLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginQuery, LoginQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
-        }
-export type LoginQueryHookResult = ReturnType<typeof useLoginQuery>;
-export type LoginLazyQueryHookResult = ReturnType<typeof useLoginLazyQuery>;
-export type LoginQueryResult = Apollo.QueryResult<LoginQuery, LoginQueryVariables>;

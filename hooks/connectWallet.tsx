@@ -1,7 +1,10 @@
 import MetaMaskOnboarding from "@metamask/onboarding";
+import { recoverTypedSignature_v4 } from "eth-sig-util";
+
 import { ethers } from "ethers";
 import React from "react";
 import { useEffect } from "react";
+import { useSignupMutation } from "../graphql/generated/apolloComponents";
 import * as abi from "../SongOrAlbumNFT.json";
 const axios = require("axios").default;
 
@@ -72,6 +75,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
   const [signedMessage, setSignedMessage] = React.useState("");
+  const [typedData, setTypedData] = React.useState("");
   const [fetchingAccount, setFetchingAccount] = React.useState(false);
   const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
   const [fetchingChain, setFetchingChain] = React.useState(false);
@@ -81,6 +85,14 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [networkConnected, setNetworkConnected] = React.useState<any | null>(
     false
   );
+
+  const [signupMutation, { data, loading, error }] = useSignupMutation({
+    variables: {
+      signedMessage,
+      publicKey: account,
+      typedData,
+    },
+  });
   const getAccount = async () => {
     try {
       setFetchingAccount(true);
@@ -98,39 +110,29 @@ export const MetamaskContextProvider = ({ children }: any) => {
       setFetchingAccount(false);
     }
   };
+
+  const msgParams = JSON.stringify({
+    types: {
+      EIP712Domain: [
+        { name: "name", type: "string" },
+        { name: "version", type: "string" },
+        { name: "chainId", type: "uint256" },
+      ],
+      // Not an EIP712Domain definition
+      Mail: [{ name: "content", type: "string" }],
+    },
+    domain: {
+      name: "bnctest",
+      version: "1",
+      chainId: 0x61,
+    },
+    primaryType: "Mail",
+    message: {
+      content: "Please sign so we can generate a jwt for you :)",
+    },
+  });
   const getSignature = async () => {
     try {
-      const msgParams = JSON.stringify({
-        domain: {
-          chainId: 0x61,
-          name: "bnctest",
-          verifyingContract: "0xbdd597aa6ddeabbdba6acd9f864438737e11c8af",
-          version: "",
-        },
-        message: {
-          contents: "Please sign so we can generate a jwt for you :)",
-          from: {
-            name: "Hashtune",
-          },
-        },
-        primaryType: "Mail",
-        types: {
-          EIP712Domain: [
-            { name: "name", type: "string" },
-            { name: "version", type: "string" },
-            { name: "chainId", type: "uint256" },
-            { name: "verifyingContract", type: "address" },
-          ],
-          // Not an EIP712Domain definition
-          Group: [
-            { name: "name", type: "string" },
-            { name: "members", type: "Person[]" },
-          ],
-          // Refer to PrimaryType
-          Mail: [{ name: "from", type: "Person" }],
-          Person: [{ name: "name", type: "string" }],
-        },
-      });
       const signedMessage = await (window as any).web3.currentProvider.sendAsync(
         {
           method: "eth_signTypedData_v4",
@@ -138,7 +140,10 @@ export const MetamaskContextProvider = ({ children }: any) => {
           from: (window as any).ethereum.selectedAddress,
         },
         function(err: any, result: any) {
-          if (result) setSignedMessage(result.result);
+          if (result) {
+            setSignedMessage(result.result);
+            setTypedData(msgParams);
+          }
           return result;
         }
       );
@@ -210,20 +215,19 @@ export const MetamaskContextProvider = ({ children }: any) => {
       setWalletConnected(false);
     }
   }, [account]);
+
+  async function handleSignup() {
+    return await signupMutation({
+      variables: {
+        signedMessage,
+        publicKey: account,
+        typedData: typedData,
+      },
+    });
+  }
   useEffect(() => {
     if (account && signedMessage && signedMessage.length > 0) {
-      // try and generate a new jwt cookie
-      axios
-        .post("http://localhost:5000/login", {
-          signedMessage,
-          publicKey: account,
-        })
-        .then((data: any) => {
-          console.log(data);
-        })
-        .catch((er: any) => {
-          console.log("could not forge token");
-        });
+      handleSignup();
     }
   }, [signedMessage]); // should accounts be in the dependencies?
   const [provider, setProvider] = React.useState<any | null>(null);
