@@ -68,6 +68,27 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
   getSignature: () => {},
 });
 
+const msgParams = JSON.stringify({
+  types: {
+    EIP712Domain: [
+      { name: "name", type: "string" },
+      { name: "version", type: "string" },
+      { name: "chainId", type: "uint256" },
+    ],
+    // Not an EIP712Domain definition
+    Mail: [{ name: "content", type: "string" }],
+  },
+  domain: {
+    name: "bnctest",
+    version: "1",
+    chainId: 0x61,
+  },
+  primaryType: "Mail",
+  message: {
+    content: "Please sign so we can generate a jwt for you :)",
+  },
+});
+
 export const MetamaskContextProvider = ({ children }: any) => {
   const { isMetaMaskInstalled } = MetaMaskOnboarding;
 
@@ -75,7 +96,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
   const [signedMessage, setSignedMessage] = React.useState("");
-  const [typedData, setTypedData] = React.useState("");
+  const [typedData, setTypedData] = React.useState(msgParams);
   const [fetchingAccount, setFetchingAccount] = React.useState(false);
   const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
   const [fetchingChain, setFetchingChain] = React.useState(false);
@@ -111,26 +132,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
     }
   };
 
-  const msgParams = JSON.stringify({
-    types: {
-      EIP712Domain: [
-        { name: "name", type: "string" },
-        { name: "version", type: "string" },
-        { name: "chainId", type: "uint256" },
-      ],
-      // Not an EIP712Domain definition
-      Mail: [{ name: "content", type: "string" }],
-    },
-    domain: {
-      name: "bnctest",
-      version: "1",
-      chainId: 0x61,
-    },
-    primaryType: "Mail",
-    message: {
-      content: "Please sign so we can generate a jwt for you :)",
-    },
-  });
   const getSignature = async () => {
     try {
       const signedMessage = await (window as any).web3.currentProvider.sendAsync(
@@ -142,7 +143,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
         function(err: any, result: any) {
           if (result) {
             setSignedMessage(result.result);
-            setTypedData(msgParams);
           }
           return result;
         }
