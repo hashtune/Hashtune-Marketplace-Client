@@ -4,13 +4,32 @@ import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksProps } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
 import client from "../../../lib/apollo-client";
-import { QueryListArtworksQuery } from "../../../graphql/generated/apolloComponents";
+import { Artwork, QueryListArtworksQuery } from "../../../graphql/generated/apolloComponents";
 import SortDropDown from "./SortDropdown";
 import { listArtworkQuery } from "../../../graphql/artwork/queries/listArtworks";
+import { DocumentNode } from "graphql";
+import Tab from "./Tab";
 
-const ArtworkContainer = (props: ListArtworksProps) => {
+export interface TabArtworksProps {
+  artworks: Artwork[];
+  type: string;
+  tabs: string[];
+}
+
+const ArtworkContainer = (props: TabArtworksProps) => {
   const [artworks, setArtworks] = useState(props.artworks);
   const [tabState, setTabState] = useState("All Hashtunes");
+
+  useEffect(() => {
+    
+    if (tabState === "Auctions") {
+      getAuctions();
+    } else if (tabState === "Buy Now") {
+      getBuyNow();
+    } else {
+      getAllHashtunes();
+    }
+  }, [tabState]);
 
   const getAuctions = async () => {
     const res = await client.query({
@@ -35,39 +54,16 @@ const ArtworkContainer = (props: ListArtworksProps) => {
     setArtworks(res.data.listArtworks.Artworks);
   };
 
-  useEffect(() => {
-    if (tabState === "Auctions") {
-      getAuctions();
-    } else if (tabState === "Buy Now") {
-      getBuyNow();
-    } else {
-      getAllHashtunes();
-    }
-  }, [tabState]);
 
   return (
     <div className={styles["artworks"] + " container"}>
       <div className="tab-nav tab-nav__container">
+
         <div className="tab-nav__indicators">
-          <a
-            className="tab-nav__indicators--element"
-            onClick={() => setTabState("All Hashtunes")}
-          >
-            All Hashtunes
-          </a>
-          <a
-            className="tab-nav__indicators--element"
-            onClick={() => setTabState("Auctions")}
-          >
-            Auctions
-          </a>
-          <a
-            className="tab-nav__indicators--element"
-            onClick={() => setTabState("Buy Now")}
-          >
-            Buy Now
-          </a>
-        </div>
+          {props.tabs!== undefined && props.tabs.length > 0 &&
+          props.tabs?.map((tab) => (
+            <Tab onClick={() => setTabState(tab)} style={"tab-nav__indicators--element"} text={tab}/>
+          ))}
         <div className="tab-nav__dropdown">
           <SortDropDown />
         </div>
@@ -86,6 +82,8 @@ const ArtworkContainer = (props: ListArtworksProps) => {
           ))}
       </div>
     </div>
+    
+        </div>
   );
 };
 export default ArtworkContainer;
