@@ -33,13 +33,13 @@
   }
 }
 
-.countdown_card {
-  &-title {
+.countdown {
+  &__title {
     flex: 100% 1;
     font-size: 1.7rem;
     color: #bababa;
   }
-  &-data {
+  &__data {
     display: flex;
     &--item {
       margin-right: 2.2rem;
@@ -49,7 +49,7 @@
           margin-top: 0.8rem !important;
         }
       }
-      &-title {
+      h3 {
         font-size: 3.2rem;
         font-weight: 600;
       }
@@ -61,7 +61,8 @@
     }
   }
 }
-.countdown_card-small {
+
+.countdown-artwork {
   padding: 1.4rem 3rem;
   display: flex;
   flex-direction: column;
@@ -69,12 +70,12 @@
   flex: 1 1 55%;
 
   border-left: 2px solid rgba(110, 110, 110, 0.49);
-  &-title {
+  &__title {
     flex: 100% 1;
     font-size: 1.2rem;
     color: #bababa;
   }
-  &-data {
+  &__data {
     display: flex;
     flex: 1 1 100%;
     &--item {
@@ -86,7 +87,7 @@
           margin-top: 0.6rem !important;
         }
       }
-      &-title {
+      h3 {
         flex: 1 1 50%;
         font-size: 2.5rem;
         font-weight: 600;
@@ -96,7 +97,6 @@
         flex: 1 1 50%;
         font-size: 1rem;
         font-weight: 100;
-        // color: #bababa;
       }
     }
   }

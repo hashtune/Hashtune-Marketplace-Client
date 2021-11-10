@@ -73,10 +73,11 @@ section {
 .dot_divider {
   height: 1rem;
   width: 1rem;
-  max-width: 1rem;
+  max-width: 0.5vw;
+  max-height: 0.5vw;
+  bottom: 2.5rem;
   background-color: white;
   border-radius: 50%;
-  margin: 2.5rem;
   display: inline-block;
 }
 
@@ -106,7 +107,83 @@ section {
   }
 }
 
-
 .flex-content-center {
   justify-content: center !important;
+}
+
+.socials {
+  @include socials(2rem, 2.5rem);
+}
+.socials-profile {
+  @include socials(3rem, 3rem);
+}
+.socials-artwork {
+  @include socials(1rem, 2rem);
+}
+//
+
+.image-name-handle {
+  @include image-name-handle;
+
+  &--edit-button {
+    margin: -16rem 0 12.1rem;
+  }
+  &__picture {
+    margin: -16rem 0 12.1rem;
+    padding: 0.4rem;
+    img {
+      width: 180px;
+      height: 180px;
+    }
+  }
+  &__content {
+    margin: -16rem auto 12.1rem 3rem;
+    &--name-status {
+      font-size: 3.7rem;
+      font-weight: 700;
+      height: 5.3rem;
+    }
+    &--username {
+      font-size: 2.3rem;
+    }
+    &-status {
+      margin: 2rem 1.7rem 0;
+      width: 2rem;
+      height: 2rem;
+      svg {
+        width: 1.6rem;
+      }
+    }
+  }
+}
+.artwork-image-name-handle {
+  @include image-name-handle;
+
+  &__picture {
+    padding: 0.2rem;
+    img {
+      max-width: 5rem !important;
+      max-height: 5rem !important;
+    }
+  }
+  &__content {
+    margin: 0rem auto 0rem 1rem;
+    &--name-status {
+      font-size: 2rem;
+      font-weight: 550;
+      height: 3rem;
+    }
+    &--username {
+      margin-top: -0.3rem;
+      font-size: 1.4rem;
+    }
+    &-status {
+      margin: 1rem 0.8rem 0;
+      width: 1.4rem;
+      height: 1.4rem;
+      svg {
+        width: 1.6rem;
+      }
+    }
+  }
 }
