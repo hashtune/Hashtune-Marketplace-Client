@@ -68,7 +68,7 @@ const Hero = (props: ListArtworkProps, coin: Coin) => {
             <div className={styles["vertical_divider"] + " vertical_divider"} />
             {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
             {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
-            <Countdown liveAt={date} style="countdown_card" />
+            <Countdown liveAt={date} />
           </div>
           <BidButton />
         </div>
