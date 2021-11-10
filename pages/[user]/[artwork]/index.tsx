@@ -10,6 +10,10 @@ import Countdown from "../../../components/Home/Hero/Countdown";
 import ArtworkHistoryItem from "../../../components/Artwork/ArtworkHistoryItem";
 import { artworkQuery } from "../../../graphql/artwork/queries/artwork";
 import { Artwork } from "../../../graphql/generated/apolloComponents";
+import { PAGES } from "../../../utils/constants/enum";
+import { LinkIcon } from "../../../components/Layout/BurgerMenu/LinkIcon";
+import { Socials } from "../../../components/Layout/BurgerMenu/Socials";
+import ImageNameHandle from "../../../components/ImageNameHandle";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // console.log(ctx);
@@ -36,12 +40,11 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   };
 }
 
-export default function Artwork(artwork: Artwork) {
+export default function SingleArtwork(artwork: any) {
   const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  let singleArtwork: Artwork = artwork.artwork;
 
-  // Call this function whenever you want to
-  // refresh props!
   const refreshData = () => {
     console.log("refreshing");
     router.replace(router.asPath);
@@ -49,8 +52,8 @@ export default function Artwork(artwork: Artwork) {
   };
 
   useEffect(() => {
-    if (artwork !== null) setIsRefreshing(false);
-  }, [artwork]);
+    if (singleArtwork !== null) setIsRefreshing(false);
+  }, [singleArtwork]);
   // Should be from database but that breaks it
   let coverImage = "/images/artwork.png";
 
@@ -81,15 +84,19 @@ export default function Artwork(artwork: Artwork) {
               <div className={styles["hero__hashtune-details"]}>
                 <CreatorIconHandle
                   image={creatorImage}
-                  handle={artwork.creator.handle}
+                  handle={singleArtwork.creator.handle}
                 />
                 <div className={styles["hero__hashtune-details--header"]}>
                   <a className={styles["hero__hashtune-details--title"]}>
-                    {artwork.title}
+                    {singleArtwork.title}
                   </a>
-                  <div className="dot_divider" />
-                  <a className={styles["hero__hashtune-details--creator-name"]}>
-                    {artwork.creator.fullName}
+                  <div className={styles["dot_divider"] + " dot_divider"} />
+                  <div
+                    className={styles["hero__hashtune-details--creator-name"]}
+                  >
+                    {singleArtwork.creator.fullName}
+                  </div>
+                  <div className={styles["hero__hashtune-details--downloads"]}>
                     <a href="">
                       <div
                         className={styles["hero__hashtune-details--tooltip-1"]}
@@ -111,10 +118,10 @@ export default function Artwork(artwork: Artwork) {
                         <use xlinkHref="../dist/icons/sprite.svg#hashtune-wave-file" />
                       </svg>
                     </a>
-                  </a>
+                  </div>
                 </div>
                 <div className={styles["hero__hashtune-details--description"]}>
-                  <p>{artwork.description}</p>
+                  <p>{singleArtwork.description}</p>
                 </div>
                 <div className={styles["hero__hashtune-details--footer"]}>
                   <div
@@ -156,64 +163,32 @@ export default function Artwork(artwork: Artwork) {
                 Music Details
               </div>
               <div className={styles["artwork__details--description"]}>
-                {artwork.description}
+                {singleArtwork.description}
               </div>
             </div>
             <div className={styles["artwork__creator"]}>
               <div className={styles["artwork__creator--title"]}>Creator</div>
               <div className={styles["artwork__creator--info"]}>
-                <div className={styles["artwork__creator--header"]}>
-                  <div className={styles["artwork__creator--image"]}>
-                    <Image
-                      alt={"creator image"}
-                      src={creatorImage}
-                      width={60}
-                      height={60}
-                    />
-                  </div>
-                  <div className={styles["artwork__creator--name-handle"]}>
-                    <div className={styles["artwork__creator--name-approved"]}>
-                      <a className={styles["artwork__creator--name"]}>
-                        {artwork.creator.fullName}
-                      </a>
-                      {artwork.creator.isApprovedCreator ? (
-                        <svg>
-                          <use xlinkHref="dist/icons/sprite.svg#hashtune-check" />
-                        </svg>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                    <a className={styles["artwork__creator--handle"]}>
-                      @{artwork.creator.handle}
-                    </a>
-                  </div>
-                </div>
+                <ImageNameHandle
+                  profilePicture={creatorImage}
+                  handle={singleArtwork.creator.handle}
+                  isApprovedCreator={singleArtwork.creator.isApprovedCreator}
+                  fullName={singleArtwork.creator.handle}
+                  page={PAGES.ARTWORK}
+                />
                 <div className={styles["artwork__creator--bio"]}>
-                  {artwork.creator.bio}
+                  {singleArtwork.creator.bio}
                 </div>
-                <div className={styles["artwork__creator--socials"]}>
-                  <a href="">
-                    <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-globe" />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-twitter" />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-instagram" />
-                    </svg>
-                  </a>
-                  <a href="">
-                    <svg>
-                      <use xlinkHref="../dist/icons/sprite.svg#hashtune-youtube" />
-                    </svg>
-                  </a>
-                </div>
+                <Socials
+                  iconRefs={[
+                    { icon: "globe", href: '""' },
+                    { icon: "twitter", href: '""' },
+                    { icon: "instagram", href: '""' },
+                    { icon: "youtube", href: '""' },
+                  ]}
+                  directorydifference={1}
+                  page={PAGES.ARTWORK}
+                />
               </div>
             </div>
           </div>
@@ -222,13 +197,12 @@ export default function Artwork(artwork: Artwork) {
               <div className={styles["nft__details--title"]}>NFT Details</div>
               <div className={styles["nft__details--info"]}>
                 <div className={styles["nft__details--top"]}>
-                  {/* <div className={styles["nft__details--price"]}> */}
                   <div className={styles["nft__details--price"]}>
                     <div>Reserve Price</div>
                     <div>1378 BNB</div>
                     <div>$1,220</div>
                   </div>
-                  <Countdown liveAt={date} style="countdown_card-small" />
+                  <Countdown liveAt={date} page={PAGES.ARTWORK} />
                 </div>
                 <div className={styles["nft__details--btn"]}>
                   <div className={styles["nft__details--btn-inner"]}>
@@ -245,21 +219,21 @@ export default function Artwork(artwork: Artwork) {
                   imgSrc={coverImage}
                   listed={false}
                   date={"Sep 22, 2021 at 3:39am"}
-                  artwork={artwork}
+                  artwork={singleArtwork}
                   actor={"sophiekahn"}
                 />
                 <ArtworkHistoryItem
                   imgSrc={coverImage}
                   listed={true}
                   date={"Sep 22, 2021 at 3:39am"}
-                  artwork={artwork}
+                  artwork={singleArtwork}
                   actor={"sophiekahn"}
                 />
                 <ArtworkHistoryItem
                   imgSrc={coverImage}
                   listed={false}
                   date={"Sep 22, 2021 at 3:39am"}
-                  artwork={artwork}
+                  artwork={singleArtwork}
                   actor={"sophiekahn"}
                 />
               </div>
@@ -269,20 +243,4 @@ export default function Artwork(artwork: Artwork) {
       )}
     </div>
   );
-}
-
-{
-  /* <button onClick={refreshData}>GET NEW DATA</button>
-          <h3>{singleArtwork.artwork.handle}</h3>
-          <h3>{singleArtwork.artwork.title}</h3>
-          <h3>{singleArtwork.artwork.image}</h3>
-          <h3>{singleArtwork.artwork.creator.id}</h3>
-          <h3>{singleArtwork.artwork.creator.fullName}</h3>
-          <Link href={`/${singleArtwork.artwork.creator.handle}`}>
-            {singleArtwork.artwork.creator.handle}
-          </Link>
-          <h3>{singleArtwork.artwork.saleType}</h3>
-          <h3>{singleArtwork.artwork.lsited}</h3>
-          <h3>{singleArtwork.artwork.price}</h3>
-          <h3>{singleArtwork.artwork.reservePrice}</h3> */
 }
