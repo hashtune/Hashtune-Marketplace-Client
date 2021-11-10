@@ -11,6 +11,10 @@ import ListArtwork from '../../components/Home/ListArtwork/ListArtwork';
 import SortDropDown from '../../components/Home/ListContainer/SortDropdown';
 import { queryProfileData } from '../../graphql/user/queries/profileData';
 import { Artwork, User } from '../../graphql/generated/apolloComponents';
+import { Socials } from '../../components/Layout/BurgerMenu/Socials';
+import { PAGES } from '../../utils/constants/enum';
+import ImageNameHandle from '../../components/ImageNameHandle';
+import PagesManifestPlugin from 'next/dist/build/webpack/plugins/pages-manifest-plugin';
 
 // TODO: Refactor page/query
 
@@ -69,37 +73,9 @@ export default function Profile(singleUser: any) {
 						/>
 					</div>
 				</div>
-
 				<div className="container_relative">
-					<div className={styles['user-profile-details']}>
-						<div className={styles['user-profile-details__picture']}>
-							<Image src={profilePicture} width="180" height="180" alt="" />
-						</div>
-						<div className={styles['user-profile-details__content']}>
-							<div className={styles['user-profile-details__content-primary']}>
-								<div className={styles['user-profile-details__content--name-status']}>
-									{creator.fullName}
-									{creator.isApprovedCreator ? (
-										<div className={styles['user-profile-details__content-status']}>
-											<svg fill="#fff">
-												<use xlinkHref="dist/icons/sprite.svg#hashtune-check"></use>
-											</svg>
-										</div>
-									) : (
-										<></>
-									)}
-								</div>
-								<p className={styles['user-profile-details__content--username']}>@{creator.handle}</p>
-							</div>
-						</div>
-						<a
-							href={`/${creator.handle}/edit-profile`}
-							className={styles['user-profile-details--edit-button'] + ' btn'}
-						>
-							Edit Profile
-						</a>
-					</div>
-
+					<ImageNameHandle profilePicture={profilePicture} handle={creator.handle} isApprovedCreator={creator.isApprovedCreator} fullName={creator.fullName}
+					page= {PAGES.PROFILE} />
 					<div className={styles['user-profile-content']}>
 						<aside className={styles['user-profile-content__sidebar']}>
 							<div className={styles['user-profile-content__sidebar-section']}>
@@ -108,28 +84,16 @@ export default function Profile(singleUser: any) {
 							</div>
 							<div className={styles['user-profile-content__sidebar-section']}>
 								<h3>Links</h3>
-								<div className={styles['user-profile-content__sidebar-section__socials']}>
-									<a href="">
-										<svg>
-											<use xlinkHref="dist/icons/sprite.svg#hashtune-globe"></use>
-										</svg>
-									</a>
-									<a href="">
-										<svg>
-											<use xlinkHref="dist/icons/sprite.svg#hashtune-twitter"></use>
-										</svg>
-									</a>
-									<a href="">
-										<svg>
-											<use xlinkHref="dist/icons/sprite.svg#hashtune-instagram"></use>
-										</svg>
-									</a>
-									<a href="">
-										<svg>
-											<use xlinkHref="dist/icons/sprite.svg#hashtune-youtube"></use>
-										</svg>
-									</a>
-								</div>
+								<Socials
+                				  iconRefs={[
+                				    { icon: "globe", href: '""' },
+                				    { icon: "twitter", href: '""' },
+                				    { icon: "instagram", href: '""' },
+                				    { icon: "youtube", href: '""' },
+                				  ]}
+                				  directorydifference={0}
+                				  page={PAGES.PROFILE}
+                				/>	
 							</div>
 						</aside>
 						<div className={styles['user-profile-content__artworks']}>
