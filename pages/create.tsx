@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import client from "../lib/apollo-client";
 import gql from "graphql-tag";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
-import styles from "./Create.module.scss";
+import styles from "../styles/pages/Create.module.scss";
 import { checkHandleFree } from "../lib/apiQueries/ArtworkQueries";
 import { SaleType } from "../hooks/connectWallet";
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
