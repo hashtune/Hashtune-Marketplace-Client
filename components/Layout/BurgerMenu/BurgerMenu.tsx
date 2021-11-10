@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import { LinkIcon } from "./LinkIcon";
 import { MenuItem } from "./MenuItem";
+import { PAGES } from "../../../utils/constants/enum";
+import { Socials } from "./Socials";
 
 export const BurgerMenu = () => {
   const [isActive, setIsActive] = useState(false);
@@ -87,11 +89,15 @@ export const BurgerMenu = () => {
           </button>
         </div>
         <div className={styles["nav__footer"]}>
-          <div className={styles["nav__socials"]}>
-            <LinkIcon icon={"instagram"} href={""} />
-            <LinkIcon icon={"twitter"} href={""} />
-            <LinkIcon icon={"youtube"} href={""} />
-          </div>
+          <Socials
+            iconRefs={[
+              { icon: "twitter", href: '""' },
+              { icon: "instagram", href: '""' },
+              { icon: "youtube", href: '""' },
+            ]}
+            directorydifference={0}
+            page={PAGES.HOME}
+          />
           <p className={styles["nav__copyright"]}>
             Hashtune 2021 &copy;. All Rights Reserved.
           </p>
