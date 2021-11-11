@@ -6,6 +6,7 @@ import ArtworkContainer from "../components/Home/ListContainer/ArtworkContainer"
 import { listArtworkQuery } from "../graphql/artwork/queries/listArtworks";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 import { Artwork } from "../graphql/generated/apolloComponents";
+import { PAGES } from "../utils/constants/enum";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({
@@ -26,7 +27,11 @@ export default function Home({ allArtworks }: { allArtworks: Artwork[] }) {
       <Navbar />
       <main>
         <Hero artwork={allArtworks[0]} />
-        <ArtworkContainer type={"All Hashtunes"} artworks={allArtworks} />
+        <ArtworkContainer
+          artworks={allArtworks}
+          tabs={["All Hashtunes", "Auctions", "Buy Now"]}
+          page={PAGES.HOME}
+        />
       </main>
     </div>
   );
