@@ -74,3 +74,17 @@
     }
   }
 }
+@mixin title($underlined, $profile) {
+  font-weight: 500;
+  font-size: large;
+  padding-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 700;
+  @if ($underlined) {
+    border-bottom: 0.2rem solid #1f1f1f;
+  }
+  @if ($profile) {
+    margin-bottom: 2.03rem;
+    padding: 0rem 0rem 1rem 0rem;
+  }
+}

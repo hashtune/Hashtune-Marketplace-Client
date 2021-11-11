@@ -118,9 +118,18 @@ section {
   @include socials(3rem, 3rem);
 }
 .socials-artwork {
-  @include socials(1rem, 2rem);
+  @include socials(1.5rem, 2rem);
 }
-//
+
+.title {
+  @include title(false, false);
+}
+.title-underlined {
+  @include title(true, false);
+}
+.title-underlined-profile {
+  @include title(true, true);
+}
 
 .image-name-handle {
   @include image-name-handle;
