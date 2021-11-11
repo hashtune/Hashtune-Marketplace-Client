@@ -213,11 +213,7 @@ $light-grey-text: #c2c2c2;
     }
   }
 }
-@mixin title() {
-  font-weight: 500;
-  font-size: large;
-  padding-bottom: 2rem;
-}
+
 .artwork {
   display: flex;
   justify-content: center;
@@ -237,11 +233,11 @@ $light-grey-text: #c2c2c2;
     @media screen and (max-width: 768px) {
       width: 100% !important;
     }
-    &--title {
-      @include title;
+    // &--title {
+    //   @include title;
 
-      border-bottom: 1px solid #202020;
-    }
+    //   border-bottom: 1px solid #202020;
+    // }
     &--description {
       color: #c2c2c2;
       padding: 2rem 0rem;
@@ -295,13 +291,13 @@ $light-grey-text: #c2c2c2;
 
     &--bio {
       color: #b0b0b0;
-      padding: 1.5rem 0rem;
+      padding: 2rem 0rem;
       font-size: small;
       line-height: 1.4;
     }
-    &--title {
-      @include title;
-    }
+    // &--title {
+    //   @include title;
+    // }
   }
 }
 .nft {
@@ -312,9 +308,9 @@ $light-grey-text: #c2c2c2;
   margin-bottom: 10rem;
   &__details {
     flex: 1 1 30%;
-    &--title {
-      @include title;
-    }
+    // &--title {
+    //   @include title;
+    // }
     &--top {
       background-color: #272727;
       display: flex;
@@ -376,9 +372,9 @@ $light-grey-text: #c2c2c2;
   }
   &__history {
     flex: 1 1 65%;
-    &--title {
-      @include title;
-    }
+    // &--title {
+    //   @include title;
+    // }
     &--items {
       display: flex;
       flex-direction: column;
