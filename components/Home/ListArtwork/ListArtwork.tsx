@@ -4,13 +4,14 @@ import Price from "./Price";
 import { ListArtworkProps } from "../../../lib/interfaces/ArtworkInterfaces";
 import { randomMockMedia } from "../../../utils/index";
 import styles from "../ListContainer/Artwork.module.scss";
+import { PAGES } from "../../../utils/constants/enum";
 
 const ListArtwork = (props: ListArtworkProps) => {
   const artwork = props.artwork;
   const coverImage = `/dist/images/mock/artworks/${randomMockMedia(16)}.png`;
   const artworkContent: React.RefObject<HTMLDivElement> = useRef(null);
   useEffect(() => {
-    if (props.userPage === true) {
+    if (props.page === PAGES.PROFILE) {
       artworkContent.current?.classList.toggle(
         styles["artwork__content--user-page"]
       );
