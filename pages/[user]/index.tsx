@@ -49,10 +49,6 @@ export default function Profile(singleUser: any) {
   // TODO: If this user does not exist then return 404
   const artworkContainer: React.RefObject<HTMLDivElement> = useRef(null);
   const creator: User = singleUser.singleUser;
-  // const [artworks, setArtworks] = useState(singleUser?.created);
-  // const [tabState, setTabState] = useState('Created');
-  console.log("Created: " + JSON.stringify(creator.created));
-  console.log("Owned: " + JSON.stringify(creator.owned));
   return (
     <div>
       <Navbar />
@@ -78,11 +74,11 @@ export default function Profile(singleUser: any) {
           <div className={styles["user-profile-content"]}>
             <aside className={styles["user-profile-content__sidebar"]}>
               <div className={styles["user-profile-content__sidebar-section"]}>
-                <h3>Bio</h3>
+                <h3 className={"title-underlined-profile"}>Bio</h3>
                 {creator.bio}
               </div>
               <div className={styles["user-profile-content__sidebar-section"]}>
-                <h3>Links</h3>
+                <h3 className={"title-underlined-profile"}>Links</h3>
                 <Socials
                   iconRefs={[
                     { icon: "globe", href: '""' },
