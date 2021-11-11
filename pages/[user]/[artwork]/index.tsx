@@ -159,15 +159,13 @@ export default function SingleArtwork(artwork: any) {
           </div>
           <div className={styles["artwork"] + " container"}>
             <div className={styles["artwork__details"]}>
-              <div className={styles["artwork__details--title"]}>
-                Music Details
-              </div>
+              <div className={"title-underlined"}>Music Details</div>
               <div className={styles["artwork__details--description"]}>
                 {singleArtwork.description}
               </div>
             </div>
             <div className={styles["artwork__creator"]}>
-              <div className={styles["artwork__creator--title"]}>Creator</div>
+              <div className={"title"}>Creator</div>
               <div className={styles["artwork__creator--info"]}>
                 <ImageNameHandle
                   profilePicture={creatorImage}
@@ -194,7 +192,7 @@ export default function SingleArtwork(artwork: any) {
           </div>
           <div className={styles["nft"] + " container"}>
             <div className={styles["nft__details"]}>
-              <div className={styles["nft__details--title"]}>NFT Details</div>
+              <div className={"title"}>NFT Details</div>
               <div className={styles["nft__details--info"]}>
                 <div className={styles["nft__details--top"]}>
                   <div className={styles["nft__details--price"]}>
@@ -212,7 +210,7 @@ export default function SingleArtwork(artwork: any) {
               </div>
             </div>
             <div className={styles["nft__history"]}>
-              <div className={styles["nft__history--title"]}>Album History</div>
+              <div className={"title"}>Album History</div>
               <div className={styles["nft__history--items"]}>
                 {/* HARDCODED LISTED, IMG, DATE */}
                 <ArtworkHistoryItem
