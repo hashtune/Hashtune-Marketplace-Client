@@ -10,12 +10,18 @@ import { listArtworkQuery } from "../../../graphql/artwork/queries/listArtworks"
 
 interface TabProps {
   onClick: () => void;
-  style: string;
   text: string;
+  key: string;
 }
 const Tab = (props: TabProps) => {
   return (
-    <a className={props.style} onClick={() => props.onClick}>
+    <a
+      className="tab-nav__indicators--element"
+      key={props.text}
+      onClick={() => {
+        props.onClick();
+      }}
+    >
       {props.text}
     </a>
   );
