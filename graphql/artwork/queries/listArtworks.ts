@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 export const listArtworkQuery = gql`
-    query queryListArtworks {
-    listArtworks {
+query queryListArtworks($auction: Boolean, $listed: Boolean) {
+    listArtworks(auction: $auction, listed: $listed) {
       Artworks {
         id
         handle
