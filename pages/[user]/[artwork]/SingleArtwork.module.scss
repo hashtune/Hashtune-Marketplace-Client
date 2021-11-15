@@ -1,243 +1,16 @@
 $light-grey-text: #c2c2c2;
 
-@mixin tooltip() {
-  position: absolute;
-  left: -1rem;
-  bottom: 4.4rem;
-  background-color: #272727;
-  padding: 0.4rem 1rem;
-  font-size: 1.2rem;
-  width: max-content;
-
-  visibility: hidden;
-  span {
-    position: absolute;
-    top: 2.5rem;
-    width: 0.7rem;
-    height: 0.7rem;
-    background-color: #272727;
-    transform: rotate(45deg);
-  }
-}
-
-.dot_divider {
-  align-self: center;
-  flex: 1 1 100%;
-}
-
-.hero {
-  width: 100%;
-  height: 85rem;
-  background-color: #090909;
-  margin-bottom: 8rem;
-
-  @media screen and (max-width: 768px) {
-    &__container {
-      grid-template-columns: repeat(auto-fit, minmax(100%, 1fr)) !important;
-    }
-    height: 121rem;
-    margin-bottom: 1rem;
-  }
-  @media only screen and (max-width: 500px) {
-    height: 118rem !important;
-  }
-
-  @media only screen and (min-width: 700px) and (max-width: 1024px) {
-    height: 135rem;
-    margin-bottom: 1rem;
-  }
-  @media only screen and (min-width: 1024px) and (max-width: 1030px) {
-    height: 142rem;
-    margin-bottom: 1rem;
-  }
-
-  @media screen and (max-width: 970px) and (max-width: 1204px) {
-    height: 127rem;
-  }
-
-  &__container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(48rem, 1fr));
-    justify-content: center;
-    align-items: center;
-  }
-  &__hashtune-artwork {
-    margin: 15rem 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @media screen and (max-width: 970px) and (max-width: 1204px) {
-      margin: 10rem 0 2rem 0;
-    }
-    @media screen and (max-width: 768px) {
-      margin: 10rem 0 2rem 0;
-    }
-    &--image {
-      position: relative !important;
-    }
-  }
-  &__hashtune-details {
-    margin-left: 4rem;
-    @media screen and (max-width: 768px) {
-      margin-left: 0;
-      &--description {
-        width: 100% !important;
-      }
-    }
-    &--tooltip {
-      &-1 {
-        @include tooltip();
-        span {
-          &:first-of-type {
-            right: 52%;
-          }
-        }
-      }
-      &-2 {
-        @include tooltip();
-        span {
-          &:first-of-type {
-            right: 45%;
-          }
-        }
-      }
-    }
-    &--header {
-      display: flex;
-      justify-content: flex-start;
-      align-items: baseline;
-      width: 100%;
-      gap: 2rem;
-      div {
-        flex: 1 1 100%;
-      }
-      svg {
-        width: 2.3rem;
-        height: 2.3rem;
-        fill: #fff;
-        margin-left: 1vw;
-      }
-    }
-    &--title {
-      font-size: 2.5vw;
-      flex: 1 1 100%;
-      font-weight: 700;
-    }
-    &--creator-name {
-      font-size: 2.5vw;
-      white-space: nowrap;
-      flex: 1 1 100%;
-      color: #979797;
-    }
-
-    &--downloads {
-      flex: 1 1 100%;
-      a {
-        position: relative;
-        &:hover {
-          svg {
-            opacity: 0.5;
-          }
-          > .hero__hashtune-details--tooltip-2 {
-            visibility: visible;
-          }
-          > .hero__hashtune-details--tooltip-1 {
-            visibility: visible;
-          }
-        }
-      }
-    }
-    &--description {
-      font-size: 1.7rem;
-      color: #c2c2c2;
-      width: 80%;
-      margin-bottom: 2rem;
-    }
-    &--footer {
-      display: flex;
-      margin-top: 7rem;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 5%;
-    }
-    &--play-button {
-      cursor: pointer;
-      transform: rotate(45deg);
-      margin-top: 5px;
-    }
-    &--times {
-      display: flex;
-      justify-content: space-between;
-      a {
-        padding: 0rem 0.7rem;
-        background-color: #303030;
-        border: 1px transparent;
-        border-radius: 2px;
-        font-size: 1.3rem;
-      }
-    }
-  }
-  &__hashtune-auction-details {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    @media screen and (max-width: 768px) {
-      flex-wrap: wrap;
-      & .vertical_divider {
-        display: none !important;
-      }
-      .price_card {
-        width: 100%;
-        margin-bottom: 3rem;
-      }
-      .countdown_card {
-        width: 100%;
-      }
-      .countdown_card-data {
-        width: 100%;
-        justify-content: space-between;
-      }
-    }
-    @media screen and (max-width: 970px) and (max-width: 1204px) {
-      // align-items: start;
-      .price_card {
-        // width: 50%;
-        margin-bottom: 3rem;
-      }
-      .countdown_card {
-        // width: 50%;
-      }
-      .countdown_card-data {
-        // margin-right: 5rem;
-      }
-    }
-  }
-}
-
 .artwork {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 8%;
-  img {
-    border-radius: 50%;
-    border: 20px solid transparent;
-    border-image: linear-gradient(305deg, #f1d7e0, #e0432e 63%, #e5e0f2 13%)
-      border-box;
-    //Doesnt work yet
-  }
 
   &__details {
-    // height: 20rem;
     flex: 1 1 70%;
     @media screen and (max-width: 768px) {
       width: 100% !important;
     }
-    // &--title {
-    //   @include title;
-
-    //   border-bottom: 1px solid #202020;
-    // }
     &--description {
       color: #c2c2c2;
       padding: 2rem 0rem;
@@ -246,42 +19,6 @@ $light-grey-text: #c2c2c2;
   }
   &__creator {
     flex: 1 1 25%;
-    &--header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 5%;
-    }
-    &--image {
-      flex: 1 1 15%;
-    }
-    &--name-handle {
-      flex: 1 1 77%;
-      height: min-content;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: flex-start;
-    }
-    &--name-approved {
-      line-height: 2rem;
-      display: flex;
-      height: max-content;
-      svg {
-        max-height: 0.5rem;
-        max-width: 0.5rem;
-      }
-    }
-
-    &--name {
-      font-weight: 550;
-      flex: 1 1 100%;
-      font-size: larger;
-    }
-    &--handle {
-      font-size: 1.4rem;
-      color: $light-grey-text;
-    }
 
     &--info {
       background-color: #0f0f0f;
@@ -295,9 +32,6 @@ $light-grey-text: #c2c2c2;
       font-size: small;
       line-height: 1.4;
     }
-    // &--title {
-    //   @include title;
-    // }
   }
 }
 .nft {
@@ -308,9 +42,6 @@ $light-grey-text: #c2c2c2;
   margin-bottom: 10rem;
   &__details {
     flex: 1 1 30%;
-    // &--title {
-    //   @include title;
-    // }
     &--top {
       background-color: #272727;
       display: flex;
@@ -372,9 +103,6 @@ $light-grey-text: #c2c2c2;
   }
   &__history {
     flex: 1 1 65%;
-    // &--title {
-    //   @include title;
-    // }
     &--items {
       display: flex;
       flex-direction: column;
