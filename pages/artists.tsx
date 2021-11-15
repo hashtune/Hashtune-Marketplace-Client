@@ -1,7 +1,7 @@
 import { listCreatorsQuery } from "../graphql/user/queries/listApprovedCreators";
 import client from "../lib/apollo-client";
 import React from "react";
-import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
+import CreatorContainer from "../components/ListCreator/CreatorContainer";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 import { User } from "../graphql/generated/apolloComponents";
 

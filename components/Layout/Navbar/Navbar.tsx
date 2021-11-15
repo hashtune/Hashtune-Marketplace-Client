@@ -6,7 +6,7 @@ import Search from "./Search";
 import { BurgerMenu } from "../BurgerMenu/BurgerMenu";
 import { MetamaskContext } from "../../../hooks/connectWallet";
 import React, { useEffect, useRef } from "react";
-import ConnectWallet from "./ConnectWallet";
+import ConnectWallet from "../ConnectWallet/ConnectWallet";
 import { useRouter } from "next/router";
 
 export const Navbar = () => {

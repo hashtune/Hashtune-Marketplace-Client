@@ -7,15 +7,15 @@ import client from "../../lib/apollo-client";
 import React, { useEffect, useRef, useState } from "react";
 import { Navbar } from "../../components/Layout/Navbar/Navbar";
 import { randomMockMedia } from "../../utils/index";
-import ListArtwork from "../../components/Home/ListArtwork/ListArtwork";
-import SortDropDown from "../../components/Home/ListContainer/SortDropdown";
+import ListArtwork from "../../components/ListArtwork/ListArtwork";
+import SortDropDown from "../../components/ArtworkContainer/SortDropdown";
 import { queryProfileData } from "../../graphql/user/queries/profileData";
 import { Artwork, User } from "../../graphql/generated/apolloComponents";
-import { Socials } from "../../components/Layout/BurgerMenu/Socials";
+import { LinkIcons } from "../../components/Layout/LinkIcons/LinkIcons";
 import { PAGES } from "../../utils/constants/enum";
-import ImageNameHandle from "../../components/ImageNameHandle";
+import ImageNameHandle from "../../components/Badges/ImageNameHandle";
 import PagesManifestPlugin from "next/dist/build/webpack/plugins/pages-manifest-plugin";
-import ArtworkContainer from "../../components/Home/ListContainer/ArtworkContainer";
+import ArtworkContainer from "../../components/ArtworkContainer/ArtworkContainer";
 
 // TODO: Refactor page/query
 
@@ -79,7 +79,7 @@ export default function Profile(singleUser: any) {
               </div>
               <div className={styles["user-profile-content__sidebar-section"]}>
                 <h3 className={"title-underlined-profile"}>Links</h3>
-                <Socials
+                <LinkIcons
                   iconRefs={[
                     { icon: "globe", href: '""' },
                     { icon: "twitter", href: '""' },

@@ -1,12 +1,13 @@
 import { GetStaticProps } from "next";
 import client from "../lib/apollo-client";
 import React from "react";
-import Hero from "../components/Home/Hero/Hero";
-import ArtworkContainer from "../components/Home/ListContainer/ArtworkContainer";
+import ArtworkContainer from "../components/ArtworkContainer/ArtworkContainer";
 import { listArtworkQuery } from "../graphql/artwork/queries/listArtworks";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
 import { Artwork } from "../graphql/generated/apolloComponents";
 import { PAGES } from "../utils/constants/enum";
+import { useRouter } from "next/router";
+import Hero from "../components/Hero/Hero";
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data } = await client.query({
