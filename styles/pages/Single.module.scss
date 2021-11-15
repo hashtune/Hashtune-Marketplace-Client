@@ -1,0 +1,22 @@
+.single__preview {
+  background-color: #090909;
+}
+
+.single__form {
+}
+
+.single__container {
+  margin-top: 7rem;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  .single__section {
+    padding: 7rem;
+    height: 90%;
+    width: 100%;
+    h1 {
+      font-size: 4.1rem;
+      font-weight: 600;
+    }
+  }
+}
