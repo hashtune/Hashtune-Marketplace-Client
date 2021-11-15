@@ -117,7 +117,7 @@ export default function Hero(props: ListArtworkProps, coin: Coin) {
                             <span />
                           </div>
                           <svg>
-                            <use xlinkHref="wave-file" />
+                            <use xlinkHref="../dist/icons/sprite.svg#hashtune-wave-file" />
                           </svg>
                         </a>
                       </div>
