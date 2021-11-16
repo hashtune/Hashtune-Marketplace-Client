@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
-import styles from "../../pages/[user]/[artwork]/SingleArtwork.module.scss";
+import styles from "./ArtworkHistoryItem.module.scss";
 import Price from "../ListArtwork/Price";
 import { Artwork } from "../../graphql/generated/apolloComponents";
 
@@ -9,13 +9,15 @@ interface HistoryItemProps {
   listed: boolean;
   date: string;
   actor: string;
+  price?: string;
   artwork: Artwork;
 }
 
 const ArtworkHistoryItem = (props: HistoryItemProps) => {
+  let price = props.price !== undefined ? props.price : "";
   return (
-    <div className={styles["nft__history--item"]}>
-      <div className={styles["nft__history--item-main"]}>
+    <div className={"nft__history--item"}>
+      <div className={"nft__history--main"}>
         <div>
           <Image
             alt="list cover image"
@@ -24,17 +26,17 @@ const ArtworkHistoryItem = (props: HistoryItemProps) => {
             height={50}
           />
         </div>
-        <div className={styles["nft__history--info"]}>
-          <div className={styles["nft__history--action"]}>
+        <div className={"nft__history--info"}>
+          <div className={"nft__history--action"}>
             {props.listed ? "Listed" : "Minted"} by @{props.actor}
           </div>
-          <div className={styles["nft__history--date"]}>{props.date}</div>
+          <div className={"nft__history--date"}>{props.date}</div>
         </div>
       </div>
       {props.listed ? (
-        <div className={styles["nft__history--price"]}>
-          <div className={styles["nft__history--price-bnb"]}>100 BNB</div>
-          <div className={styles["nft__history--price-dollar"]}>$1220</div>
+        <div className={"nft__history--price"}>
+          <div className={"nft__history--bnb"}>{props.price}</div>
+          <div className={"nft__history--dollar"}>$1220</div>
         </div>
       ) : (
         <></>

@@ -28,7 +28,7 @@ const ImageNameHandle = (props: CreatorImageHandleProps) => {
       </div>
       <div className={style + "__content"}>
         <div className={style + "__content--name-status"}>
-          {props.fullName}
+          <a>{props.fullName}</a>
           {props.isApprovedCreator ? (
             <div className={style + "__content-status"}>
               <svg>
