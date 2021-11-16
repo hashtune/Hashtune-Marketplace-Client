@@ -143,6 +143,7 @@ export default function SingleArtwork(artwork: any) {
                   date={"Sep 22, 2021 at 3:39am"}
                   artwork={singleArtwork}
                   actor={"sophiekahn"}
+                  price={priceText[1]}
                 />
                 <ArtworkHistoryItem
                   imgSrc={coverImage}
