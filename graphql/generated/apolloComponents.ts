@@ -187,6 +187,8 @@ export type Mutation = {
   registerUser: UserResult;
   /** edit the price or reserve price of an artwork */
   updateArtwork: ArtworkResult;
+  /** Edit user profile data */
+  updateUser: UserResult;
 };
 
 
@@ -213,6 +215,11 @@ export type MutationRegisterUserArgs = {
 
 export type MutationUpdateArtworkArgs = {
   InputType?: Maybe<UpdateArtworkInput>;
+};
+
+
+export type MutationUpdateUserArgs = {
+  InputType?: Maybe<UpdateUserInput>;
 };
 
 export type Query = {
@@ -267,6 +274,16 @@ export type UpdateArtworkInput = {
   artworkId: Scalars['String'];
   reservePrice?: Maybe<Scalars['BigInt']>;
   salePrice?: Maybe<Scalars['BigInt']>;
+};
+
+/** User input */
+export type UpdateUserInput = {
+  bio?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  userId: Scalars['String'];
 };
 
 export type User = {
