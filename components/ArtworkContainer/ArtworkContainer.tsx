@@ -59,10 +59,9 @@ const ArtworkContainer = (props: ArtworkContainerProps) => {
               setTabState(tab);
             } } text={tab} key={tab}/>
           ))}
-          
-      </div>
+        </div>
         <div className="tab-nav__dropdown">
-          <SortDropDown />
+          <SortDropDown/>
         </div>
       </div>
       <div className={styles["artworks__container"]}>
@@ -71,7 +70,7 @@ const ArtworkContainer = (props: ArtworkContainerProps) => {
             <div key={artwork.id} className={styles["artworks__item"]}>
               <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
                 <a>
-                  <ListArtwork page = {props.page} imageSize={368} artwork={artwork} />
+                  <ListArtwork page = {props.page} imageSize={368} artwork={artwork}/>
                 </a>
               </Link>
             </div>

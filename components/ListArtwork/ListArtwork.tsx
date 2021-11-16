@@ -19,7 +19,7 @@ const ListArtwork = (props: ListArtworkProps) => {
   });
 
   return (
-    <div className={styles["artwork"]}>
+    <div className={"artwork"}>
       <div>
         <Image
           alt="list cover image"
@@ -28,8 +28,8 @@ const ListArtwork = (props: ListArtworkProps) => {
           height={props.imageSize}
         />
       </div>
-      <div ref={artworkContent} className={styles["artwork__content"]}>
-        <div className={styles["artwork__content--title-name"]}>
+      <div ref={artworkContent} className={"artwork__content"}>
+        <div className={"artwork__content--title-name"}>
           <h3>{artwork.title}</h3>
           <p>{artwork.creator.fullName}</p>
         </div>
