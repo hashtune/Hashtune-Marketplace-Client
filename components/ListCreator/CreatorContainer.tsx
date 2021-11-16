@@ -8,7 +8,7 @@ import SortDropDown from "../ArtworkContainer/SortDropdown";
 const CreatorContainer = (props: ListCreatorFieldsProp) => {
   let creatorImage = "/images/creator.png"; //Hardcoded for now
   return (
-    <div>
+    <div className={"list-creators"}>
       <h3>All Artists</h3>
       <SortDropDown />
       <ul>
