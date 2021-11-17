@@ -19,7 +19,7 @@ export async function getServerSideProps() {
 }
 export default function Creators({ allCreators }: { allCreators: User[] }) {
   return (
-    <div>
+    <div className="creators-page">
       <Navbar />
       <CreatorContainer creators={allCreators} />
     </div>
