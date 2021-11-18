@@ -24,7 +24,8 @@ describe("Locators for ArtworkContainer", () => {
     })
 
     it('locating ArtworkContainer elements specific to Profile Page', () => {
-        cy.visit("/user1")
+        cy.visit("/user1");
+        cy.intercept("")
 
         // DUPLICATE: Should have indicators and dropdown as child
         cy.get('.tab-nav').children().should('have.length', 2);

@@ -50,7 +50,7 @@ export default function Profile(singleUser: any) {
   const artworkContainer: React.RefObject<HTMLDivElement> = useRef(null);
   const creator: User = singleUser.singleUser;
   return (
-    <div>
+    <div className="profile">
       <Navbar />
       <main>
         <div className={styles["user-profile"]}>
