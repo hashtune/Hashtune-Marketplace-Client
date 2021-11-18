@@ -176,7 +176,7 @@ const ConnectWallet = (props: ConnectWalletProps) => {
           <div>active chain Id: {chainId}</div> */}
           <div ref={footer} className={styles["body__footer"]}>
             <p>
-              <b>Don't have a wallet?</b>
+              <b>Don&apos;t have a wallet?</b>
             </p>
             <p>Check our complete guide on wallets.</p>
           </div>
