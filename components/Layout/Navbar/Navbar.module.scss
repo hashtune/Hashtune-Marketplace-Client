@@ -1,0 +1,124 @@
+.navbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #0d0d0d;
+  position: fixed;
+  height: 7.4rem;
+  padding: 0 3rem;
+  top: 0;
+  z-index: 1;
+  color: #fff;
+  border-bottom: 0.2rem solid #1b1b1b;
+
+  &__register {
+    justify-content: center !important;
+  }
+  & .btn {
+    font-size: 0.9rem;
+  }
+  &__logo {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    justify-content: center;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.2s;
+    }
+  }
+  &__sidebar-icon {
+    margin-top: 0.2rem;
+    cursor: pointer;
+    svg {
+      fill: #fff;
+    }
+  }
+
+  &__menu {
+    flex: 0 0 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+    &-item {
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        height: 100%;
+        transition: all 0.2s;
+        height: 100%;
+        padding: 2rem 4rem;
+        svg {
+          width: 2rem;
+          height: 2rem;
+          margin-right: 1rem;
+        }
+        &:hover {
+          background-color: #181818;
+        }
+        &.active {
+          background-color: #181818;
+        }
+      }
+    }
+  }
+
+  &__search {
+    height: 100%;
+    flex: 50% 0;
+    @media screen and (max-width: 970px) and (max-width: 1204px) {
+      display: none;
+    }
+
+    &--input {
+      height: 100%;
+      width: 60rem;
+      background-color: #000000;
+      border: none;
+      outline: none;
+      color: #818181;
+      padding: 0 4rem;
+      font-size: 1.5rem;
+      &:focus {
+        color: #ffffff;
+        &--icon {
+          opacity: 1;
+        }
+      }
+    }
+    &--icon {
+      position: absolute;
+      width: 1.2rem;
+      height: 7rem;
+      margin: 0.1rem 2rem;
+      opacity: 0.5;
+    }
+  }
+  &__wallet {
+    font-size: 1.6rem;
+    background-color: #181818;
+    @media screen and (min-width: 375px) and (max-width: 700px) {
+      display: none;
+    }
+    @media only screen and (min-width: 700px) and (max-width: 1024px) {
+      margin: auto 2rem auto auto;
+    }
+  }
+}
+
+// navbar__mobile-elements
+
+// .register__navbar {
+//   height: 100vh;
+//   width: 50vw;
+//   position: relative;
+//   border: none;
+//   background-color: #000000;
+// }

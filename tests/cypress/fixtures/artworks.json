@@ -1,0 +1,104 @@
+
+[
+  {
+    "id": "cku1167b90014k8v5ar7cz3hz",
+    "handle": "amazingsong",
+    "title": "amazingsongTitle",
+    "image": "blahblah",
+    "description": "song description",
+    "listed": true,
+    "price": null,
+    "reservePrice": "50",
+    "saleType": "auction",
+    "Auctions": [],
+    "latestAuction": null,
+    "auctionWithNoReservePriceAndNoBids": false,
+    "creator": {
+      "fullName": "user 1",
+      "id": "cku1167af0000k8v5m0ah764f"
+    }
+  },
+  {
+    "id": "cku1167bq0027k8v5ywlm0fcs",
+    "handle": "hello",
+    "title": "amazingsongTitle",
+    "image": "nothing",
+    "description": "song description",
+    "listed": true,
+    "price": null,
+    "reservePrice": null,
+    "saleType": "auction",
+    "Auctions": [],
+    "latestAuction": null,
+    "auctionWithNoReservePriceAndNoBids": true,
+    "creator": {
+      "fullName": "user 1",
+      "id": "cku1167af0000k8v5m0ah764f"
+    }
+  },
+  {
+    "id": "cku1167c10040k8v5qdpfvdo1",
+    "handle": "history",
+    "title": "amazingsongTitle",
+    "image": "blahblah2",
+    "description": "song description",
+    "listed": true,
+    "price": null,
+    "reservePrice": "50",
+    "saleType": "auction",
+    "Auctions": [
+      {
+        "id": "cku1167c10041k8v5xx012xst",
+        "bids": [
+          {
+            "id": "cku1167cg0057k8v5jisb3a02"
+          }
+        ]
+      }
+    ],
+    "latestAuction": {
+      "currentHigh": "0"
+    },
+    "auctionWithNoReservePriceAndNoBids": false,
+    "creator": {
+      "fullName": "user 1",
+      "id": "cku1167af0000k8v5m0ah764f"
+    }
+  },
+  {
+    "id": "cku1167cr0060k8v5d5m9438b",
+    "handle": "amazingsong2",
+    "title": "amazingsongTitle2",
+    "image": "blahblah2",
+    "description": "song description2",
+    "listed": true,
+    "price": "100",
+    "reservePrice": null,
+    "saleType": "fixed",
+    "Auctions": [],
+    "latestAuction": null,
+    "auctionWithNoReservePriceAndNoBids": false,
+    "creator": {
+      "fullName": "user 2",
+      "id": "cku1167b00007k8v51jb4cumv"
+    }
+  },
+  {
+    "id": "cku1167d30072k8v5zucksbgx",
+    "handle": "fixedwithhistory",
+    "title": "amazingsongTitle",
+    "image": "blahblah2",
+    "description": "song description",
+    "listed": true,
+    "price": "100",
+    "reservePrice": null,
+    "saleType": "fixed",
+    "Auctions": [],
+    "latestAuction": null,
+    "auctionWithNoReservePriceAndNoBids": false,
+    "creator": {
+      "fullName": "user 1",
+      "id": "cku1167af0000k8v5m0ah764f"
+    }
+  }
+]
