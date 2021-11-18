@@ -1,3 +1,0 @@
-# Hashtune Client
-
-test-git
