@@ -115,13 +115,14 @@ export default function SingleArtwork(artwork: any) {
                   <div className={styles["nft__details--price"]}>
                     <div>{priceText[0]}</div>
                     <div>{priceText[1]}</div>
+                    {/* HARDCODED */}
                     <div>$1,220</div>
                   </div>
                   <Countdown liveAt={date} page={PAGES.ARTWORK} />
                 </div>
                 <div className={styles["nft__details--btn"]}>
                   <div className={styles["nft__details--btn-inner"]}>
-                    Make an offer
+                    {priceText[0] === "Buy For " ? "Purchase" : priceText[0]}
                   </div>
                 </div>
               </div>
