@@ -15,6 +15,8 @@ export default function Signup() {
   ] = useRegisterUserMutation();
 
   const { account } = React.useContext(MetamaskContext);
+  const { getSignature } = React.useContext(MetamaskContext)
+  const [signupMutation, { error }] = useSignupMutation();
   // TODO: If no account connected - figure out if we want to redierct
   // prompt the user etc...
   if (!account) return null;
@@ -27,8 +29,8 @@ export default function Signup() {
     }
     return errorMessage;
   };
-  const { getSignature } = React.useContext(MetamaskContext)
-  const [signupMutation, { error }] = useSignupMutation();
+
+
 
   return (
     <div className={"app " + styles["register__layout"]}>
