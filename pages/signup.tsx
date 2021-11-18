@@ -4,8 +4,9 @@ import styles from "../styles/pages/Signup.module.scss";
 import { Formik, Field } from "formik";
 import { InputField } from "../components/Fields/InputField";
 import { useRegisterUserMutation } from "../graphql/generated/apolloComponents";
-import { MetamaskContext } from "../hooks/connectWallet";
+import { MetamaskContext, msgParams } from "../hooks/connectWallet";
 import router from "next/router";
+import { useSignupMutation } from "../graphql/generated/apolloComponents";
 
 export default function Signup() {
   const [
@@ -26,6 +27,8 @@ export default function Signup() {
     }
     return errorMessage;
   };
+  const { getSignature } = React.useContext(MetamaskContext)
+  const [signupMutation, { error }] = useSignupMutation();
 
   return (
     <div className={"app " + styles["register__layout"]}>
@@ -50,8 +53,26 @@ export default function Signup() {
                 },
               },
             });
+            // TODO always redirect to signup if account and no user
             if (res.data?.registerUser.Users && res.data?.registerUser.Users.length > 0) {
-              router.replace(`/${res.data.registerUser.Users[0].handle}`)
+              const sig: string = await getSignature();
+              const signupResult = await signupMutation({variables: {
+                signedMessage: sig,
+                publicKey: account,
+                typedData: msgParams,
+              }})
+              console.log({signupResult})
+              if (signupResult.data?.cookie) {
+                // redirect to new profile
+                router.replace(`/${res.data.registerUser.Users[0].handle}`)
+              } else {
+                // error generating cookie, rollback user creation
+                //TODO delete mutation
+              }
+              console.log({error})
+            } else {
+              //error during register
+              console.log({res})
             }
           }}
           initialValues={{

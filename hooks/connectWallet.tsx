@@ -1,12 +1,8 @@
 import MetaMaskOnboarding from "@metamask/onboarding";
-import { recoverTypedSignature_v4 } from "eth-sig-util";
-
 import { ethers } from "ethers";
 import React from "react";
 import { useEffect } from "react";
-import { useSignupMutation } from "../graphql/generated/apolloComponents";
 import * as abi from "../SongOrAlbumNFT.json";
-const axios = require("axios").default;
 
 export type SaleType = "auction" | "fixed";
 export type CreateNFTProps = {
@@ -39,7 +35,8 @@ export type MetamaskContext = {
   setContract: (data: string) => void;
   approveArtist: () => void;
   createNFT: (props: CreateNFTProps) => Promise<string>;
-  getSignature: () => void;
+  getSignature: () => Promise<string>;
+  disconnectAccount: () => Promise<void>;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
@@ -65,10 +62,11 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
   setContract: () => {},
   approveArtist: () => {},
   createNFT: () => ({} as Promise<string>),
-  getSignature: () => {},
+  getSignature: () => ({} as Promise<string>),
+  disconnectAccount: () => ({} as Promise<void>),
 });
 
-const msgParams = JSON.stringify({
+export const msgParams = JSON.stringify({
   types: {
     EIP712Domain: [
       { name: "name", type: "string" },
@@ -96,7 +94,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
   const [signedMessage, setSignedMessage] = React.useState("");
-  const [typedData, setTypedData] = React.useState(msgParams);
   const [fetchingAccount, setFetchingAccount] = React.useState(false);
   const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
   const [fetchingChain, setFetchingChain] = React.useState(false);
@@ -107,13 +104,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
     false
   );
 
-  const [signupMutation, { data, loading, error }] = useSignupMutation({
-    variables: {
-      signedMessage,
-      publicKey: account,
-      typedData,
-    },
-  });
   const getAccount = async () => {
     try {
       setFetchingAccount(true);
@@ -132,21 +122,21 @@ export const MetamaskContextProvider = ({ children }: any) => {
     }
   };
 
+  const disconnectAccount = async () => {
+    setAccount("");
+  };
+
   const getSignature = async () => {
     try {
-      const signedMessage = await (window as any).web3.currentProvider.sendAsync(
-        {
-          method: "eth_signTypedData_v4",
-          params: [(window as any).ethereum.selectedAddress, msgParams],
-          from: (window as any).ethereum.selectedAddress,
-        },
-        function(err: any, result: any) {
-          if (result) {
-            setSignedMessage(result.result);
-          }
-          return result;
-        }
-      );
+      const result = await (window as any).ethereum.request({
+        method: "eth_signTypedData_v4",
+        params: [(window as any).ethereum.selectedAddress, msgParams],
+        from: (window as any).ethereum.selectedAddress,
+      });
+      if (result) {
+        setSignedMessage(result);
+        return result;
+      }
     } catch (e) {
       console.log(e);
     }
@@ -190,7 +180,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
           } else {
             setAccount(newAccounts);
           }
-          getSignature();
         }
       );
       (window as any).ethereum.on("networkChanged", (newNetwork: string) => {
@@ -212,24 +201,13 @@ export const MetamaskContextProvider = ({ children }: any) => {
     if (account && account.length > 0) {
       setWalletConnected(true);
     } else {
+      // TODO call this.disconnectAccount() when the user disconnects
+      // via meta mask. Involves refactoring when we ask for accounts
+      console.log({ account });
       setWalletConnected(false);
     }
   }, [account]);
 
-  async function handleSignup() {
-    return await signupMutation({
-      variables: {
-        signedMessage,
-        publicKey: account,
-        typedData: typedData,
-      },
-    });
-  }
-  useEffect(() => {
-    if (account && signedMessage && signedMessage.length > 0) {
-      handleSignup();
-    }
-  }, [signedMessage]); // should accounts be in the dependencies?
   const [provider, setProvider] = React.useState<any | null>(null);
   const [contract, setContract] = React.useState<any | null>(null);
 
@@ -320,6 +298,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
         approveArtist, // test function
         createNFT,
         getSignature,
+        disconnectAccount,
       }}
     >
       {children}
