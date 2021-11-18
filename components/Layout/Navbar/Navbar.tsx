@@ -60,7 +60,12 @@ export const Navbar = () => {
         <div className={styles["navbar__logo"]} data-cy="navbar-logo">
           <Link href="/">
             <a>
-              <Image src="/images/logo.svg" width={133} height={32} />
+              <Image
+                src="/images/logo.svg"
+                width={133}
+                height={32}
+                alt="Hashtune Logo"
+              />
             </a>
           </Link>
         </div>
@@ -104,7 +109,12 @@ export const Navbar = () => {
           <Link href="/">
             <a>
               {/* <Image src="/images/logo.svg" width={169} height={39} /> */}
-              <Image src="/images/logo.svg" width={133} height={32} />
+              <Image
+                src="/images/logo.svg"
+                width={133}
+                height={32}
+                alt="Hashtune Logo"
+              />
             </a>
           </Link>
         </div>

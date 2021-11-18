@@ -3,7 +3,7 @@ import {
   GetServerSidePropsContext,
   GetStaticProps,
 } from "next";
-import { queryCreators } from "../lib/apiQueries/CreatorQueries";
+import { listCreatorsQuery } from "../graphql/user/queries/listApprovedCreators";
 import client from "../lib/apollo-client";
 import {
   ListCreatorFields,
@@ -15,7 +15,7 @@ import { Navbar } from "../components/Layout/Navbar/Navbar";
 
 export async function getServerSideProps() {
   const { data } = await client.query({
-    query: queryCreators,
+    query: listCreatorsQuery,
   });
 
   return {

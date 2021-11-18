@@ -10,7 +10,7 @@ import { randomMockMedia } from '../../utils/index';
 import ListArtwork from '../../components/Home/ListArtwork/ListArtwork';
 import { ListArtworkFields } from '../../lib/interfaces/ArtworkInterfaces';
 import SortDropDown from '../../components/Home/ListContainer/SortDropdown';
-import { queryProfileData } from '../../lib/apiQueries/UserQueries';
+import { queryProfileData } from '../../graphql/user/queries/profileData';
 
 // TODO: Refactor page/query
 
@@ -73,7 +73,7 @@ export default function User(singleUser: any) {
 				<div className="container_relative">
 					<div className={styles['user-profile-details']}>
 						<div className={styles['user-profile-details__picture']}>
-							<Image src={profilePicture} width="180" height="180" alt="" />
+							<Image src={profilePicture} width="180" height="180" alt={singleUser?.fullName} />
 						</div>
 						<div className={styles['user-profile-details__content']}>
 							<div className={styles['user-profile-details__content-primary']}>

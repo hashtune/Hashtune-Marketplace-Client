@@ -6,7 +6,7 @@ import { ListCreatorFields } from "../../../lib/interfaces/CreatorInterfaces";
 const ListCreator = (props: ListCreatorFields) => {
   return (
     <div>
-      <Image src={props.image} width={346} height={346} />
+      <Image src={props.image} width={346} height={346} alt={props.fullName} />
       <h2>{props.fullName}</h2>
     </div>
   );

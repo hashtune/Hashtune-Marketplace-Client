@@ -196,6 +196,8 @@ export type Mutation = {
   registerUser: UserResult;
   /** edit the price or reserve price of an artwork */
   updateArtwork: ArtworkResult;
+  /** Edit user profile data */
+  updateUser: UserResult;
 };
 
 
@@ -229,6 +231,11 @@ export type MutationRegisterUserArgs = {
 
 export type MutationUpdateArtworkArgs = {
   InputType?: Maybe<UpdateArtworkInput>;
+};
+
+
+export type MutationUpdateUserArgs = {
+  InputType?: Maybe<UpdateUserInput>;
 };
 
 export type Query = {
@@ -285,6 +292,16 @@ export type UpdateArtworkInput = {
   salePrice?: Maybe<Scalars['BigInt']>;
 };
 
+/** User input */
+export type UpdateUserInput = {
+  bio?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  userId: Scalars['String'];
+};
+
 export type User = {
   __typename?: 'User';
   bio: Scalars['String'];
@@ -318,6 +335,18 @@ export type Wallet = {
   updatedAt: Scalars['String'];
 };
 
+export type FindArtworkQueryVariables = Exact<{
+  findArtworkId: Scalars['String'];
+}>;
+
+
+export type FindArtworkQuery = { __typename?: 'Query', findArtwork: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, image: string, description: string, listed: boolean, price?: any | null | undefined, saleType: string, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', currentHigh: any, artworkId: string, liveAt?: any | null | undefined, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined, creator: { __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string } } }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', path?: string | null | undefined, message?: string | null | undefined } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+
+export type QueryListArtworksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type QueryListArtworksQuery = { __typename?: 'Query', listArtworks: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', id: string, handle: string, title: string, image: string, description: string, listed: boolean, saleType: string, price?: any | null | undefined, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, creator: { __typename?: 'User', fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean }, Auctions: Array<{ __typename?: 'Auction', bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', artworkId: string, liveAt?: any | null | undefined, currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', message?: string | null | undefined, path?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ExternalChainError?: { __typename?: 'ExternalChainError', message: string } | null | undefined, ExternalChainErrorStillPending?: { __typename?: 'ExternalChainErrorStillPending', message: string } | null | undefined } };
+
 export type DisconnectUserMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -347,7 +376,192 @@ export type FindUserByPublicKeyQueryVariables = Exact<{
 
 export type FindUserByPublicKeyQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', handle: string }> | null | undefined, ClientErrorUserNotFound?: { __typename?: 'ClientErrorUserNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined, ClientErrorJWTInvalid?: { __typename?: 'ClientErrorJWTInvalid', message?: string | null | undefined } | null | undefined } };
 
+export type AllListCreatorsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
+
+export type AllListCreatorsQueryQuery = { __typename?: 'Query', listCreators: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', id: string, fullName: string, image?: string | null | undefined, handle: string, bio: string, email: string, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string } }> | null | undefined, ClientErrorUserNotFound?: { __typename?: 'ClientErrorUserNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+
+export type ProfileQueryQueryVariables = Exact<{
+  handle: Scalars['String'];
+}>;
+
+
+export type ProfileQueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string }, created: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }>, owned: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> }> | null | undefined } };
+
+
+export const FindArtworkDocument = gql`
+    query findArtwork($findArtworkId: String!) {
+  findArtwork(id: $findArtworkId) {
+    Artworks {
+      kind
+      handle
+      title
+      image
+      description
+      listed
+      price
+      saleType
+      reservePrice
+      Auctions {
+        currentHigh
+        liveAt
+        artworkId
+        bids {
+          id
+        }
+      }
+      latestAuction {
+        currentHigh
+        bids {
+          id
+        }
+        artworkId
+        liveAt
+      }
+      auctionWithNoReservePriceAndNoBids
+      creator {
+        id
+        fullName
+        handle
+        email
+        bio
+        image
+        isApprovedCreator
+        wallet {
+          provider
+          publicKey
+        }
+      }
+    }
+    ClientErrorArtworkNotFound {
+      message
+    }
+    ClientErrorArgumentsConflict {
+      path
+      message
+    }
+    ClientErrorUserUnauthorized {
+      message
+    }
+    ClientErrorUnknown {
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindArtworkQuery__
+ *
+ * To run a query within a React component, call `useFindArtworkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindArtworkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindArtworkQuery({
+ *   variables: {
+ *      findArtworkId: // value for 'findArtworkId'
+ *   },
+ * });
+ */
+export function useFindArtworkQuery(baseOptions: Apollo.QueryHookOptions<FindArtworkQuery, FindArtworkQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindArtworkQuery, FindArtworkQueryVariables>(FindArtworkDocument, options);
+      }
+export function useFindArtworkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindArtworkQuery, FindArtworkQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindArtworkQuery, FindArtworkQueryVariables>(FindArtworkDocument, options);
+        }
+export type FindArtworkQueryHookResult = ReturnType<typeof useFindArtworkQuery>;
+export type FindArtworkLazyQueryHookResult = ReturnType<typeof useFindArtworkLazyQuery>;
+export type FindArtworkQueryResult = Apollo.QueryResult<FindArtworkQuery, FindArtworkQueryVariables>;
+export const QueryListArtworksDocument = gql`
+    query queryListArtworks {
+  listArtworks {
+    Artworks {
+      id
+      handle
+      title
+      image
+      description
+      listed
+      saleType
+      price
+      reservePrice
+      auctionWithNoReservePriceAndNoBids
+      creator {
+        fullName
+        handle
+        email
+        bio
+        image
+        isApprovedCreator
+      }
+      Auctions {
+        bids {
+          id
+        }
+      }
+      latestAuction {
+        bids {
+          id
+        }
+        artworkId
+        liveAt
+        currentHigh
+      }
+    }
+    ClientErrorArtworkNotFound {
+      message
+    }
+    ClientErrorArgumentsConflict {
+      message
+      path
+    }
+    ClientErrorUnknown {
+      message
+    }
+    ClientErrorUserUnauthorized {
+      message
+    }
+    ExternalChainError {
+      message
+    }
+    ExternalChainErrorStillPending {
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useQueryListArtworksQuery__
+ *
+ * To run a query within a React component, call `useQueryListArtworksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useQueryListArtworksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useQueryListArtworksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useQueryListArtworksQuery(baseOptions?: Apollo.QueryHookOptions<QueryListArtworksQuery, QueryListArtworksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<QueryListArtworksQuery, QueryListArtworksQueryVariables>(QueryListArtworksDocument, options);
+      }
+export function useQueryListArtworksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryListArtworksQuery, QueryListArtworksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<QueryListArtworksQuery, QueryListArtworksQueryVariables>(QueryListArtworksDocument, options);
+        }
+export type QueryListArtworksQueryHookResult = ReturnType<typeof useQueryListArtworksQuery>;
+export type QueryListArtworksLazyQueryHookResult = ReturnType<typeof useQueryListArtworksLazyQuery>;
+export type QueryListArtworksQueryResult = Apollo.QueryResult<QueryListArtworksQuery, QueryListArtworksQueryVariables>;
 export const DisconnectUserDocument = gql`
     mutation disconnectUser {
   disconnected
@@ -515,3 +729,168 @@ export function useFindUserByPublicKeyLazyQuery(baseOptions?: Apollo.LazyQueryHo
 export type FindUserByPublicKeyQueryHookResult = ReturnType<typeof useFindUserByPublicKeyQuery>;
 export type FindUserByPublicKeyLazyQueryHookResult = ReturnType<typeof useFindUserByPublicKeyLazyQuery>;
 export type FindUserByPublicKeyQueryResult = Apollo.QueryResult<FindUserByPublicKeyQuery, FindUserByPublicKeyQueryVariables>;
+export const AllListCreatorsQueryDocument = gql`
+    query AllListCreatorsQuery {
+  listCreators {
+    Users {
+      id
+      fullName
+      image
+      handle
+      bio
+      email
+      wallet {
+        provider
+        publicKey
+      }
+      isApprovedCreator
+    }
+    ClientErrorUserNotFound {
+      message
+    }
+    ClientErrorUnknown {
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useAllListCreatorsQueryQuery__
+ *
+ * To run a query within a React component, call `useAllListCreatorsQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllListCreatorsQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllListCreatorsQueryQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllListCreatorsQueryQuery(baseOptions?: Apollo.QueryHookOptions<AllListCreatorsQueryQuery, AllListCreatorsQueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllListCreatorsQueryQuery, AllListCreatorsQueryQueryVariables>(AllListCreatorsQueryDocument, options);
+      }
+export function useAllListCreatorsQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllListCreatorsQueryQuery, AllListCreatorsQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllListCreatorsQueryQuery, AllListCreatorsQueryQueryVariables>(AllListCreatorsQueryDocument, options);
+        }
+export type AllListCreatorsQueryQueryHookResult = ReturnType<typeof useAllListCreatorsQueryQuery>;
+export type AllListCreatorsQueryLazyQueryHookResult = ReturnType<typeof useAllListCreatorsQueryLazyQuery>;
+export type AllListCreatorsQueryQueryResult = Apollo.QueryResult<AllListCreatorsQueryQuery, AllListCreatorsQueryQueryVariables>;
+export const ProfileQueryDocument = gql`
+    query ProfileQuery($handle: String!) {
+  findUser(handle: $handle) {
+    Users {
+      id
+      fullName
+      handle
+      email
+      bio
+      image
+      isApprovedCreator
+      wallet {
+        provider
+        publicKey
+      }
+      created {
+        kind
+        handle
+        title
+        id
+        image
+        description
+        listed
+        price
+        reservePrice
+        saleType
+        Auctions {
+          id
+          currentHigh
+          liveAt
+          artworkId
+        }
+        creator {
+          fullName
+        }
+        Auctions {
+          bids {
+            id
+          }
+        }
+        auctionWithNoReservePriceAndNoBids
+        latestAuction {
+          bids {
+            id
+          }
+          currentHigh
+        }
+      }
+      owned {
+        kind
+        handle
+        title
+        id
+        image
+        description
+        listed
+        price
+        reservePrice
+        saleType
+        Auctions {
+          id
+          currentHigh
+          liveAt
+          artworkId
+        }
+        creator {
+          fullName
+        }
+        Auctions {
+          bids {
+            id
+          }
+        }
+        auctionWithNoReservePriceAndNoBids
+        latestAuction {
+          bids {
+            id
+          }
+          currentHigh
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useProfileQueryQuery__
+ *
+ * To run a query within a React component, call `useProfileQueryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileQueryQuery({
+ *   variables: {
+ *      handle: // value for 'handle'
+ *   },
+ * });
+ */
+export function useProfileQueryQuery(baseOptions: Apollo.QueryHookOptions<ProfileQueryQuery, ProfileQueryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProfileQueryQuery, ProfileQueryQueryVariables>(ProfileQueryDocument, options);
+      }
+export function useProfileQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileQueryQuery, ProfileQueryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProfileQueryQuery, ProfileQueryQueryVariables>(ProfileQueryDocument, options);
+        }
+export type ProfileQueryQueryHookResult = ReturnType<typeof useProfileQueryQuery>;
+export type ProfileQueryLazyQueryHookResult = ReturnType<typeof useProfileQueryLazyQuery>;
+export type ProfileQueryQueryResult = Apollo.QueryResult<ProfileQueryQuery, ProfileQueryQueryVariables>;
