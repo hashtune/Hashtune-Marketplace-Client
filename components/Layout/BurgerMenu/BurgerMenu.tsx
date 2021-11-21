@@ -5,10 +5,9 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { LinkIcon } from "./LinkIcon";
 import { MenuItem } from "./MenuItem";
 import { PAGES } from "../../../utils/constants/enum";
-import { Socials } from "./Socials";
+import { LinkIcons } from "../LinkIcons/LinkIcons";
 
 export const BurgerMenu = () => {
   const [isActive, setIsActive] = useState(false);
@@ -89,7 +88,7 @@ export const BurgerMenu = () => {
           </button>
         </div>
         <div className={styles["nav__footer"]}>
-          <Socials
+          <LinkIcons
             iconRefs={[
               { icon: "twitter", href: '""' },
               { icon: "instagram", href: '""' },
