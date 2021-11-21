@@ -15,23 +15,24 @@ The architecture consists of 3 repositories:
 
 ![](.github/assets/images/architecture.png)
 
-Each repository has it's own steps for set up, development and testing.
+<div align="center">Each repository has it's own steps for set up, development and testing.</div>
+
 ---
 
 ## Setup 🏗
 * Run `yarn` or `npm install` to install dependencies
----
+
 
 ## Development 🚀
 1. Run `yarn dev` to start the Client
 2. Run the Setup for the Server and start it on  <u>localhost:5000</u> 
 3. Visit <u>localhost:3000</u> to view the running Application
----
+
 
 ## Testing 🧪
 The client is tests using the Jest and Cypress testing Frameworks.
 * To run Cypress End-to-End tests run all the necessary setup steps for the Client and Server and then run `yarn cy:open`.
----
+
 
 ## Repository structure 🗂
 * The application’s architecture is monolithic
@@ -39,7 +40,7 @@ The client is tests using the Jest and Cypress testing Frameworks.
 * Various reusable React components reside in the /components folder
 * The GraphQL Code Generator can be found in the /graphql directory
 * The styles folder contains the 7-1 SCSS architecture
----
+
 
 ## Client Application Architecture/Components 🧱
 * Next.Js + React.Js: Our frontend Client uses React and the React framework Next.Js for routing, state management etc.
