@@ -6,7 +6,7 @@
 ​
 </div>
 
-## Architecture ��
+## Architecture 🏛
 The architecture consists of 3 repositories:
 ​
 1. [Client Application](https://github.com/hashtune/Hashtune-Marketplace-Client)
@@ -19,19 +19,25 @@ Each repository has it's own steps for set up, development and testing.
 ​
 ---
 ​
-## Setup �� <br>
+## Setup 🏗
 * Run `yarn` or `npm install` to install dependencies
 ​
 ---
 ​
-## Development ��
+## Development 🚀
 1. Run `yarn dev` to start the Client
 2. Run the Setup for the Server and start it on  <u>localhost:5000</u> 
 3. Visit <u>localhost:3000</u> to view the running Application
 ​
 ---
 ​
-## Repository structure ��
+## Testing 🧪
+The client is tests using the Jest and Cypress testing Frameworks.
+* To run Cypress End-to-End tests run all the necessary setup steps for the Client and Server and then run `yarn cy:open`.
+​
+---
+​
+## Repository structure 🏛
 * The application’s architecture is monolithic
 * The individual pages resides in the /pages folder
 * Various reusable React components reside in the /components folder
@@ -40,7 +46,7 @@ Each repository has it's own steps for set up, development and testing.
 ​
 ---
 ​
-## Client Application Architecture/Components ��
+## Client Application Architecture/Components 🏛
 * Next.Js + React.Js: Our frontend Client uses React and the React framework Next.Js for routing, state management etc.
 * Apollo Client: Used to fetch data from Server API.
 * GraphQL CodeGen: Used to automatically generate typed from GraphQL queries
