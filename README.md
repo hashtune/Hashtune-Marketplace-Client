@@ -30,8 +30,8 @@ The architecture consists of 3 repositories:
 
 
 ## Testing 🧪
-The client is tests using the Jest and Cypress testing Frameworks.
-* To run Cypress End-to-End tests run all the necessary setup steps for the Client and Server and then run `yarn cy:open`.
+The client uses the Jest and Cypress testing Frameworks.
+* To [run Cypress End-to-End tests](https://github.com/hashtune/Hashtune-Marketplace-Client/tree/feat/client-tests/tests/cypress) run all the necessary setup steps for the Client and Server and then run `yarn cy:open`.
 
 
 ## Repository structure 🗂
