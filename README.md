@@ -24,7 +24,6 @@ Each repository has it's own steps for set up, development and testing.
 ​
 `yarn` or `npm install` to install dependencies
 ​
-​
 ---
 ​
 ## Development ��
@@ -43,12 +42,10 @@ Each repository has it's own steps for set up, development and testing.
 * The styles folder contains the 7-1 SCSS architecture
 ​
 ---
-
 ## Client Application Architecture/Components ��
+​
 * Next.Js + React.Js: Our frontend Client uses React and the React framework Next.Js for routing, state management etc.
 * Apollo Client: Used to fetch data from Server API.
 * GraphQL CodeGen: Used to automatically generate typed from GraphQL queries
 * SCSS Modules: For component level styles
 * 7-1 SCSS Architecture: For global styles and utility classes.
-​
----
