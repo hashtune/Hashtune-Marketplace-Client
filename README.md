@@ -7,7 +7,6 @@
 </div>
 
 ## Architecture ��
-​
 The architecture consists of 3 repositories:
 ​
 1. [Client Application](https://github.com/hashtune/Hashtune-Marketplace-Client)
@@ -21,13 +20,11 @@ Each repository has it's own steps for set up, development and testing.
 ---
 ​
 ## Setup �� <br>
-​
 * Run `yarn` or `npm install` to install dependencies
 ​
 ---
 ​
 ## Development ��
-​
 1. Run `yarn dev` to start the Client
 2. Run the Setup for the Server and start it on  <u>localhost:5000</u> 
 3. Visit <u>localhost:3000</u> to view the running Application
@@ -35,7 +32,6 @@ Each repository has it's own steps for set up, development and testing.
 ---
 ​
 ## Repository structure ��
-​
 * The application’s architecture is monolithic
 * The individual pages resides in the /pages folder
 * Various reusable React components reside in the /components folder
@@ -45,7 +41,6 @@ Each repository has it's own steps for set up, development and testing.
 ---
 ​
 ## Client Application Architecture/Components ��
-​
 * Next.Js + React.Js: Our frontend Client uses React and the React framework Next.Js for routing, state management etc.
 * Apollo Client: Used to fetch data from Server API.
 * GraphQL CodeGen: Used to automatically generate typed from GraphQL queries
