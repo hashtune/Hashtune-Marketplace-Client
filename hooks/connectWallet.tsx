@@ -21,6 +21,7 @@ export type MetamaskContext = {
   fetchingAccount: boolean;
   fetchingNetwork: boolean;
   fetchingChain: boolean;
+  signedMessage: string;
   setNetwork: (data: string) => void;
   setChainId: (id: string) => void;
   setAccount: (data: string) => void;
@@ -34,12 +35,15 @@ export type MetamaskContext = {
   setContract: (data: string) => void;
   approveArtist: () => void;
   createNFT: (props: CreateNFTProps) => Promise<string>;
+  getSignature: () => Promise<string>;
+  disconnectAccount: () => Promise<void>;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
   account: "",
   network: "",
   chainId: "",
+  signedMessage: "",
   walletConnected: false,
   networkConnected: false,
   fetchingAccount: false,
@@ -58,6 +62,29 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
   setContract: () => {},
   approveArtist: () => {},
   createNFT: () => ({} as Promise<string>),
+  getSignature: () => ({} as Promise<string>),
+  disconnectAccount: () => ({} as Promise<void>),
+});
+
+export const msgParams = JSON.stringify({
+  types: {
+    EIP712Domain: [
+      { name: "name", type: "string" },
+      { name: "version", type: "string" },
+      { name: "chainId", type: "uint256" },
+    ],
+    // Not an EIP712Domain definition
+    Mail: [{ name: "content", type: "string" }],
+  },
+  domain: {
+    name: "bnctest",
+    version: "1",
+    chainId: 0x61,
+  },
+  primaryType: "Mail",
+  message: {
+    content: "Please sign so we can generate a jwt for you :)",
+  },
 });
 
 export const MetamaskContextProvider = ({ children }: any) => {
@@ -66,6 +93,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [account, setAccount] = React.useState("");
   const [network, setNetwork] = React.useState("");
   const [chainId, setChainId] = React.useState("");
+  const [signedMessage, setSignedMessage] = React.useState("");
   const [fetchingAccount, setFetchingAccount] = React.useState(false);
   const [fetchingNetwork, setFetchingNetwork] = React.useState(false);
   const [fetchingChain, setFetchingChain] = React.useState(false);
@@ -75,6 +103,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
   const [networkConnected, setNetworkConnected] = React.useState<any | null>(
     false
   );
+
   const getAccount = async () => {
     try {
       setFetchingAccount(true);
@@ -90,6 +119,26 @@ export const MetamaskContextProvider = ({ children }: any) => {
       console.error("Error on init when getting accounts", err);
     } finally {
       setFetchingAccount(false);
+    }
+  };
+
+  const disconnectAccount = async () => {
+    setAccount("");
+  };
+
+  const getSignature = async () => {
+    try {
+      const result = await (window as any).ethereum.request({
+        method: "eth_signTypedData_v4",
+        params: [(window as any).ethereum.selectedAddress, msgParams],
+        from: (window as any).ethereum.selectedAddress,
+      });
+      if (result) {
+        setSignedMessage(result);
+        return result;
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   const getNetwork = async () => {
@@ -152,9 +201,13 @@ export const MetamaskContextProvider = ({ children }: any) => {
     if (account && account.length > 0) {
       setWalletConnected(true);
     } else {
+      // TODO call this.disconnectAccount() when the user disconnects
+      // via meta mask. Involves refactoring when we ask for accounts
+      console.log({ account });
       setWalletConnected(false);
     }
   }, [account]);
+
   const [provider, setProvider] = React.useState<any | null>(null);
   const [contract, setContract] = React.useState<any | null>(null);
 
@@ -206,9 +259,10 @@ export const MetamaskContextProvider = ({ children }: any) => {
       console.log({ result });
       return result.hash;
     } catch (e) {
-      console.log({ e });
+      console.log("issue creating nft");
     }
   };
+
   useEffect(() => {
     if (isMetaMaskInstalled()) {
       const { ethersProvider, contract } = getContract();
@@ -229,6 +283,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
         fetchingAccount,
         fetchingChain,
         fetchingNetwork,
+        signedMessage,
         setAccount,
         setNetwork,
         setChainId,
@@ -242,6 +297,8 @@ export const MetamaskContextProvider = ({ children }: any) => {
         setContract,
         approveArtist, // test function
         createNFT,
+        getSignature,
+        disconnectAccount,
       }}
     >
       {children}
