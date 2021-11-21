@@ -8,6 +8,7 @@ import { MetamaskContext } from "../../../hooks/connectWallet";
 import React, { useEffect, useRef } from "react";
 import ConnectWallet from "../ConnectWallet/ConnectWallet";
 import { useRouter } from "next/router";
+import { useDisconnectUserMutation } from "../../../graphql/generated/apolloComponents";
 
 export const Navbar = () => {
   const [connectVisible, setConnectVisible] = React.useState(false);
@@ -15,14 +16,19 @@ export const Navbar = () => {
   const overlay: React.RefObject<HTMLDivElement> = useRef(null);
   const router = useRouter();
   const {
-    account,
     walletConnected,
     networkConnected,
     fetchingAccount,
     fetchingChain,
     fetchingNetwork,
+    disconnectAccount
   } = React.useContext(MetamaskContext);
-
+  const [disconnectUser] = useDisconnectUserMutation();
+  async function handleDisconnect() {
+    disconnectAccount()
+    const res = await disconnectUser();
+    return res.data?.disconnected;
+  }
   const walletState = () => {
     if (fetchingAccount || fetchingChain || fetchingNetwork) {
       return <></>;
@@ -40,7 +46,11 @@ export const Navbar = () => {
     } else if (walletConnected && !networkConnected) {
       return <div>Binance testnet required</div>;
     } else {
-      return <div>Connected: {account}</div>;
+      return (
+        <a className={styles["navbar__wallet"] + " btn"} onClick={() =>  handleDisconnect()}>
+          Disconnect 
+        </a>
+      );
     }
   };
 
