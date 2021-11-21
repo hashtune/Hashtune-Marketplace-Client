@@ -1,10 +1,10 @@
 import router from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { useFindUserByPublicKeyQuery } from "../../../graphql/generated/apolloComponents";
-import { MetamaskContext, msgParams } from "../../../hooks/connectWallet";
+import { findUserByPublicKeyQuery } from "../../../graphql/findUserByPublicKey";
+import { useQueryQuery } from "../../../graphql/generated/apolloComponents";
+import { MetamaskContext } from "../../../hooks/connectWallet";
 import styles from "./ConnectWallet.module.scss";
 import { IconButton } from "./IconButton";
-import { useSignupMutation } from "../../../graphql/generated/apolloComponents";
 
 export type ConnectWalletProps = {
   toggleModal: any;
@@ -16,6 +16,8 @@ const ConnectWallet = (props: ConnectWalletProps) => {
   // Also need to listen for account changes.
   const {
     account,
+    network,
+    chainId,
     walletConnected,
     networkConnected,
     getAccount,
@@ -113,30 +115,11 @@ const ConnectWallet = (props: ConnectWalletProps) => {
   };
 
   // TODO figure out why this component mounts like 50 times and runs this query
-  const { data, loading, error } = useFindUserByPublicKeyQuery({
+  const { data, loading, error } = useQueryQuery({
     variables: {
        findUserPublicKey: account
     },
-    // Never cache this because if I edit the cookie I want a new request to go out
-   fetchPolicy: "network-only"
   });
-
-  const { getSignature } = React.useContext(MetamaskContext)
-  const [signupMutation] = useSignupMutation();
-
-  async function handleInvalidJWT () {
-    const sig: string = await getSignature();
-    const signupResult = await signupMutation({variables: {
-      signedMessage: sig,
-      publicKey: account,
-      typedData: msgParams,
-    }})
-    if (signupResult.data?.cookie) {
-      console.log("new cookie added!")
-    } else {
-      console.log(signupResult.errors)
-    }
-  }
 
   useEffect(() => {
     if (account) {
@@ -148,9 +131,6 @@ const ConnectWallet = (props: ConnectWalletProps) => {
       } else if (data && data?.findUser.ClientErrorUserNotFound) {
         console.log("USER NON EXISTING")
         router.replace("/signup")
-      } else if (data && data?.findUser.ClientErrorJWTInvalid) {
-        // user exists but JWT expired, ask to sign again
-        handleInvalidJWT()
       }
     }
   }, [data?.findUser.Users])
