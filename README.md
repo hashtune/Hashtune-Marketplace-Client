@@ -20,7 +20,7 @@ Each repository has it's own steps for set up, development and testing.
 ​
 ---
 ​
-## Setup ��
+## Setup �� <br>
 ​
 Run `yarn` or `npm install` to install dependencies
 ​
