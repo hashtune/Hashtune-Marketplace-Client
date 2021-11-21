@@ -12,5 +12,9 @@ module.exports = withPWA({
     skipWaiting: true,
     disable: process.env.NODE_ENV === 'development',
     register: true,
-  }
+  },
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
 })

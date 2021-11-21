@@ -22,4 +22,3 @@ jobs:
             pm2 kill
             pm2 start npm --name "hashtune-client" -- start
             echo 'Succesfully deployed 🎉'
-
