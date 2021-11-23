@@ -342,7 +342,10 @@ export type FindArtworkQueryVariables = Exact<{
 
 export type FindArtworkQuery = { __typename?: 'Query', findArtwork: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, image: string, description: string, listed: boolean, price?: any | null | undefined, saleType: string, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', currentHigh: any, artworkId: string, liveAt?: any | null | undefined, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined, creator: { __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string } } }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', path?: string | null | undefined, message?: string | null | undefined } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
 
-export type QueryListArtworksQueryVariables = Exact<{ [key: string]: never; }>;
+export type QueryListArtworksQueryVariables = Exact<{
+  listArtworksListed?: Maybe<Scalars['Boolean']>;
+  listArtworksAuction?: Maybe<Scalars['Boolean']>;
+}>;
 
 
 export type QueryListArtworksQuery = { __typename?: 'Query', listArtworks: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', id: string, handle: string, title: string, image: string, description: string, listed: boolean, saleType: string, price?: any | null | undefined, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, creator: { __typename?: 'User', fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean }, Auctions: Array<{ __typename?: 'Auction', bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', artworkId: string, liveAt?: any | null | undefined, currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', message?: string | null | undefined, path?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ExternalChainError?: { __typename?: 'ExternalChainError', message: string } | null | undefined, ExternalChainErrorStillPending?: { __typename?: 'ExternalChainErrorStillPending', message: string } | null | undefined } };
@@ -478,8 +481,8 @@ export type FindArtworkQueryHookResult = ReturnType<typeof useFindArtworkQuery>;
 export type FindArtworkLazyQueryHookResult = ReturnType<typeof useFindArtworkLazyQuery>;
 export type FindArtworkQueryResult = Apollo.QueryResult<FindArtworkQuery, FindArtworkQueryVariables>;
 export const QueryListArtworksDocument = gql`
-    query queryListArtworks {
-  listArtworks {
+    query queryListArtworks($listArtworksListed: Boolean, $listArtworksAuction: Boolean) {
+  listArtworks(listed: $listArtworksListed, auction: $listArtworksAuction) {
     Artworks {
       id
       handle
@@ -548,6 +551,8 @@ export const QueryListArtworksDocument = gql`
  * @example
  * const { data, loading, error } = useQueryListArtworksQuery({
  *   variables: {
+ *      listArtworksListed: // value for 'listArtworksListed'
+ *      listArtworksAuction: // value for 'listArtworksAuction'
  *   },
  * });
  */
