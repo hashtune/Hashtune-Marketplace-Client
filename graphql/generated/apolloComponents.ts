@@ -240,7 +240,7 @@ export type MutationUpdateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  /** Find an artwork by id */
+  /** Find an artwork by handle */
   findArtwork: ArtworkResult;
   /** Find an user by handle or public key */
   findUser: UserResult;
@@ -254,7 +254,7 @@ export type Query = {
 
 
 export type QueryFindArtworkArgs = {
-  id: Scalars['String'];
+  handle: Scalars['String'];
 };
 
 
@@ -336,7 +336,7 @@ export type Wallet = {
 };
 
 export type FindArtworkQueryVariables = Exact<{
-  findArtworkId: Scalars['String'];
+  findArtworkHandle: Scalars['String'];
 }>;
 
 
@@ -393,8 +393,8 @@ export type ProfileQueryQuery = { __typename?: 'Query', findUser: { __typename?:
 
 
 export const FindArtworkDocument = gql`
-    query findArtwork($findArtworkId: String!) {
-  findArtwork(id: $findArtworkId) {
+    query findArtwork($findArtworkHandle: String!) {
+  findArtwork(handle: $findArtworkHandle) {
     Artworks {
       kind
       handle
@@ -465,7 +465,7 @@ export const FindArtworkDocument = gql`
  * @example
  * const { data, loading, error } = useFindArtworkQuery({
  *   variables: {
- *      findArtworkId: // value for 'findArtworkId'
+ *      findArtworkHandle: // value for 'findArtworkHandle'
  *   },
  * });
  */

@@ -20,7 +20,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const { user, artwork } = ctx.query;
   const singleArtwork = await client.query({
     query: artworkQuery,
-    variables: { findArtworkId: artwork },
+    variables: { findArtworkHandle: artwork },
   });
   if (
     singleArtwork.data.findArtwork.Artworks &&
@@ -89,9 +89,9 @@ export default function Artwork(singleArtwork: any) {
                   handle={artwork.creator.handle}
                 />
                 <div className={styles["hero__hashtune-details--header"]}>
-                  <a className={styles["hero__hashtune-details--title"]}>
+                  <h3 className={styles["hero__hashtune-details--title"]}>
                     {artwork.title}
-                  </a>
+                  </h3>
                   <div className="dot_divider" />
                   <a className={styles["hero__hashtune-details--creator-name"]}>
                     {artwork.creator.fullName}
@@ -117,6 +117,9 @@ export default function Artwork(singleArtwork: any) {
                       </svg>
                     </a>
                   </a>
+                </div>
+                <div className={styles["hero__hashtune-details--description"]}>
+                  <p>{artwork.handle}</p>
                 </div>
                 <div className={styles["hero__hashtune-details--description"]}>
                   <p>{artwork.description}</p>

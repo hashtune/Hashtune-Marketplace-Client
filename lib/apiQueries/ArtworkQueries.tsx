@@ -117,38 +117,3 @@ export const queryListArtworksListCreators = gql`
     }
   }
 `;
-
-export function queryArtworkById(id: string) {
-  return client.query({
-    query: gql`
-      query FindArtworkByIdQuery(${id}: String!){
-        findArtwork(id: ${id}) {
-          handle
-          id
-          title
-          image
-          description
-          creator {
-            id
-            handle
-            fullName
-            image
-          }
-          listed
-          price
-          reservePrice
-          saleType
-          auctionWithNoReservePriceAndNoBids
-          Auctions {
-            bids {
-              id
-            }
-          }
-          latestAuction {
-            currentHigh
-          }
-        }
-      }
-    `,
-  });
-}
