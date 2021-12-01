@@ -53,6 +53,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
           <h1 className={styles["hero__hashtune-details--title"]}>
             {artwork.title}
           </h1>
+          <h2> {artwork.handle}</h2>
           <div className={styles["hero__hashtune-details--description"]}>
             <p>{artwork.description}</p>
           </div>
@@ -65,9 +66,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
               coin={coin}
               style={styles["price_card"]}
             />
-            <div
-              className={styles["vertical_divider"] + " vertical_divider"}
-            ></div>
+            <div className={styles["vertical_divider"] + " vertical_divider"} />
             {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
             {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
             <Countdown liveAt={date} style="countdown_card" />

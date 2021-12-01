@@ -153,7 +153,7 @@ export default function User(singleUser: any) {
 										artworks.length > 0 &&
 										artworks?.map((userArtwork: ListArtworkFields) => (
 											<div key={userArtwork.id} className={styles['artworks__item']}>
-												<Link href={`/${singleUser?.handle}/${userArtwork.id}`}>
+												<Link href={`/${singleUser?.handle}/${userArtwork.handle}`}>
 													<a>
 														<ListArtwork userPage={true} imageSize={280} artwork={userArtwork} />
 													</a>

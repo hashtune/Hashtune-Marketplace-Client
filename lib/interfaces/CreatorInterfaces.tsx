@@ -19,6 +19,7 @@ export interface ListCreatorFields {
   fullName: string;
   id: string;
   image: string;
+  handle: string;
 }
 
 export interface ListCreatorFieldsProp {

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
-export const artworkQuery=  gql`
-query findArtwork($findArtworkId: String!) {
-    findArtwork(id: $findArtworkId) {
+export const artworkQuery = gql`
+  query findArtwork($findArtworkHandle: String!) {
+    findArtwork(handle: $findArtworkHandle) {
       Artworks {
         kind
         handle
@@ -58,5 +58,5 @@ query findArtwork($findArtworkId: String!) {
         message
       }
     }
-}
-`
+  }
+`;

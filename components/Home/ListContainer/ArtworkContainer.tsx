@@ -77,7 +77,7 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
         {artworks.length > 0 &&
           artworks?.map((artwork) => (
             <div key={artwork.id} className={styles["artworks__item"]}>
-              <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
+              <Link href={`/${artwork.creator.handle}/${artwork.handle}`}>
                 <a>
                   <ListArtwork imageSize={368} artwork={artwork} />
                 </a>
