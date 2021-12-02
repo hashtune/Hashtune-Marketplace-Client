@@ -4,6 +4,7 @@ import Price from "./Price";
 import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import { randomMockMedia } from "../../../utils/index";
 import styles from "../ListContainer/Artwork.module.scss";
+import { AudioPlayerContext } from "../../../hooks/audioPlayer";
 
 const ListArtwork = (props: ListArtworkFieldsProp) => {
   const artwork = props.artwork;
@@ -17,6 +18,7 @@ const ListArtwork = (props: ListArtworkFieldsProp) => {
     }
   });
 
+
   return (
     <div className={styles["artwork"]}>
       <div>
@@ -25,7 +27,7 @@ const ListArtwork = (props: ListArtworkFieldsProp) => {
           src={coverImage}
           width={props.imageSize}
           height={props.imageSize}
-        />
+        /> 
       </div>
       <div ref={artworkContent} className={styles["artwork__content"]}>
         <div className={styles["artwork__content--title-name"]}>

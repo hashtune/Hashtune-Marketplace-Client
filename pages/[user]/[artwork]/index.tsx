@@ -13,6 +13,7 @@ import Price from "../../../components/Home/ListArtwork/Price";
 import Countdown from "../../../components/Home/Hero/Countdown";
 import ArtworkHistoryItem from "../../../components/Artwork/ArtworkHistoryItem";
 import { artworkQuery } from "../../../graphql/artwork/queries/artwork";
+import { AudioPlayerContext } from "../../../hooks/audioPlayer";
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   // console.log(ctx);
@@ -43,6 +44,12 @@ export default function Artwork(singleArtwork: any) {
   const router = useRouter();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const artwork = singleArtwork.artwork;
+
+  const { playOrPause } = React.useContext(AudioPlayerContext);
+
+  function handleClick(url: string) {
+    playOrPause(url);
+  }
 
   // Call this function whenever you want to
   // refresh props!
@@ -133,6 +140,7 @@ export default function Artwork(singleArtwork: any) {
                       src={playButton}
                       width={80}
                       height={80}
+                      onClick={() => handleClick("/dist/audio/4.mp3")}
                     />
                   </div>
                   <div>
