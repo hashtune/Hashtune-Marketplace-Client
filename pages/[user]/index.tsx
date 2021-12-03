@@ -136,10 +136,10 @@ export default function User(singleUser: any) {
 							<div className={styles['artworks'] + ' container'}>
 								<div className={'tab-nav' + ' ' + 'tab-nav__container'}>
 									<div className="tab-nav__indicators">
-										<a className="tab-nav__indicators--element" onClick={() => setTabState('Created')}>
+										<a className={tabState === "Created" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"} onClick={() => setTabState('Created')}>
 											Created
 										</a>
-										<a className="tab-nav__indicators--element" onClick={() => setTabState('Collected')}>
+										<a className={tabState === "Collected" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"} onClick={() => setTabState('Collected')}>
 											Collected
 										</a>
 									</div>
