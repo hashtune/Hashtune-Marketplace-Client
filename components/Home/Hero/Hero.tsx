@@ -31,7 +31,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
   let playButton = "/dist/play-button.svg";
   const { playOrPause } = React.useContext(AudioPlayerContext);
   function handleClick(url: string) {
-    playOrPause(url);
+    playOrPause(url, "humam", "amazingsongTitle2");
   }
 
   return (

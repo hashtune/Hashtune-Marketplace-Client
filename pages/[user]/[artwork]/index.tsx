@@ -48,7 +48,7 @@ export default function Artwork(singleArtwork: any) {
   const { playOrPause } = React.useContext(AudioPlayerContext);
 
   function handleClick(url: string) {
-    playOrPause(url);
+    playOrPause(url, "exmaple", "anytitle");
   }
 
   // Call this function whenever you want to
