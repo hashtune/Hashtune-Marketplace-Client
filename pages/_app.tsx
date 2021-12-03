@@ -4,7 +4,7 @@ import Head from "next/head";
 import { MetamaskContextProvider } from "../hooks/connectWallet";
 import { AudioPlayerContextProvider } from "../hooks/audioPlayer";
 
-const GA_TRACKING_ID = "";
+const GA_TRACKING_ID = "G-GF75Z533XJ";
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apollo-client"
 
