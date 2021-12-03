@@ -50,19 +50,20 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       <div className="tab-nav tab-nav__container">
         <div className="tab-nav__indicators">
           <a
-            className="tab-nav__indicators--element"
+            className={tabState === "All Hashtunes" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"}
             onClick={() => setTabState("All Hashtunes")}
+
           >
             All Hashtunes
           </a>
           <a
-            className="tab-nav__indicators--element"
+            className={tabState === "Auctions" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"}
             onClick={() => setTabState("Auctions")}
           >
             Auctions
           </a>
           <a
-            className="tab-nav__indicators--element"
+            className={tabState === "Buy Now" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"}
             onClick={() => setTabState("Buy Now")}
           >
             Buy Now
