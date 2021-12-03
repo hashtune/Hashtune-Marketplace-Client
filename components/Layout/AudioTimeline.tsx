@@ -25,7 +25,16 @@ export const AudioTimeline = ({
           className={styles["audioTimeline__menu-item"]}
           onClick={() => toggle()}
         >
-          {isPaused ? "play" : "pause"}
+          {isPaused ? (
+            <svg fill="#ffffff">
+              <use xlinkHref="/dist/icons/sprite.svg#hashtune-play" />
+            </svg>
+          ) : (
+            <svg fill="#ffffff">
+              <use xlinkHref="/dist/icons/sprite.svg#hashtune-pause" />
+            </svg>
+          )}
+
           {/* TODO add previous and next */}
         </div>
         <div className={styles["audioTimeline__menu-item"]}>{artist}</div>
