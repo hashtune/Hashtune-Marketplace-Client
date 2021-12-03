@@ -1,0 +1,43 @@
+.audioTimeline {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background-color: #0d0d0d;
+  padding: 0 3rem;
+  border-top: 0.2rem solid #1b1b1b;
+  &__menu {
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 10%;
+    height: auto;
+    width: 100%;
+    display: flex;
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+    &--icon {
+      width: 1.2rem;
+      height: 7rem;
+      margin: 0.1rem 2rem;
+    }
+    &-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      height: 100%;
+      transition: all 0.2s;
+      height: 100%;
+      padding: 1rem 2rem;
+      margin: 0.2rem;
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+      &.active {
+        background-color: #181818;
+      }
+    }
+  }
+}
