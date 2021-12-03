@@ -1,14 +1,12 @@
 import React from "react";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
-import styles from "./faq.module.scss";
+
 export default function Explore() {
   return (
     <div>
       <Navbar />
-      <div className={styles["faq"]}>
+      <div className="static-content-container">
         <h1>FAQ</h1>
-        <br />
-        <br />
         <p>HOW MUCH DO ARTISTS TAKE?</p>
         <p>
           Artists receive close to 100% of their initial record sale, and then

@@ -1,14 +1,11 @@
 import React from "react";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
-import styles from "./about.module.scss";
 export default function Explore() {
   return (
     <div>
       <Navbar />
-      <div className={styles["about"]}>
-        <h1>ABOUT</h1>
-        <br />
-        <br />
+      <div className="static-content-container">
+        <h1>About</h1>
         <p>
           Hashtune is a platform for artists to create and sell their audio
           tracks as one of a kind records. Each digital record represents a
