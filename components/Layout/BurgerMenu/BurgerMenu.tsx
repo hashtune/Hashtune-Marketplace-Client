@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { LinkIcon } from "./LinkIcon";
 import { MenuItem } from "./MenuItem";
+import router from "next/router";
 
 export const BurgerMenu = () => {
   const [isActive, setIsActive] = useState(false);
@@ -74,8 +75,8 @@ export const BurgerMenu = () => {
       <nav ref={burgerMenu} className={styles["nav"]} id="js-nav">
         <div className={styles["nav__header"]}>
           <ul className={styles["menu"]}>
-            <MenuItem text={"FAQ"} />
-            <MenuItem text={"About"} />
+            <MenuItem text={"FAQ"} onClick={() => router.replace("/faq")}/>
+            <MenuItem text={"About"} onClick={() => router.replace("/about")}/>
             <MenuItem text={"Help"} />
             <MenuItem text={"Contact"} />
             <MenuItem text={"Terms of Service"} />
