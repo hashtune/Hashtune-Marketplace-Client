@@ -1,49 +1,36 @@
-import { gql } from "@apollo/client";
-import { GetServerSidePropsContext } from "next";
-import client from "../../../lib/apollo-client";
+
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import router from "next/router";
 import { Navbar } from "../../../components/Layout/Navbar/Navbar";
 import styles from "./SingleArtwork.module.scss";
 import Image from "next/dist/client/image";
 import CreatorIconHandle from "../../../components/Home/ListCreator/CreatorIconHandle";
-import ConvertedPrice from "../../../components/Home/Hero/ConvertedPrice";
-import Price from "../../../components/Home/ListArtwork/Price";
 import Countdown from "../../../components/Home/Hero/Countdown";
 import ArtworkHistoryItem from "../../../components/Artwork/ArtworkHistoryItem";
-import { artworkQuery } from "../../../graphql/artwork/queries/artwork";
 import { AudioPlayerContext } from "../../../hooks/audioPlayer";
+import { Session } from "../../../hooks/session";
+import { useFindArtworkQuery } from "../../../graphql/generated/apolloComponents";
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  // console.log(ctx);
-  // console.log("GET SERVER SIDE PROPS CALLED");
-  const { user, artwork } = ctx.query;
-  const singleArtwork = await client.query({
-    query: artworkQuery,
-    variables: { findArtworkHandle: artwork },
-  });
-  if (
-    singleArtwork.data.findArtwork.Artworks &&
-    singleArtwork.data.findArtwork.Artworks[0]
-  ) {
-    return {
-      props: {
-        artwork: singleArtwork.data.findArtwork.Artworks[0],
-      },
-    };
-  }
-  return {
-    props: {
-      artwork: null,
-    },
-  };
-}
+export { getServerSideProps } from "../../../hooks/session";
 
-export default function Artwork(singleArtwork: any) {
-  const router = useRouter();
+export default function Artwork({ session }: { session: Session }) {
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const artwork = singleArtwork.artwork;
+  let handle = "";
+  if (typeof window !== "undefined") {
+    handle = router.query.artwork as string;
+  }
+  const { data: singleArtwork, loading, error } = useFindArtworkQuery({
+    variables: {
+      findArtworkHandle: handle,
+    },
+  });
+  
+  if (!singleArtwork?.findArtwork.Artworks?.[0]) {
+    return <></>
+  }
+
+
+  const artwork = singleArtwork?.findArtwork.Artworks?.[0]!;
 
   const { playOrPause } = React.useContext(AudioPlayerContext);
 
@@ -51,18 +38,7 @@ export default function Artwork(singleArtwork: any) {
     playOrPause(url, "exmaple", "anytitle");
   }
 
-  // Call this function whenever you want to
-  // refresh props!
-  const refreshData = () => {
-    console.log("refreshing");
-    router.replace(router.asPath);
-    setIsRefreshing(true);
-  };
-
-  useEffect(() => {
-    if (singleArtwork !== null) setIsRefreshing(false);
-  }, [singleArtwork]);
-
+  
   // let cover = artwork.image || "/";
   let coverImage = "/images/artwork.png"; //Should be from database but that breaks it
 
@@ -73,7 +49,7 @@ export default function Artwork(singleArtwork: any) {
 
   return (
     <div>
-      <Navbar />
+      <Navbar session={session} />
       {isRefreshing ? (
         <h1>LOADING</h1>
       ) : (

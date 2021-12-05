@@ -1,18 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "../../pages/[user]/[artwork]/SingleArtwork.module.scss";
-import {
-  ListArtworkFields,
-  ListArtworkFieldsProp,
-} from "../../lib/interfaces/ArtworkInterfaces";
-import Price from "../Home/ListArtwork/Price";
+import { FindArtworkQuery } from "../../graphql/generated/apolloComponents";
 
 interface HistoryItemProps {
   imgSrc: string;
   listed: boolean;
   date: string;
   actor: string;
-  artwork: ListArtworkFields;
+  artwork: Omit<FindArtworkQuery["findArtwork"]["Artworks"], "null">;
 }
 
 const ArtworkHistoryItem = (props: HistoryItemProps) => {

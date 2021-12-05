@@ -105,11 +105,25 @@ $light-blue: #42a1f5;
     flex: 1 1 100%;
     display: flex;
     align-self: center;
+    background: #7f7fd5; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #91eae4,
+      #86a8e7,
+      #7f7fd5
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #91eae4,
+      #86a8e7,
+      #7f7fd5
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(25px);
     border-radius: 20px;
+    border: none;
     h2 {
       flex: 1 1 100%;
       width: 220px;

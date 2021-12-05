@@ -1,9 +1,12 @@
 import React from "react";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
-export default function Explore() {
+import { Session } from "../hooks/session";
+export { getServerSideProps } from "../hooks/session";
+
+export default function Explore({ session }: { session: Session }) {
   return (
     <div>
-      <Navbar />
+      <Navbar session={session} />
       <div className="static-content-container">
         <h1>About</h1>
         <p>

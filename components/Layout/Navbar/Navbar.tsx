@@ -9,11 +9,16 @@ import React, { useEffect, useRef } from "react";
 import ConnectWallet from "./ConnectWallet";
 import { useRouter } from "next/router";
 import { useDisconnectUserMutation } from "../../../graphql/generated/apolloComponents";
+import { Session } from "../../../hooks/session";
 
-export const Navbar = () => {
+export type NavbarProps = {
+  session: Session
+}
+
+export const Navbar = (props: NavbarProps) => {
+  // Needs to be passed into Navbar on each page
   const [connectVisible, setConnectVisible] = React.useState(false);
 
-  const overlay: React.RefObject<HTMLDivElement> = useRef(null);
   const router = useRouter();
   const {
     walletConnected,
@@ -23,6 +28,8 @@ export const Navbar = () => {
     fetchingNetwork,
     disconnectAccount
   } = React.useContext(MetamaskContext);
+  let creatorImage = "/dist/images/mock/users/26.png";
+
   const [disconnectUser] = useDisconnectUserMutation();
   async function handleDisconnect() {
     disconnectAccount()
@@ -46,10 +53,31 @@ export const Navbar = () => {
     } else if (walletConnected && !networkConnected) {
       return <div>Binance testnet required</div>;
     } else {
+      // props.session should be defined
       return (
-        <a className={styles["navbar__wallet"] + " btn"} onClick={() =>  handleDisconnect()}>
-          Disconnect 
-        </a>
+        <div className={styles["navbar__profileContainer"]}>
+          {/* TODO if approved creator */}
+          <button className={styles["navbar__uploadMusic"]} onClick={() => router.replace("/create")}><span>Upload Music</span></button>
+          {/* <ProfilePicker></ProfilePicker> */}
+        <div className={styles["navbar__profilePicker"]}>
+        <Image
+              alt="cover image"
+              src={creatorImage}
+              width={35}
+              height={35}
+              onClick={() => router.push(`${props.session.user.handle}`)}
+            />
+            <div className={styles["navbar__overlay_active"]}>
+              {props.session?.user.handle}
+            </div>
+            {/* <svg fill="#ffffff">
+              <use xlinkHref="/dist/icons/dist/arrow-down.swg" />
+            </svg> */}
+        </div>
+        </div>
+        // <a className={styles["navbar__wallet"] + " btn"} onClick={() =>  handleDisconnect()}>
+        //   Disconnect 
+        // </a>
       );
     }
   };

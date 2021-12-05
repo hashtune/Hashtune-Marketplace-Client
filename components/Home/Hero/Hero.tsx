@@ -10,16 +10,17 @@ import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces
 import Link from "next/link";
 import { AudioPlayerContext } from "../../../hooks/audioPlayer";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`https://api.coingecko.com/api/v3/coins/binancecoin
-    `);
-  const data = await res.json();
-  return {
-    props: {
-      coin: data,
-    },
-  };
-};
+// TODO Move to page
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const res = await fetch(`https://api.coingecko.com/api/v3/coins/binancecoin
+//     `);
+//   const data = await res.json();
+//   return {
+//     props: {
+//       coin: data,
+//     },
+//   };
+// };
 
 const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
   let artwork = props.artwork;

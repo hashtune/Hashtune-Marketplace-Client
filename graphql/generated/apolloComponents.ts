@@ -186,7 +186,7 @@ export type Mutation = {
   addArtwork: ArtworkResult;
   /** Create an auction for a given artwork */
   addAuction: AuctionResult;
-  /** Returns cookie if signing */
+  /** Returns cookie if signing, must be called after the user is created in the database.  */
   cookie: Scalars['String'];
   /** delete an Auction if it has no bids */
   deleteAuction: AuctionResult;

@@ -1,39 +1,23 @@
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetStaticProps,
-} from "next";
-import { listCreatorsQuery } from "../graphql/user/queries/listApprovedCreators";
-import client from "../lib/apollo-client";
-import {
-  ListCreatorFields,
-  ListCreatorFieldsProp,
-} from "../lib/interfaces/CreatorInterfaces";
 import React from "react";
 import CreatorContainer from "../components/Home/ListContainer/CreatorContainer";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
+import { Session } from "../hooks/session";
+import { useAllListCreatorsQueryQuery } from "../graphql/generated/apolloComponents";
 
-export async function getServerSideProps() {
-  const { data } = await client.query({
-    query: listCreatorsQuery,
+export { getServerSideProps } from "../hooks/session";
+
+export default function Creators({ session }: { session: Session }) {
+  const { data, loading, error } = useAllListCreatorsQueryQuery({
+    variables: {},
   });
+  if (!data || !data.listCreators || !data.listCreators.Users) {
+    return <></>;
+  }
 
-  return {
-    props: {
-      allCreators: data.listCreators.Users.slice(0, 20),
-      fallback: true,
-    },
-  };
-}
-export default function Creators({
-  allCreators,
-}: {
-  allCreators: ListCreatorFields[];
-}) {
   return (
     <div>
-      <Navbar />
-      <CreatorContainer creators={allCreators} />
+      <Navbar session={session} />
+      <CreatorContainer creators={data.listCreators.Users} />
     </div>
   );
 }
