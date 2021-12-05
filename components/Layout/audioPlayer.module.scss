@@ -6,6 +6,9 @@
   background-color: #0d0d0d;
   padding: 0 3rem;
   border-top: 0.2rem solid #1b1b1b;
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
   &__menu {
     align-items: center;
     justify-content: space-between;
@@ -13,9 +16,7 @@
     height: auto;
     width: 100%;
     display: flex;
-    @media screen and (max-width: 768px) {
-      display: none;
-    }
+
     &--icon {
       width: 1.2rem;
       height: 7rem;
