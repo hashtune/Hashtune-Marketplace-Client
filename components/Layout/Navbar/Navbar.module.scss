@@ -15,14 +15,30 @@
     display: flex;
     align-items: center;
   }
+  &__down {
+    width: 11px;
+    height: 11px;
+  }
   &__overlay {
     display: none;
   }
+
   &__overlay_active {
     display: block;
+    background: black;
+    position: fixed;
+    margin-top: 156px;
+    border: 1px solid grey;
+    padding: 1rem 3rem;
+    right: 60px;
+    &_active {
+      padding: 1rem 3rem;
+    }
   }
   &__profilePicker {
     cursor: pointer;
+    display: flex;
+    align-items: center;
   }
   &__uploadMusic {
     width: 145px;

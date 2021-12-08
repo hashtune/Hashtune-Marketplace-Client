@@ -132,6 +132,8 @@ const ConnectWallet = (props: ConnectWalletProps) => {
       typedData: msgParams,
     }})
     if (signupResult.data?.cookie) {
+      // So the navbar reloads with the correct user
+      router.replace(router.asPath);
       console.log("new cookie added!")
     } else {
       console.log(signupResult.errors)

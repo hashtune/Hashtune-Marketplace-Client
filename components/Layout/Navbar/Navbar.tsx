@@ -30,16 +30,20 @@ export const Navbar = (props: NavbarProps) => {
   } = React.useContext(MetamaskContext);
   let creatorImage = "/dist/images/mock/users/26.png";
 
+  const [dropDownOpen, setDropDownOpen] = React.useState(false)
   const [disconnectUser] = useDisconnectUserMutation();
   async function handleDisconnect() {
     disconnectAccount()
     const res = await disconnectUser();
     return res.data?.disconnected;
   }
+  function toggleDropDown () {
+    setDropDownOpen(!dropDownOpen)
+  }
   const walletState = () => {
     if (fetchingAccount || fetchingChain || fetchingNetwork) {
       return <></>;
-    } else if (!walletConnected) {
+    } else if (!walletConnected || !props.session) {
       return (
         <>
           <a
@@ -52,32 +56,28 @@ export const Navbar = (props: NavbarProps) => {
       );
     } else if (walletConnected && !networkConnected) {
       return <div>Binance testnet required</div>;
-    } else {
-      // props.session should be defined
+    } else if (props.session) {
       return (
         <div className={styles["navbar__profileContainer"]}>
           {/* TODO if approved creator */}
           <button className={styles["navbar__uploadMusic"]} onClick={() => router.replace("/create")}><span>Upload Music</span></button>
-          {/* <ProfilePicker></ProfilePicker> */}
         <div className={styles["navbar__profilePicker"]}>
         <Image
               alt="cover image"
               src={creatorImage}
               width={35}
               height={35}
-              onClick={() => router.push(`${props.session.user.handle}`)}
+              onClick={() => toggleDropDown()}
             />
-            <div className={styles["navbar__overlay_active"]}>
-              {props.session?.user.handle}
+            <div className={dropDownOpen ? styles["navbar__overlay_active"] : styles["navbar__overlay"]}>
+              <div className={styles["navbar__overlay_active_item"]} onClick={() => router.push(`/${props.session.user.handle}`)}>@{props.session?.user.handle}</div>
+              <div className={styles["navbar__overlay_active_item"]} onClick={() =>  handleDisconnect()}>Sign out</div>
             </div>
-            {/* <svg fill="#ffffff">
-              <use xlinkHref="/dist/icons/dist/arrow-down.swg" />
-            </svg> */}
+            <svg fill="#ffffff" className={styles["navbar__down"]}>
+              <use xlinkHref="/dist/icons/sprite.svg#hashtune-arrow-down" />
+            </svg>
         </div>
         </div>
-        // <a className={styles["navbar__wallet"] + " btn"} onClick={() =>  handleDisconnect()}>
-        //   Disconnect 
-        // </a>
       );
     }
   };
