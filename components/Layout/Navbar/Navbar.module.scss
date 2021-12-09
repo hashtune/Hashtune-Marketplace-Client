@@ -16,29 +16,60 @@
     align-items: center;
   }
   &__down {
+    margin: 0 0 0 0.8rem;
     width: 11px;
     height: 11px;
   }
-  &__overlay {
-    display: none;
-  }
-
-  &__overlay_active {
+  &__dropdown {
+    &--inactive {
+      display: none;
+    }
+    &--item {
+      height: 45%;
+      padding: 1rem 2rem;
+      width: 102%;
+      margin-left: -0.2rem;
+      font-size: 1.7rem;
+      font-weight: 450;
+      &:hover {
+        background-color: #1b1b1b;
+      }
+      &:first-child {
+        height: 55%;
+      }
+      &:nth-child(2) {
+        border: 1px transparent;
+        border-radius: 0 0 3px 3px;
+      }
+    }
+    &--name {
+      font-weight: 600;
+    }
+    &--handle {
+      margin-top: -1rem;
+      font-size: 1.3rem;
+    }
+    padding: -0.4rem !important;
+    width: 17rem;
     display: block;
     background: black;
     position: fixed;
-    margin-top: 156px;
-    border: 1px solid grey;
-    padding: 1rem 3rem;
-    right: 60px;
-    &_active {
-      padding: 1rem 3rem;
-    }
+    margin-top: 18.8rem;
+    height: 11.5rem;
+    right: 8%;
+    border-radius: 0 0 6.5px 6.5px;
+    box-shadow: 20px 20.5px 37px -10px rgba(255, 255, 255, 0.02);
+    border: solid 0.2rem #1b1b1b;
+    background-color: #020202;
   }
   &__profilePicker {
     cursor: pointer;
     display: flex;
     align-items: center;
+    img {
+      border: 1px transparent;
+      border-radius: 50%;
+    }
   }
   &__uploadMusic {
     width: 145px;

@@ -69,13 +69,21 @@ export const Navbar = (props: NavbarProps) => {
               height={35}
               onClick={() => toggleDropDown()}
             />
-            <div className={dropDownOpen ? styles["navbar__overlay_active"] : styles["navbar__overlay"]}>
-              <div className={styles["navbar__overlay_active_item"]} onClick={() => router.push(`/${props.session.user.handle}`)}>@{props.session?.user.handle}</div>
-              <div className={styles["navbar__overlay_active_item"]} onClick={() =>  handleDisconnect()}>Sign out</div>
-            </div>
-            <svg fill="#ffffff" className={styles["navbar__down"]}>
+            <svg onClick={() => toggleDropDown()} fill="#ffffff" className={styles["navbar__down"]}>
               <use xlinkHref="/dist/icons/sprite.svg#hashtune-arrow-down" />
             </svg>
+            <div className={dropDownOpen ? styles["navbar__dropdown"] : styles["navbar__dropdown--inactive"]}>
+              <div className={styles["navbar__dropdown--item"]} onClick={() => router.push(`/${props.session.user.handle}`)}>
+                <div className={styles["navbar__dropdown--name"]}>
+                {props.session?.user.handle}
+                </div>
+                <div className={styles["navbar__dropdown--handle"]}>
+                  @{props.session?.user.handle}
+                </div>
+              </div>
+              <div className={styles["navbar__dropdown--item"]} onClick={() =>  handleDisconnect()}>Sign out</div>
+            </div>
+            
         </div>
         </div>
       );
