@@ -6,20 +6,24 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to DigitalOcean  
-        uses: appleboy/ssh-action@v0.1.2
-        with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
-          username: ${{ secrets.SSH_USERNAME }}
+    env:
+      GRAPHQL_ENDPOINT: https://hashtune.co/graphql
+      SERVER_SECRET: ${{secrets.SERVER_SECRET}}
+      STAGE: production
+      steps:
+        - name: Deploy to DigitalOcean
+          uses: appleboy/ssh-action@v0.1.2
+          with:
+            host: ${{secrets.SSH_HOST}}
+            key: ${{secrets.SSH_KEY}}
+            username: ${{ secrets.SSH_USERNAME }}
 
-          script: |
-            rm -rf Hashtune-Marketplace-Client
-            git clone git@github.com:hashtune/Hashtune-Marketplace-Client.git
-            cd Hashtune-Marketplace-Client
-            yarn
-            pm2 kill
-            yarn build
-            pm2 start npm --name "hashtune-client" -- start
-            echo 'Succesfully deployed 🎉'
+            script: |
+              rm -rf Hashtune-Marketplace-Client
+              git clone git@github.com:hashtune/Hashtune-Marketplace-Client.git
+              cd Hashtune-Marketplace-Client
+              yarn
+              pm2 kill
+              yarn build
+              GRAPHQL_ENDPOINT=https://hashtune.co/graphql SERVER_SECRET=${{secrets.SERVER_SECRET}} STAGE=production pm2 start npm --name "hashtune-client" -- start
+              echo 'Succesfully deployed 🎉'
