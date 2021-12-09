@@ -152,7 +152,8 @@ const ConnectWallet = (props: ConnectWalletProps) => {
         router.replace("/signup")
       } else if (data && data?.findUser.ClientErrorJWTInvalid) {
         // user exists but JWT expired, ask to sign again
-        handleInvalidJWT()
+        console.log("invalid jwt")
+        if (networkConnected) handleInvalidJWT()
       }
     }
   }, [data?.findUser.Users])

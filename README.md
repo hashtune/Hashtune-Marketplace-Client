@@ -24,6 +24,7 @@ The architecture consists of 3 repositories:
 
 - Run `yarn` or `npm install` to install dependencies
 - Create a .env.local with the same SERVER_SECRET as in the server repo.
+- Metamask needs to be setup and a connection to Binance Test Network needs to be added https://academy.binance.com/en/articles/connecting-metamask-to-binance-smart-chain
 
 ## Development 🚀
 

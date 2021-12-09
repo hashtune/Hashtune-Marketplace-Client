@@ -34,8 +34,8 @@ export default function Artwork({ session }: { session: Session }) {
 
   const { playOrPause } = React.useContext(AudioPlayerContext);
 
-  function handleClick(url: string) {
-    playOrPause(url, "exmaple", "anytitle");
+  function handleClick(url: string, artist: string, title: string) {
+    playOrPause(url, artist, title);
   }
 
   
@@ -116,7 +116,7 @@ export default function Artwork({ session }: { session: Session }) {
                       src={playButton}
                       width={80}
                       height={80}
-                      onClick={() => handleClick("/dist/audio/4.mp3")}
+                      onClick={() => handleClick("/dist/audio/4.mp3", artwork.creator.handle, artwork.title)}
                     />
                   </div>
                   <div>
