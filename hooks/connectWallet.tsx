@@ -203,7 +203,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
     } else {
       // TODO call this.disconnectAccount() when the user disconnects
       // via meta mask. Involves refactoring when we ask for accounts
-      console.log({ account });
       setWalletConnected(false);
     }
   }, [account]);

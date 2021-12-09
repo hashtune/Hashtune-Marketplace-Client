@@ -132,6 +132,8 @@ const ConnectWallet = (props: ConnectWalletProps) => {
       typedData: msgParams,
     }})
     if (signupResult.data?.cookie) {
+      // So the navbar reloads with the correct user
+      router.replace(router.asPath);
       console.log("new cookie added!")
     } else {
       console.log(signupResult.errors)
@@ -150,7 +152,8 @@ const ConnectWallet = (props: ConnectWalletProps) => {
         router.replace("/signup")
       } else if (data && data?.findUser.ClientErrorJWTInvalid) {
         // user exists but JWT expired, ask to sign again
-        handleInvalidJWT()
+        console.log("invalid jwt")
+        if (networkConnected) handleInvalidJWT()
       }
     }
   }, [data?.findUser.Users])

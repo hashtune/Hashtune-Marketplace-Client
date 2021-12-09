@@ -1,51 +1,35 @@
-import { GetServerSidePropsContext } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './User.module.scss';
-
-import client from '../../lib/apollo-client';
 import React, { useEffect, useRef, useState } from 'react';
 import { Navbar } from '../../components/Layout/Navbar/Navbar';
 import { randomMockMedia } from '../../utils/index';
 import ListArtwork from '../../components/Home/ListArtwork/ListArtwork';
-import { ListArtworkFields } from '../../lib/interfaces/ArtworkInterfaces';
 import SortDropDown from '../../components/Home/ListContainer/SortDropdown';
-import { queryProfileData } from '../../graphql/user/queries/profileData';
+import { Session } from "../../hooks/session";
+import { useProfileQueryQuery } from "../../graphql/generated/apolloComponents";
+import { GetServerSidePropsContext } from "next";
+import router from "next/router";
 
-// TODO: Refactor page/query
+export { getServerSideProps } from "../../hooks/session";
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-	const { user } = ctx.query;
-	const singleUser = await client.query({
-		query: queryProfileData,
-		variables: { handle: user }
-	});
+export default function User(ctx: GetServerSidePropsContext & {session: Session}) {
+	const profilePicture = `/dist/images/mock/users/${randomMockMedia(12)}.png`;
+	const coverImage = `/dist/cover.png`;
+	let handle = ""
+	if (typeof window !== 'undefined') {
+		 handle = router.query.user as string;
 
-	const userData = singleUser.data.findUser.Users;
-	if (userData && userData[0]) {
-		return {
-			props: {
-				singleUser: userData[0]
-			}
-		};
 	}
-
-	return {
-		props: {
-			singleUser: null
-		}
-	};
-}
-
-const profilePicture = `/dist/images/mock/users/${randomMockMedia(12)}.png`;
-// const profilePicture = `/dist/images/mock/users/15.png`;
-const coverImage = `/dist/cover.png`;
-
-const artworkImage = `/dist/images/mock/artworks/${randomMockMedia(19)}.png`;
-export default function User(singleUser: any) {
 	// TODO: If this user does not exist then return 404
 	const artworkContainer: React.RefObject<HTMLDivElement> = useRef(null);
-	singleUser = singleUser.singleUser;
+	const { data, loading, error } = useProfileQueryQuery({
+		variables: {
+		      handle: handle
+	 }
+	 });
+	
+	let singleUser = data?.findUser?.Users?.[0] ?? null;
 	const [artworks, setArtworks] = useState(singleUser?.created);
 	const [tabState, setTabState] = useState('Created');
 	useEffect(() => {
@@ -57,7 +41,7 @@ export default function User(singleUser: any) {
 	}, [tabState, singleUser]);
 	return (
 		<div>
-			<Navbar />
+			<Navbar session={ctx.session}/>
 			<main>
 				<div className={styles['user-profile']}>
 					<div className={styles['user-profile__cover']}>
@@ -151,7 +135,7 @@ export default function User(singleUser: any) {
 								<div ref={artworkContainer} className={styles['artworks__container']}>
 									{artworks &&
 										artworks.length > 0 &&
-										artworks?.map((userArtwork: ListArtworkFields) => (
+										artworks?.map((userArtwork: any) => (
 											<div key={userArtwork.id} className={styles['artworks__item']}>
 												<Link href={`/${singleUser?.handle}/${userArtwork.handle}`}>
 													<a>

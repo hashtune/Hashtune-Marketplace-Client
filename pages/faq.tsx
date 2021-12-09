@@ -1,10 +1,12 @@
 import React from "react";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
+import { Session } from "../hooks/session";
+export { getServerSideProps } from "../hooks/session";
 
-export default function Explore() {
+export default function Explore({ session }: { session: Session }) {
   return (
     <div>
-      <Navbar />
+      <Navbar session={session} />
       <div className="static-content-container">
         <h1>FAQ</h1>
         <h2 className="title-paragraph">How much do artists take?</h2>
