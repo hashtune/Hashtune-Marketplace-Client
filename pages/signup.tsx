@@ -7,8 +7,11 @@ import { useRegisterUserMutation } from "../graphql/generated/apolloComponents";
 import { MetamaskContext, msgParams } from "../hooks/connectWallet";
 import router from "next/router";
 import { useSignupMutation } from "../graphql/generated/apolloComponents";
+import { Session } from "../hooks/session";
 
-export default function Signup() {
+export { getServerSideProps } from "../hooks/session";
+
+export default function Signup({session}: {session: Session}) {
   const [
     registerUserMutation,
     { data, loading, error: registerError },
@@ -34,7 +37,7 @@ export default function Signup() {
 
   return (
     <div className={"app " + styles["register__layout"]}>
-      <Navbar />
+      <Navbar session={session} />
       <div className={styles["register__hero"]}>
         <div className={styles["register__content"]}>
           <h2>Create an account</h2>
