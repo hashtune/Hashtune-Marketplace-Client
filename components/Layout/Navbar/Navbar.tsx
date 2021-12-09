@@ -75,7 +75,7 @@ export const Navbar = (props: NavbarProps) => {
             <div className={dropDownOpen ? styles["navbar__dropdown"] : styles["navbar__dropdown--inactive"]}>
               <div className={styles["navbar__dropdown--item"]} onClick={() => router.push(`/${props.session.user.handle}`)}>
                 <div className={styles["navbar__dropdown--name"]}>
-                {props.session?.user.handle}
+                {props.session?.user.fullName}
                 </div>
                 <div className={styles["navbar__dropdown--handle"]}>
                   @{props.session?.user.handle}

@@ -6,6 +6,7 @@ import { listArtworkQuery } from "../graphql/artwork/queries/listArtworks";
 export type Session = {
     user: {
         id: string
+        fullName: string
         handle: string
         image?: string
         email: string
@@ -48,6 +49,7 @@ export async function getServerSideProps({req}: GetServerSidePropsContext) {
     const session: Session = {
         user: {
             id: token.id,
+            fullName: token.fullName,
             handle: token.handle,
             email: token.email,
             image: token.image,
