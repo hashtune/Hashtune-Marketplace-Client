@@ -8,17 +8,20 @@ import styles from "./Hero.module.scss";
 import ConvertedPrice, { Coin } from "./ConvertedPrice";
 import { ListArtworkFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
 import Link from "next/link";
+import { AudioPlayerContext } from "../../../hooks/audioPlayer";
+import PlayerContainer from "../../Audio/PlayerContainer";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const res = await fetch(`https://api.coingecko.com/api/v3/coins/binancecoin
-    `);
-  const data = await res.json();
-  return {
-    props: {
-      coin: data,
-    },
-  };
-};
+// TODO Move to page
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const res = await fetch(`https://api.coingecko.com/api/v3/coins/binancecoin
+//     `);
+//   const data = await res.json();
+//   return {
+//     props: {
+//       coin: data,
+//     },
+//   };
+// };
 
 const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
   let artwork = props.artwork;
@@ -27,7 +30,6 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
 
   let date = new Date("30 10 2021 13:00:00");
   let creatorImage = "/dist/images/mock/users/26.png";
-  let playButton = "/dist/play-button.svg";
 
   return (
     <div className={styles["hero"]}>
@@ -42,7 +44,11 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
             />
           </div>
           <div className={styles["hero__hashtune-artwork--play-button"]}>
-            <Image alt="cover image" src={playButton} width={60} height={60} />
+            <PlayerContainer
+              url="/dist/audio/2.mp3"
+              artist={artwork.creator.handle}
+              title={artwork.title}
+            />
           </div>
         </div>
         <div className={styles["hero__hashtune-details"]} data-cy="song-info">
@@ -53,6 +59,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
           <h1 className={styles["hero__hashtune-details--title"]}>
             {artwork.title}
           </h1>
+          <h2> {artwork.handle}</h2>
           <div className={styles["hero__hashtune-details--description"]}>
             <p>{artwork.description}</p>
           </div>
@@ -65,9 +72,7 @@ const Hero = (props: ListArtworkFieldsProp, coin: Coin) => {
               coin={coin}
               style={styles["price_card"]}
             />
-            <div
-              className={styles["vertical_divider"] + " vertical_divider"}
-            ></div>
+            <div className={styles["vertical_divider"] + " vertical_divider"} />
             {/* UNCOMMENT BELOW ONCE LIVEAT IS THERE */}
             {/* {artwork.auctions[lastAuctionIndex].liveAt} */}
             <Countdown liveAt={date} style="countdown_card" />

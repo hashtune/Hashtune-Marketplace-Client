@@ -4,6 +4,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { ListCreatorFieldsProp } from "../../../lib/interfaces/CreatorInterfaces";
 import ListCreator from "../ListCreator/ListCreator";
 import SortDropDown from "./SortDropdown";
+import styles from "./Creator.module.scss";
+import Link from "next/link";
 
 const CreatorContainer = (props: ListCreatorFieldsProp) => {
   let creatorImage = "/images/creator.png"; //Hardcoded for now
@@ -12,17 +14,22 @@ const CreatorContainer = (props: ListCreatorFieldsProp) => {
       <h3>All Artists</h3>
       <SortDropDown />
       {/* <InfiniteScroll next={fetchData} hasMore={} children={fetchData} loader={undefined} dataLength={undefined}> */}
-      <ul>
+      <div className={styles["users__container"]}>
         {props.creators.map((creator) => (
-          <li key={creator.id}>
-            <ListCreator
-              fullName={creator.fullName}
-              image={creatorImage}
-              id={creator.id}
-            />
-          </li>
+          <div key={creator.id} className={styles["users__item"]}>
+            <Link href={"/" + creator.handle}>
+              <a>
+                <ListCreator
+                  fullName={creator.fullName}
+                  image={creatorImage}
+                  id={creator.id}
+                  handle={creator.handle}
+                />
+              </a>
+            </Link>
+          </div>
         ))}
-      </ul>
+      </div>
       {/* </InfiniteScroll> */}
     </div>
   );

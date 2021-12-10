@@ -4,16 +4,22 @@ import styles from "../styles/pages/Signup.module.scss";
 import { Formik, Field } from "formik";
 import { InputField } from "../components/Fields/InputField";
 import { useRegisterUserMutation } from "../graphql/generated/apolloComponents";
-import { MetamaskContext } from "../hooks/connectWallet";
+import { MetamaskContext, msgParams } from "../hooks/connectWallet";
 import router from "next/router";
+import { useSignupMutation } from "../graphql/generated/apolloComponents";
+import { Session } from "../hooks/session";
 
-export default function Signup() {
+export { getServerSideProps } from "../hooks/session";
+
+export default function Signup({session}: {session: Session}) {
   const [
     registerUserMutation,
     { data, loading, error: registerError },
   ] = useRegisterUserMutation();
 
   const { account } = React.useContext(MetamaskContext);
+  const { getSignature } = React.useContext(MetamaskContext)
+  const [signupMutation, { error }] = useSignupMutation();
   // TODO: If no account connected - figure out if we want to redierct
   // prompt the user etc...
   if (!account) return null;
@@ -27,9 +33,11 @@ export default function Signup() {
     return errorMessage;
   };
 
+
+
   return (
     <div className={"app " + styles["register__layout"]}>
-      <Navbar />
+      <Navbar session={session} />
       <div className={styles["register__hero"]}>
         <div className={styles["register__content"]}>
           <h2>Create an account</h2>
@@ -50,8 +58,26 @@ export default function Signup() {
                 },
               },
             });
+            // TODO always redirect to signup if account and no user
             if (res.data?.registerUser.Users && res.data?.registerUser.Users.length > 0) {
-              router.replace(`/${res.data.registerUser.Users[0].handle}`)
+              const sig: string = await getSignature();
+              const signupResult = await signupMutation({variables: {
+                signedMessage: sig,
+                publicKey: account,
+                typedData: msgParams,
+              }})
+              console.log({signupResult})
+              if (signupResult.data?.cookie) {
+                // redirect to new profile
+                router.replace(`/${res.data.registerUser.Users[0].handle}`)
+              } else {
+                // error generating cookie, rollback user creation
+                //TODO delete mutation
+              }
+              console.log({error})
+            } else {
+              //error during register
+              console.log({res})
             }
           }}
           initialValues={{

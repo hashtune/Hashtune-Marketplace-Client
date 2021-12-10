@@ -134,6 +134,11 @@ export type ClientErrorInvalidHandle = {
   message?: Maybe<Scalars['String']>;
 };
 
+export type ClientErrorJwtInvalid = {
+  __typename?: 'ClientErrorJWTInvalid';
+  message?: Maybe<Scalars['String']>;
+};
+
 export type ClientErrorUnknown = {
   __typename?: 'ClientErrorUnknown';
   message: Scalars['String'];
@@ -181,8 +186,12 @@ export type Mutation = {
   addArtwork: ArtworkResult;
   /** Create an auction for a given artwork */
   addAuction: AuctionResult;
+  /** Returns cookie if signing, must be called after the user is created in the database.  */
+  cookie: Scalars['String'];
   /** delete an Auction if it has no bids */
   deleteAuction: AuctionResult;
+  /** Disconnects a user by clearing their jwt */
+  disconnected: Scalars['Boolean'];
   /** Register a user after they authenticate with the correct chain network */
   registerUser: UserResult;
   /** edit the price or reserve price of an artwork */
@@ -199,6 +208,13 @@ export type MutationAddArtworkArgs = {
 
 export type MutationAddAuctionArgs = {
   InputType?: Maybe<AddAuctionInput>;
+};
+
+
+export type MutationCookieArgs = {
+  publicKey: Scalars['String'];
+  signedMessage: Scalars['String'];
+  typedData: Scalars['String'];
 };
 
 
@@ -224,7 +240,7 @@ export type MutationUpdateUserArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  /** Find an artwork by id */
+  /** Find an artwork by handle */
   findArtwork: ArtworkResult;
   /** Find an user by handle or public key */
   findUser: UserResult;
@@ -238,7 +254,7 @@ export type Query = {
 
 
 export type QueryFindArtworkArgs = {
-  id: Scalars['String'];
+  handle: Scalars['String'];
 };
 
 
@@ -304,6 +320,7 @@ export type UserResult = {
   __typename?: 'UserResult';
   ClientErrorHandleAlreadyExists?: Maybe<ClientErrorHandleAlreadyExists>;
   ClientErrorInvalidHandle?: Maybe<ClientErrorInvalidHandle>;
+  ClientErrorJWTInvalid?: Maybe<ClientErrorJwtInvalid>;
   ClientErrorUnknown?: Maybe<ClientErrorUnknown>;
   ClientErrorUserNotFound?: Maybe<ClientErrorUserNotFound>;
   Users?: Maybe<Array<User>>;
@@ -319,24 +336,33 @@ export type Wallet = {
 };
 
 export type FindArtworkQueryVariables = Exact<{
-  findArtworkId: Scalars['String'];
+  findArtworkHandle: Scalars['String'];
 }>;
 
 
 export type FindArtworkQuery = { __typename?: 'Query', findArtwork: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, image: string, description: string, listed: boolean, price?: any | null | undefined, saleType: string, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', currentHigh: any, artworkId: string, liveAt?: any | null | undefined, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined, creator: { __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string } } }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', path?: string | null | undefined, message?: string | null | undefined } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
 
-export type QueryListArtworksQueryVariables = Exact<{ [key: string]: never; }>;
+export type QueryListArtworksQueryVariables = Exact<{
+  listArtworksListed?: Maybe<Scalars['Boolean']>;
+  listArtworksAuction?: Maybe<Scalars['Boolean']>;
+}>;
 
 
 export type QueryListArtworksQuery = { __typename?: 'Query', listArtworks: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', id: string, handle: string, title: string, image: string, description: string, listed: boolean, saleType: string, price?: any | null | undefined, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, creator: { __typename?: 'User', fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean }, Auctions: Array<{ __typename?: 'Auction', bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', artworkId: string, liveAt?: any | null | undefined, currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', message?: string | null | undefined, path?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ExternalChainError?: { __typename?: 'ExternalChainError', message: string } | null | undefined, ExternalChainErrorStillPending?: { __typename?: 'ExternalChainErrorStillPending', message: string } | null | undefined } };
 
-export type QueryQueryVariables = Exact<{
-  findUserHandle?: Maybe<Scalars['String']>;
-  findUserPublicKey?: Maybe<Scalars['String']>;
+export type DisconnectUserMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DisconnectUserMutation = { __typename?: 'Mutation', disconnected: boolean };
+
+export type SignupMutationVariables = Exact<{
+  signedMessage: Scalars['String'];
+  publicKey: Scalars['String'];
+  typedData: Scalars['String'];
 }>;
 
 
-export type QueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', handle: string }> | null | undefined, ClientErrorUserNotFound?: { __typename?: 'ClientErrorUserNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+export type SignupMutation = { __typename?: 'Mutation', cookie: string };
 
 export type RegisterUserMutationVariables = Exact<{
   inputType?: Maybe<RegisterUserInput>;
@@ -344,6 +370,14 @@ export type RegisterUserMutationVariables = Exact<{
 
 
 export type RegisterUserMutation = { __typename?: 'Mutation', registerUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', fullName: string, handle: string, email: string, bio: string, wallet: { __typename?: 'Wallet', id: string, publicKey: string, createdAt: string, provider: string } }> | null | undefined, ClientErrorHandleAlreadyExists?: { __typename?: 'ClientErrorHandleAlreadyExists', message?: string | null | undefined } | null | undefined, ClientErrorInvalidHandle?: { __typename?: 'ClientErrorInvalidHandle', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+
+export type FindUserByPublicKeyQueryVariables = Exact<{
+  findUserHandle?: Maybe<Scalars['String']>;
+  findUserPublicKey?: Maybe<Scalars['String']>;
+}>;
+
+
+export type FindUserByPublicKeyQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', handle: string }> | null | undefined, ClientErrorUserNotFound?: { __typename?: 'ClientErrorUserNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined, ClientErrorJWTInvalid?: { __typename?: 'ClientErrorJWTInvalid', message?: string | null | undefined } | null | undefined } };
 
 export type AllListCreatorsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -359,8 +393,8 @@ export type ProfileQueryQuery = { __typename?: 'Query', findUser: { __typename?:
 
 
 export const FindArtworkDocument = gql`
-    query findArtwork($findArtworkId: String!) {
-  findArtwork(id: $findArtworkId) {
+    query findArtwork($findArtworkHandle: String!) {
+  findArtwork(handle: $findArtworkHandle) {
     Artworks {
       kind
       handle
@@ -431,7 +465,7 @@ export const FindArtworkDocument = gql`
  * @example
  * const { data, loading, error } = useFindArtworkQuery({
  *   variables: {
- *      findArtworkId: // value for 'findArtworkId'
+ *      findArtworkHandle: // value for 'findArtworkHandle'
  *   },
  * });
  */
@@ -447,8 +481,8 @@ export type FindArtworkQueryHookResult = ReturnType<typeof useFindArtworkQuery>;
 export type FindArtworkLazyQueryHookResult = ReturnType<typeof useFindArtworkLazyQuery>;
 export type FindArtworkQueryResult = Apollo.QueryResult<FindArtworkQuery, FindArtworkQueryVariables>;
 export const QueryListArtworksDocument = gql`
-    query queryListArtworks {
-  listArtworks {
+    query queryListArtworks($listArtworksListed: Boolean, $listArtworksAuction: Boolean) {
+  listArtworks(listed: $listArtworksListed, auction: $listArtworksAuction) {
     Artworks {
       id
       handle
@@ -517,6 +551,8 @@ export const QueryListArtworksDocument = gql`
  * @example
  * const { data, loading, error } = useQueryListArtworksQuery({
  *   variables: {
+ *      listArtworksListed: // value for 'listArtworksListed'
+ *      listArtworksAuction: // value for 'listArtworksAuction'
  *   },
  * });
  */
@@ -531,50 +567,73 @@ export function useQueryListArtworksLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type QueryListArtworksQueryHookResult = ReturnType<typeof useQueryListArtworksQuery>;
 export type QueryListArtworksLazyQueryHookResult = ReturnType<typeof useQueryListArtworksLazyQuery>;
 export type QueryListArtworksQueryResult = Apollo.QueryResult<QueryListArtworksQuery, QueryListArtworksQueryVariables>;
-export const QueryDocument = gql`
-    query Query($findUserHandle: String, $findUserPublicKey: String) {
-  findUser(handle: $findUserHandle, publicKey: $findUserPublicKey) {
-    Users {
-      handle
-    }
-    ClientErrorUserNotFound {
-      message
-    }
-    ClientErrorUnknown {
-      message
-    }
-  }
+export const DisconnectUserDocument = gql`
+    mutation disconnectUser {
+  disconnected
 }
     `;
+export type DisconnectUserMutationFn = Apollo.MutationFunction<DisconnectUserMutation, DisconnectUserMutationVariables>;
 
 /**
- * __useQueryQuery__
+ * __useDisconnectUserMutation__
  *
- * To run a query within a React component, call `useQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useDisconnectUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDisconnectUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useQueryQuery({
+ * const [disconnectUserMutation, { data, loading, error }] = useDisconnectUserMutation({
  *   variables: {
- *      findUserHandle: // value for 'findUserHandle'
- *      findUserPublicKey: // value for 'findUserPublicKey'
  *   },
  * });
  */
-export function useQueryQuery(baseOptions?: Apollo.QueryHookOptions<QueryQuery, QueryQueryVariables>) {
+export function useDisconnectUserMutation(baseOptions?: Apollo.MutationHookOptions<DisconnectUserMutation, DisconnectUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+        return Apollo.useMutation<DisconnectUserMutation, DisconnectUserMutationVariables>(DisconnectUserDocument, options);
       }
-export function useQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryQuery, QueryQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
-        }
-export type QueryQueryHookResult = ReturnType<typeof useQueryQuery>;
-export type QueryLazyQueryHookResult = ReturnType<typeof useQueryLazyQuery>;
-export type QueryQueryResult = Apollo.QueryResult<QueryQuery, QueryQueryVariables>;
+export type DisconnectUserMutationHookResult = ReturnType<typeof useDisconnectUserMutation>;
+export type DisconnectUserMutationResult = Apollo.MutationResult<DisconnectUserMutation>;
+export type DisconnectUserMutationOptions = Apollo.BaseMutationOptions<DisconnectUserMutation, DisconnectUserMutationVariables>;
+export const SignupDocument = gql`
+    mutation Signup($signedMessage: String!, $publicKey: String!, $typedData: String!) {
+  cookie(
+    signedMessage: $signedMessage
+    publicKey: $publicKey
+    typedData: $typedData
+  )
+}
+    `;
+export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
+
+/**
+ * __useSignupMutation__
+ *
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
+ *   variables: {
+ *      signedMessage: // value for 'signedMessage'
+ *      publicKey: // value for 'publicKey'
+ *      typedData: // value for 'typedData'
+ *   },
+ * });
+ */
+export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<SignupMutation, SignupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SignupMutation, SignupMutationVariables>(SignupDocument, options);
+      }
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
+export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
+export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
 export const RegisterUserDocument = gql`
     mutation RegisterUser($inputType: RegisterUserInput) {
   registerUser(InputType: $inputType) {
@@ -628,6 +687,53 @@ export function useRegisterUserMutation(baseOptions?: Apollo.MutationHookOptions
 export type RegisterUserMutationHookResult = ReturnType<typeof useRegisterUserMutation>;
 export type RegisterUserMutationResult = Apollo.MutationResult<RegisterUserMutation>;
 export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUserMutation, RegisterUserMutationVariables>;
+export const FindUserByPublicKeyDocument = gql`
+    query findUserByPublicKey($findUserHandle: String, $findUserPublicKey: String) {
+  findUser(handle: $findUserHandle, publicKey: $findUserPublicKey) {
+    Users {
+      handle
+    }
+    ClientErrorUserNotFound {
+      message
+    }
+    ClientErrorUnknown {
+      message
+    }
+    ClientErrorJWTInvalid {
+      message
+    }
+  }
+}
+    `;
+
+/**
+ * __useFindUserByPublicKeyQuery__
+ *
+ * To run a query within a React component, call `useFindUserByPublicKeyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindUserByPublicKeyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFindUserByPublicKeyQuery({
+ *   variables: {
+ *      findUserHandle: // value for 'findUserHandle'
+ *      findUserPublicKey: // value for 'findUserPublicKey'
+ *   },
+ * });
+ */
+export function useFindUserByPublicKeyQuery(baseOptions?: Apollo.QueryHookOptions<FindUserByPublicKeyQuery, FindUserByPublicKeyQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FindUserByPublicKeyQuery, FindUserByPublicKeyQueryVariables>(FindUserByPublicKeyDocument, options);
+      }
+export function useFindUserByPublicKeyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindUserByPublicKeyQuery, FindUserByPublicKeyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FindUserByPublicKeyQuery, FindUserByPublicKeyQueryVariables>(FindUserByPublicKeyDocument, options);
+        }
+export type FindUserByPublicKeyQueryHookResult = ReturnType<typeof useFindUserByPublicKeyQuery>;
+export type FindUserByPublicKeyLazyQueryHookResult = ReturnType<typeof useFindUserByPublicKeyLazyQuery>;
+export type FindUserByPublicKeyQueryResult = Apollo.QueryResult<FindUserByPublicKeyQuery, FindUserByPublicKeyQueryVariables>;
 export const AllListCreatorsQueryDocument = gql`
     query AllListCreatorsQuery {
   listCreators {
