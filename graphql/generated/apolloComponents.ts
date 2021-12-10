@@ -389,7 +389,7 @@ export type ProfileQueryQueryVariables = Exact<{
 }>;
 
 
-export type ProfileQueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string }, created: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }>, owned: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> }> | null | undefined } };
+export type ProfileQueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string }, created: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string, handle: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }>, owned: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string, handle: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> }> | null | undefined } };
 
 
 export const FindArtworkDocument = gql`
@@ -820,6 +820,7 @@ export const ProfileQueryDocument = gql`
         }
         creator {
           fullName
+          handle
         }
         Auctions {
           bids {
@@ -853,6 +854,7 @@ export const ProfileQueryDocument = gql`
         }
         creator {
           fullName
+          handle
         }
         Auctions {
           bids {
