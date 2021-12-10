@@ -106,7 +106,18 @@ section {
   }
 }
 
-
 .flex-content-center {
   justify-content: center !important;
+}
+
+.disabled-link {
+  pointer-events: none;
+}
+
+.opacity-small {
+  opacity: 0.4;
+}
+.opacity-medium {
+}
+.opacity-big {
 }
