@@ -68,6 +68,7 @@ export const queryProfileData = gql`
           }
           creator {
             fullName
+            handle
           }
           Auctions {
             bids {
