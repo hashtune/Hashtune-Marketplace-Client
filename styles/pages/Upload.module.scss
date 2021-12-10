@@ -56,6 +56,10 @@
     flex-wrap: wrap;
   }
 
+  &-disabled {
+    opacity: 0.4;
+  }
+
   &-type {
     display: flex;
     flex-direction: column;
