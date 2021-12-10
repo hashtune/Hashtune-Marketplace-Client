@@ -39,7 +39,9 @@ export default function Upload() {
                   </a>
                 </Link>
               </div>
-              <div className={styles["upload__variant-type"]}>
+              <div
+                className={styles["upload__variant-type"] + " opacity-small"}
+              >
                 <Image
                   src="/dist/patterns/upload-type-pattern-1.png"
                   width="240"
@@ -48,9 +50,9 @@ export default function Upload() {
                   draggable="false"
                 />
                 <a
-                  href=""
                   className={
-                    "primary_button " + styles["upload__variant-type--button"]
+                    "primary_button disabled-link " +
+                    styles["upload__variant-type--button"]
                   }
                 >
                   Upload Album
