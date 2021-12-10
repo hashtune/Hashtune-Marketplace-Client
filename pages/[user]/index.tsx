@@ -137,11 +137,7 @@ export default function User(ctx: GetServerSidePropsContext & {session: Session}
 										artworks.length > 0 &&
 										artworks?.map((userArtwork: any) => (
 											<div key={userArtwork.id} className={styles['artworks__item']}>
-												<Link href={`/${singleUser?.handle}/${userArtwork.handle}`}>
-													<a>
-														<ListArtwork userPage={true} imageSize={280} artwork={userArtwork} />
-													</a>
-												</Link>
+												<ListArtwork userPage={true} imageSize={280} artwork={userArtwork} />
 											</div>
 										))}
 								</div>
