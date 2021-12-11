@@ -1,5 +1,38 @@
 .single__preview {
   background-color: #090909;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100% !important;
+  &-artwork {
+    position: relative;
+    &--image {
+      position: relative;
+    }
+    &--heading {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      .link {
+        width: 1rem;
+      }
+      margin-left: 2rem;
+    }
+    &--player {
+      display: flex;
+      align-items: center;
+    }
+    &--content {
+      position: absolute;
+      bottom: 0;
+      background: linear-gradient(rgba(0, 0, 0, 0.459), rgba(0, 0, 0, 0.995));
+      width: 100%;
+      padding: 3rem;
+      a {
+        color: #989898;
+      }
+    }
+  }
 }
 
 .single__form {
