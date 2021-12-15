@@ -10,7 +10,7 @@ import { Session } from "../../hooks/session";
 import { useProfileQueryQuery } from "../../graphql/generated/apolloComponents";
 import { GetServerSidePropsContext } from "next";
 import router from "next/router";
-
+import UserActivity from '../../components/UserProfile/userActivity/UserActivity';
 export { getServerSideProps } from "../../hooks/session";
 
 export default function User(ctx: GetServerSidePropsContext & {session: Session}) {
@@ -28,6 +28,9 @@ export default function User(ctx: GetServerSidePropsContext & {session: Session}
 		      handle: handle
 	 }
 	 });
+
+	 const [activityLog, setActivityLog] = React.useState(false);
+
 	
 	let singleUser = data?.findUser?.Users?.[0] ?? null;
 	const [artworks, setArtworks] = useState(singleUser?.created);
@@ -126,6 +129,11 @@ export default function User(ctx: GetServerSidePropsContext & {session: Session}
 										<a className={tabState === "Collected" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"} onClick={() => setTabState('Collected')}>
 											Collected
 										</a>
+										<a className={tabState === "Activity Log" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"} onClick={() => {setActivityLog(!activityLog); setTabState('Activity Log')}}>
+											Activity Log
+
+										</a>
+
 									</div>
 									<div className="tab-nav__dropdown">
 										<SortDropDown />
@@ -145,6 +153,9 @@ export default function User(ctx: GetServerSidePropsContext & {session: Session}
 											</div>
 										))}
 								</div>
+								{activityLog && <UserActivity/>}
+
+
 							</div>
 						</div>
 					</div>
