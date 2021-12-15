@@ -24,7 +24,7 @@
       }
       margin-left: 2rem;
       h1 {
-        width: 100%;
+        width: 85%;
       }
     }
     &--player {
@@ -67,6 +67,10 @@
     h1 {
       font-size: 4.1rem;
       font-weight: 600;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
 }
