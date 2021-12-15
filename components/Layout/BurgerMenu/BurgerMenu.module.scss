@@ -99,25 +99,40 @@ $light-blue: #42a1f5;
     overflow-x: hidden;
   }
   &__beArtist {
-    width: 250px;
-    min-height: 50px;
-    max-height: 70px;
+    width: 27rem;
+    min-height: 6rem;
+    max-height: 7rem;
     flex: 1 1 100%;
     display: flex;
     align-self: center;
+    background: #161616; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+      to right,
+      #a39dc8 0%,
+      30.73878586292267%,
+      #cdc2e2 61.47757172584534%,
+      80.73878586292267%,
+      #e3c8dc 100%
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+      to right,
+      #a39dc8 0%,
+      30.73878586292267%,
+      #cdc2e2 61.47757172584534%,
+      80.73878586292267%,
+      #e3c8dc 100%
+    ); /* Gradient in RGBA */
 
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(25px);
-    border-radius: 20px;
-    h2 {
-      flex: 1 1 100%;
-      width: 220px;
-      height: 29.5px;
-      line-height: 25px;
-      font-family: Karla;
-      font-size: 16px;
-      font-weight: bold;
+    border-radius: 2rem;
+    color: #000000;
+    font-size: 1.7rem;
+    font-weight: 500;
+    transition: all 0.9s;
+    &:hover {
+      opacity: 0.8;
     }
   }
   &__header {

@@ -6,8 +6,8 @@ import React, {
   useState,
 } from "react";
 import { MenuItem } from "./MenuItem";
-import { PAGES } from "../../../utils/constants/enum";
-import { LinkIcons } from "../LinkIcons/LinkIcons";
+import router from "next/router";
+import Link from "next/link";
 
 export const BurgerMenu = () => {
   const [isActive, setIsActive] = useState(false);
@@ -83,9 +83,11 @@ export const BurgerMenu = () => {
             <MenuItem text={"Privacy Policy"} />
             <MenuItem text={"Community Guidelines"} />
           </ul>
-          <button className={styles["nav__beArtist"]}>
-            <h2>Become an Artist</h2>
-          </button>
+          <Link href="/">
+          <a className={styles["nav__beArtist"]}>
+            <h2>Become an Artist 🎸</h2>
+          </a>
+          </Link>
         </div>
         <div className={styles["nav__footer"]}>
           <LinkIcons
