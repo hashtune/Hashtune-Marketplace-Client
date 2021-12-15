@@ -9,27 +9,44 @@
     &--image {
       position: relative;
     }
-    &--heading {
+    &--top {
       display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    &--heading {
+      display: inline-block;
+      flex: 1 1 80%;
       align-items: center;
       flex-wrap: wrap;
       .link {
         width: 1rem;
       }
       margin-left: 2rem;
+      h1 {
+        width: 100%;
+      }
     }
     &--player {
-      display: flex;
       align-items: center;
+      flex: 1 1 15%;
+      min-width: 7rem;
     }
+
     &--content {
       position: absolute;
       bottom: 0;
       background: linear-gradient(rgba(0, 0, 0, 0.459), rgba(0, 0, 0, 0.995));
       width: 100%;
       padding: 3rem;
+
+      align-items: center;
       a {
         color: #989898;
+      }
+      p {
+        width: 100%;
+        word-wrap: break-word;
       }
     }
   }

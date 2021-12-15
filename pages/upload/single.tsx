@@ -163,7 +163,7 @@ export default function CreatePage({ session }: { session: Session }) {
   const [descriptionOverflowing, setDescriptionOverflowing]= React.useState<boolean>(false);
   const previewText = (cutOff: number, val: string) => {
     if (val.length > cutOff) {
-      return val.slice(0, cutOff - 2) + "...";
+      return val.slice(0, cutOff - 4) + "...";
     } else {
       return val;
     }
@@ -180,8 +180,9 @@ export default function CreatePage({ session }: { session: Session }) {
   const [handleCutoffLength, setHandleCutoffLength] = React.useState<number>(50);
 
   useEffect(() => {
+    console.log("height " + contentRef.current ? contentRef.current?.offsetHeight: 0);
     let playButtonSmall = playButton.current && playButton.current.offsetWidth<=70;
-    let contentOversized =  contentRef.current && contentRef.current.offsetHeight>230;
+    let contentOversized =  contentRef.current && contentRef.current.offsetHeight>240;
     if (playButtonSmall && document.activeElement == titleInputRef.current){
       setTitleOverflowing(true)
     } else if (contentOversized){
@@ -196,7 +197,7 @@ export default function CreatePage({ session }: { session: Session }) {
     if (handleOverflowing){
       if (firstHandleOverflow){
       setFirstHandleOverflow(false);
-      setHandleCutoffLength(val.length-8);
+      setHandleCutoffLength(val.length-6);
       }
       setPreviewHandle(previewText(handleCutoffLength, val));
     } else {
