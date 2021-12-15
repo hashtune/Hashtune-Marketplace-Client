@@ -1,8 +1,8 @@
 import { Navbar } from "../../components/Layout/Navbar/Navbar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, Field } from "formik";
 import { useRegisterUserMutation } from "../../graphql/generated/apolloComponents";
-import router from "next/router";
+import router, { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "../../styles/pages/Single.module.scss";
 import { InputField } from "../../components/Fields/InputField";
@@ -142,18 +142,91 @@ export default function CreatePage({ session }: { session: Session }) {
       },
     });
     console.log({ res }); // If there was an error then artworks will be empty
+    router.replace("/" + session.user.handle + "/", handle); // Not tested
+  };
+  const [oldImage, setOldImage] = React.useState<string>("");
+  const [oldSong, setOldSong] = React.useState<string>("");
+  const [previewTitle, setPreviewTitle] = React.useState<string>(
+    "My First NFT"
+  );
+  const [previewHandle, setPreviewHandle] = React.useState<string>(
+    "My First NFT"
+  );
+  const [previewDescription, setPreviewDescription] = React.useState<string>(
+    "My First NFT"
+  );
+  const [cutOff, setCutOff] = React.useState<number>(50);
+  const [titleOverflowing, setTitleOverflowing]= React.useState<boolean>(false);
+  
+  const [handleOverflowing, setHandleOverflowing]= React.useState<boolean>(false);
+  
+  const [descriptionOverflowing, setDescriptionOverflowing]= React.useState<boolean>(false);
+  const previewText = (cutOff: number, val: string) => {
+    if (val.length > cutOff) {
+      return val.slice(0, cutOff - 2) + "...";
+    } else {
+      return val;
+    }
   };
 
+  const playButton = useRef<HTMLDivElement>(null);
+  const titleInputRef = useRef<HTMLInputElement>(null);
+  const handleInputRef = useRef<HTMLInputElement>(null);
+  const descriptionInputRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  
+  const [titleCutoffLength, setTitleCutoffLength] = React.useState<number>(50);
+  const [handleCutoffLength, setHandleCutoffLength] = React.useState<number>(50);
+
+  useEffect(() => {
+    let playButtonSmall = playButton.current && playButton.current.offsetWidth<=70;
+    let contentOversized =  contentRef.current && contentRef.current.offsetHeight>230;
+    if (playButtonSmall && document.activeElement == titleInputRef.current){
+      setTitleOverflowing(true)
+    } else if (contentOversized){
+      setHandleOverflowing(true);
+    }
+  }, [playButton.current, playButton.current?.offsetWidth,contentRef.current, contentRef.current?.offsetHeight, titleInputRef.current?.textContent, handleInputRef.current?.textContent]);
+
+  const [firstHandleOverflow, setFirstHandleOverflow] = React.useState<boolean>(true);
+  const [firstTitleOverflow, setFirstTitleOverflow] = React.useState<boolean>(true);
+
   const handleChange = (val: string) => {
+    if (handleOverflowing){
+      if (firstHandleOverflow){
+      setFirstHandleOverflow(false);
+      setHandleCutoffLength(val.length-8);
+      }
+      setPreviewHandle(previewText(handleCutoffLength, val));
+    } else {
+      setFirstHandleOverflow(true);
+      setPreviewHandle(val);
+    }
     setHandle(val);
   };
   const titleChange = (val: string) => {
+    if (titleOverflowing){
+      if (firstTitleOverflow){
+      setFirstTitleOverflow(false);
+      setTitleCutoffLength(val.length);
+      }
+      setPreviewTitle(previewText(titleCutoffLength, val));
+    } else {
+      setFirstTitleOverflow(true);
+      setPreviewTitle(val);
+    }
     setTitle(val);
   };
   const imageChange = (val: string) => {
     setImage(val);
   };
   const descriptionChange = (val: string) => {
+    if (val.length>60){
+      setPreviewDescription(val.slice(0,60)+ "...");
+    } else {
+      setPreviewDescription(val);
+    }
     setDescription(val);
   };
   const typeChange = (val: boolean) => {
@@ -227,7 +300,14 @@ export default function CreatePage({ session }: { session: Session }) {
                 datatype="file"
                 type="file"
                 placeholder="song"
-                onChange={(val) => songChange(val.target.value)}
+                accept="audio/*"
+                onChange={(val) => {
+                  if (val.target.files) {
+                    try {
+                      songChange(URL.createObjectURL(val.target.files[0]));
+                    } catch (err) {}
+                  }
+                }}
               />
             </div>
             <hr className={styles["divider"] + " mt-small mb-small"} />
@@ -237,7 +317,8 @@ export default function CreatePage({ session }: { session: Session }) {
                 <input
                   className="text_input"
                   datatype="text"
-                  placeholder="E.g. My First NFT"
+                  ref = {handleInputRef}
+                  placeholder="E.g. My-First-NFT"
                   onChange={(val) => handleChange(val.target.value)}
                 />
               </div>
@@ -246,9 +327,10 @@ export default function CreatePage({ session }: { session: Session }) {
                 <input
                   className="text_input"
                   datatype="text"
+                  ref= {titleInputRef}
+                  maxLength={40}
                   placeholder="E.g. My First NFT"
                   onChange={(val) => titleChange(val.target.value)}
-                  // defaultValue="default title"
                 />
               </div>
             </div>
@@ -260,7 +342,14 @@ export default function CreatePage({ session }: { session: Session }) {
                   datatype="file"
                   type="file"
                   placeholder="image"
-                  onChange={(val) => imageChange(val.target.value)}
+                  accept="image/*"
+                  onChange={(val) => {
+                    if (val.target.files && val.target.files !== undefined) {
+                      try {
+                        imageChange(URL.createObjectURL(val.target.files[0]));
+                      } catch (err) {}
+                    }
+                  }}
                   defaultValue={
                     !image ? "/dist/images/mock/users/3.png" : image
                   }
@@ -309,8 +398,10 @@ export default function CreatePage({ session }: { session: Session }) {
 
             <div className="input__group">
               <label htmlFor="">NFT Description </label>
+              
               <textarea
                 className="text_input"
+                maxLength={150}
                 datatype="text"
                 placeholder="E.g. I Produced this track when ..."
                 onChange={(val) => descriptionChange(val.target.value)}
@@ -353,22 +444,27 @@ export default function CreatePage({ session }: { session: Session }) {
               {renderImage()}
             </div>
 
-            <div className={styles["single__preview-artwork--content"]}>
-              <div className={styles["single__preview-artwork--player"]}>
-                <PlayerContainer
-                  url={song}
-                  artist="{artwork.creator.handle}"
-                  title="{artwork.title}"
-                />
+            <div ref = {contentRef} className={styles["single__preview-artwork--content"]}>
+              <div className={styles["single__preview-artwork--top"]}>
+                <div
+                  ref={playButton}
+                  className={styles["single__preview-artwork--player"]}
+                >
+                  <PlayerContainer
+                    url={song}
+                    artist="{artwork.creator.handle}"
+                    title="{artwork.title}"
+                  />
+                </div>
                 <div className={styles["single__preview-artwork--heading"]}>
-                  <h1>{title}</h1>
+                  <h1>{previewTitle}</h1>
                   <small>
-                    <a href="#">hashtune.co/user-handle/{handle}</a>
+                    <a href="#">hashtune.co/user-handle/{previewHandle}</a>
                   </small>
                 </div>
               </div>
               <hr className="divider" />
-              <p>{description}</p>
+              <p>{previewDescription}</p>
             </div>
           </div>
         </div>
