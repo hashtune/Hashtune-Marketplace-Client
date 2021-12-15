@@ -16,6 +16,7 @@ import { SaleType } from "../../hooks/connectWallet";
 import { Session } from "../../hooks/session";
 import { link } from "fs";
 import PlayerContainer from "../../components/Audio/PlayerContainer";
+import { GetServerSideProps } from "next";
 
 export { getServerSideProps } from "../../hooks/session";
 
@@ -33,7 +34,19 @@ export type CreateInputType = {
   currentOwner: string;
   creator: string;
 };
-export default function CreatePage({ session }: { session: Session }) {
+
+// export const getSSRProps: GetServerSideProps = async () => {
+//   const res = await fetch(`https://api.coinbase.com/v2/exchange-rates\?currency\=BNB
+//     `);
+//   const data = await res.json();
+//   return {
+//     props: {
+//       data: data.rates.USD,
+//     },
+//   };
+// };
+
+export default function CreatePage({ session, data }: { session: Session, data: number}) {
   const { createNFT } = React.useContext(MetamaskContext);
   const [song, setSong] = React.useState<string>("/dist/audio/4.mp3");
   const [handle, setHandle] = React.useState<string>("NFT-single-handle");
@@ -42,6 +55,8 @@ export default function CreatePage({ session }: { session: Session }) {
   const [image, setImage] = React.useState<string>(
     "/dist/images/mock/artworks/1.png"
   );
+
+  const conversionRate = 527;
   const [description, setDescription] = React.useState<string>(
     "NFT Single Description"
   );
@@ -144,8 +159,6 @@ export default function CreatePage({ session }: { session: Session }) {
     console.log({ res }); // If there was an error then artworks will be empty
     router.replace("/" + session.user.handle + "/", handle); // Not tested
   };
-  const [oldImage, setOldImage] = React.useState<string>("");
-  const [oldSong, setOldSong] = React.useState<string>("");
   const [previewTitle, setPreviewTitle] = React.useState<string>(
     "My First NFT"
   );
@@ -155,12 +168,8 @@ export default function CreatePage({ session }: { session: Session }) {
   const [previewDescription, setPreviewDescription] = React.useState<string>(
     "My First NFT"
   );
-  const [cutOff, setCutOff] = React.useState<number>(50);
   const [titleOverflowing, setTitleOverflowing]= React.useState<boolean>(false);
-  
   const [handleOverflowing, setHandleOverflowing]= React.useState<boolean>(false);
-  
-  const [descriptionOverflowing, setDescriptionOverflowing]= React.useState<boolean>(false);
   const previewText = (cutOff: number, val: string) => {
     if (val.length > cutOff) {
       return val.slice(0, cutOff - 4) + "...";
@@ -172,7 +181,6 @@ export default function CreatePage({ session }: { session: Session }) {
   const playButton = useRef<HTMLDivElement>(null);
   const titleInputRef = useRef<HTMLInputElement>(null);
   const handleInputRef = useRef<HTMLInputElement>(null);
-  const descriptionInputRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   
@@ -180,7 +188,6 @@ export default function CreatePage({ session }: { session: Session }) {
   const [handleCutoffLength, setHandleCutoffLength] = React.useState<number>(50);
 
   useEffect(() => {
-    console.log("height " + contentRef.current ? contentRef.current?.offsetHeight: 0);
     let playButtonSmall = playButton.current && playButton.current.offsetWidth<=70;
     let contentOversized =  contentRef.current && contentRef.current.offsetHeight>240;
     if (playButtonSmall && document.activeElement == titleInputRef.current){
@@ -283,6 +290,12 @@ export default function CreatePage({ session }: { session: Session }) {
 
   console.log(renderImage());
 
+  const roundParseConvert = (val: string) =>{
+    return "$" + Math.round((val ? parseFloat(val): 0) * conversionRate *100)/100;
+  }
+
+  
+
   return (
     <div className={"app " + styles["single__layout"]}>
       <Navbar session={session} />
@@ -378,8 +391,11 @@ export default function CreatePage({ session }: { session: Session }) {
                   <label htmlFor="">NFT Price </label>
                   <input
                     type="number"
-                    placeholder="sale price"
-                    onChange={(val) => salePriceChange(val.target.value)}
+                    placeholder="sale price (BNB)"
+                    onChange={(val) => {
+                      val.target.value = val.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+                      salePriceChange(val.target.value);
+                    }}
                     className="text_input"
                   />
                 </div>
@@ -388,12 +404,20 @@ export default function CreatePage({ session }: { session: Session }) {
                   <label htmlFor="">Auction reserve price </label>
                   <input
                     type="number"
-                    placeholder="auction reserve price"
-                    onChange={(val) => reservePriceChange(val.target.value)}
+                    placeholder="auction reserve price (BNB)"
+                    onChange={(val) => {
+                      val.target.value = val.target.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');
+                      reservePriceChange(val.target.value);
+                    }
+                    }
                     className="text_input"
                   />
                 </div>
               )}
+              <div className="input__group"> 
+                <label htmlFor="">In Dollars </label>
+                <h1>{saleType === "fixed" ?roundParseConvert(salePrice) : roundParseConvert(reservePrice)}</h1>
+              </div>
             </div>
             <hr className={styles["divider"] + " mt-small mb-small"} />
 
