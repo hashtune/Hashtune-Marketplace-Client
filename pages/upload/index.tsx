@@ -29,15 +29,14 @@ export default function Upload() {
                   alt=""
                   draggable="false"
                 />
-                <Link href="/upload/single">
-                  <a
-                    className={
-                      "primary_button " + styles["upload__variant-type--button"]
-                    }
-                  >
-                    Upload Single
-                  </a>
-                </Link>
+                <a
+                  href="/upload/single"
+                  className={
+                    "primary_button " + styles["upload__variant-type--button"]
+                  }
+                >
+                  Upload Single
+                </a>
               </div>
               <div
                 className={styles["upload__variant-type"] + " opacity-small"}
