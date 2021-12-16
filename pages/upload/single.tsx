@@ -388,7 +388,7 @@ export default function CreatePage({ session, data }: { session: Session, data: 
               <div className="vertical_divider" />
               {saleType === "fixed" ? (
                 <div className="input__group">
-                  <label htmlFor="">NFT Price </label>
+                  <label htmlFor="">NFT Price (BNB)</label>
                   <input
                     type="number"
                     placeholder="sale price (BNB)"
