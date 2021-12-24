@@ -131,7 +131,9 @@ export default function CreatePage({ session, data }: { session: Session, data: 
       ],
       creatorsRoyalties: [90, 10],
     });
-    if (!txHash) return;
+    if (!txHash) {
+      console.log("no transaction hash")
+    };
     const input: CreateInputType = {
       txHash: txHash,
       handle,
@@ -157,7 +159,9 @@ export default function CreatePage({ session, data }: { session: Session, data: 
       },
     });
     console.log({ res }); // If there was an error then artworks will be empty
-    router.replace("/" + session.user.handle + "/", handle); // Not tested
+    if (res.data?.addArtwork?.Artworks !== null) {
+      router.replace("/" + session.user.handle + "/", handle); // Not tested
+    }
   };
   const [previewTitle, setPreviewTitle] = React.useState<string>(
     "My First NFT"

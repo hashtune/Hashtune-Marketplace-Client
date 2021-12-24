@@ -60,7 +60,7 @@ export const Navbar = (props: NavbarProps) => {
       return (
         <div className={styles["navbar__profileContainer"]}>
           {/* TODO if approved creator */}
-          <button className={styles["navbar__uploadMusic"]} onClick={() => router.replace("/create")}><span>Upload Music</span></button>
+          <button className={styles["navbar__uploadMusic"]} onClick={() => router.replace("/upload")}><span>Upload Music</span></button>
         <div className={styles["navbar__profilePicker"]}>
         <Image
               alt="cover image"
