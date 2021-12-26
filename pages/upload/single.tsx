@@ -1,22 +1,15 @@
 import { Navbar } from "../../components/Layout/Navbar/Navbar";
-import React, { useEffect, useRef, useState } from "react";
-import { Formik, Field } from "formik";
-import { useRegisterUserMutation } from "../../graphql/generated/apolloComponents";
-import router, { useRouter } from "next/router";
+import React, { useEffect, useRef } from "react";
+import router from "next/router";
 import Image from "next/image";
 import styles from "../../styles/pages/Single.module.scss";
-import { InputField } from "../../components/Fields/InputField";
-import DropFileInput from "../../components/Forms/DropFileInput/DropFileInput";
-
 import { MetamaskContext } from "../../hooks/connectWallet";
 import client from "../../lib/apollo-client";
 import gql from "graphql-tag";
 import { checkHandleFree } from "../../lib/apiQueries/ArtworkQueries";
 import { SaleType } from "../../hooks/connectWallet";
 import { Session } from "../../hooks/session";
-import { link } from "fs";
 import PlayerContainer from "../../components/Audio/PlayerContainer";
-import { GetServerSideProps } from "next";
 
 export { getServerSideProps } from "../../hooks/session";
 
@@ -72,7 +65,7 @@ export default function CreatePage({ session, data }: { session: Session, data: 
           description
           saleType
           txHash
-          pending
+          tokenId
           creator {
             fullName
           }
@@ -160,7 +153,7 @@ export default function CreatePage({ session, data }: { session: Session, data: 
     });
     console.log({ res }); // If there was an error then artworks will be empty
     if (res.data?.addArtwork?.Artworks !== null) {
-      router.replace("/" + session.user.handle + "/", handle); // Not tested
+      router.replace(session.user.handle + "/" + handle); // Not tested
     }
   };
   const [previewTitle, setPreviewTitle] = React.useState<string>(

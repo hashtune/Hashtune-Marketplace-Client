@@ -41,6 +41,7 @@ export type Artwork = {
   auctionWithNoReservePriceAndNoBids: Scalars['Boolean'];
   creator: User;
   description: Scalars['String'];
+  events: Array<Event>;
   handle: Scalars['String'];
   id: Scalars['ID'];
   image: Scalars['String'];
@@ -48,11 +49,11 @@ export type Artwork = {
   latestAuction?: Maybe<Auction>;
   listed: Scalars['Boolean'];
   owner?: Maybe<User>;
-  pending: Scalars['Boolean'];
   price?: Maybe<Scalars['BigInt']>;
   reservePrice?: Maybe<Scalars['BigInt']>;
   saleType: Scalars['String'];
   title: Scalars['String'];
+  tokenId: Scalars['String'];
   txHash: Scalars['String'];
 };
 
@@ -170,6 +171,48 @@ export type CreateArtworkInput = {
   txHash: Scalars['String'];
 };
 
+/** Purchase fixed sale NFT input */
+export type CreateFixedSaleInput = {
+  artworkId: Scalars['String'];
+  price: Scalars['BigInt'];
+  txHash: Scalars['String'];
+};
+
+export type Event = {
+  __typename?: 'Event';
+  createdAt: Scalars['DateTime'];
+  eventData: EventData;
+  id: Scalars['String'];
+  user: Scalars['String'];
+  userEventId: User;
+  version: Scalars['BigInt'];
+};
+
+export type EventData = {
+  __typename?: 'EventData';
+  eventType?: Maybe<EventType>;
+  id: Scalars['String'];
+  price?: Maybe<Scalars['BigInt']>;
+  txHash: Scalars['String'];
+};
+
+export enum EventType {
+  ArtistAuctionReceivedRoyalties = 'artist_auction_received_royalties',
+  ArtistSaleReceivedRoyalties = 'artist_sale_received_royalties',
+  BuyerBidAccepted = 'buyer_bid_accepted',
+  BuyerBidAutomaticallyAccepted = 'buyer_bid_automatically_accepted',
+  BuyerBidAutomaticallyLost = 'buyer_bid_automatically_lost',
+  BuyerBidExceeded = 'buyer_bid_exceeded',
+  BuyerBidLost = 'buyer_bid_lost',
+  BuyerBidReceived = 'buyer_bid_received',
+  BuyerSaleCreated = 'buyer_sale_created',
+  OwnerBidAccepted = 'owner_bid_accepted',
+  OwnerBidAutomaticallyAccepted = 'owner_bid_automatically_accepted',
+  OwnerBidReceived = 'owner_bid_received',
+  OwnerSaleCreated = 'owner_sale_created',
+  OwnerSaleEnded = 'owner_sale_ended'
+}
+
 export type ExternalChainError = {
   __typename?: 'ExternalChainError';
   message: Scalars['String'];
@@ -192,6 +235,8 @@ export type Mutation = {
   deleteAuction: AuctionResult;
   /** Disconnects a user by clearing their jwt */
   disconnected: Scalars['Boolean'];
+  /** Purchase a fixed sale artwork */
+  puchaseFixedSaleArtwork: ArtworkResult;
   /** Register a user after they authenticate with the correct chain network */
   registerUser: UserResult;
   /** edit the price or reserve price of an artwork */
@@ -221,6 +266,11 @@ export type MutationCookieArgs = {
 export type MutationDeleteAuctionArgs = {
   auctionId: Scalars['String'];
   userId: Scalars['String'];
+};
+
+
+export type MutationPuchaseFixedSaleArtworkArgs = {
+  InputType?: Maybe<CreateFixedSaleInput>;
 };
 
 
@@ -335,12 +385,19 @@ export type Wallet = {
   updatedAt: Scalars['String'];
 };
 
+export type MutationMutationVariables = Exact<{
+  inputType?: Maybe<CreateFixedSaleInput>;
+}>;
+
+
+export type MutationMutation = { __typename?: 'Mutation', puchaseFixedSaleArtwork: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', id: string }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ExternalChainError?: { __typename?: 'ExternalChainError', message: string } | null | undefined, ExternalChainErrorStillPending?: { __typename?: 'ExternalChainErrorStillPending', message: string } | null | undefined } };
+
 export type FindArtworkQueryVariables = Exact<{
   findArtworkHandle: Scalars['String'];
 }>;
 
 
-export type FindArtworkQuery = { __typename?: 'Query', findArtwork: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, image: string, description: string, listed: boolean, price?: any | null | undefined, saleType: string, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', currentHigh: any, artworkId: string, liveAt?: any | null | undefined, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined, creator: { __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string } } }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', path?: string | null | undefined, message?: string | null | undefined } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
+export type FindArtworkQuery = { __typename?: 'Query', findArtwork: { __typename?: 'ArtworkResult', Artworks?: Array<{ __typename?: 'Artwork', id: string, kind: string, handle: string, title: string, tokenId: string, image: string, description: string, listed: boolean, price?: any | null | undefined, saleType: string, reservePrice?: any | null | undefined, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, latestAuction?: { __typename?: 'Auction', currentHigh: any, artworkId: string, liveAt?: any | null | undefined, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined, creator: { __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string } }, owner?: { __typename?: 'User', id: string } | null | undefined, events: Array<{ __typename?: 'Event', createdAt: any, eventData: { __typename?: 'EventData', eventType?: EventType | null | undefined, price?: any | null | undefined, txHash: string }, userEventId: { __typename?: 'User', handle: string } }> }> | null | undefined, ClientErrorArtworkNotFound?: { __typename?: 'ClientErrorArtworkNotFound', message?: string | null | undefined } | null | undefined, ClientErrorArgumentsConflict?: { __typename?: 'ClientErrorArgumentsConflict', path?: string | null | undefined, message?: string | null | undefined } | null | undefined, ClientErrorUserUnauthorized?: { __typename?: 'ClientErrorUserUnauthorized', message?: string | null | undefined } | null | undefined, ClientErrorUnknown?: { __typename?: 'ClientErrorUnknown', message: string } | null | undefined } };
 
 export type QueryListArtworksQueryVariables = Exact<{
   listArtworksListed?: Maybe<Scalars['Boolean']>;
@@ -392,13 +449,62 @@ export type ProfileQueryQueryVariables = Exact<{
 export type ProfileQueryQuery = { __typename?: 'Query', findUser: { __typename?: 'UserResult', Users?: Array<{ __typename?: 'User', id: string, fullName: string, handle: string, email: string, bio: string, image?: string | null | undefined, isApprovedCreator: boolean, wallet: { __typename?: 'Wallet', provider: string, publicKey: string }, created: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }>, owned: Array<{ __typename?: 'Artwork', kind: string, handle: string, title: string, id: string, image: string, description: string, listed: boolean, price?: any | null | undefined, reservePrice?: any | null | undefined, saleType: string, auctionWithNoReservePriceAndNoBids: boolean, Auctions: Array<{ __typename?: 'Auction', id: string, currentHigh: any, liveAt?: any | null | undefined, artworkId: string, bids: Array<{ __typename?: 'Bid', id: string }> }>, creator: { __typename?: 'User', fullName: string }, latestAuction?: { __typename?: 'Auction', currentHigh: any, bids: Array<{ __typename?: 'Bid', id: string }> } | null | undefined }> }> | null | undefined } };
 
 
+export const MutationDocument = gql`
+    mutation Mutation($inputType: CreateFixedSaleInput) {
+  puchaseFixedSaleArtwork(InputType: $inputType) {
+    Artworks {
+      id
+    }
+    ClientErrorArtworkNotFound {
+      message
+    }
+    ClientErrorUserUnauthorized {
+      message
+    }
+    ExternalChainError {
+      message
+    }
+    ExternalChainErrorStillPending {
+      message
+    }
+  }
+}
+    `;
+export type MutationMutationFn = Apollo.MutationFunction<MutationMutation, MutationMutationVariables>;
+
+/**
+ * __useMutationMutation__
+ *
+ * To run a mutation, you first call `useMutationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMutationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [mutationMutation, { data, loading, error }] = useMutationMutation({
+ *   variables: {
+ *      inputType: // value for 'inputType'
+ *   },
+ * });
+ */
+export function useMutationMutation(baseOptions?: Apollo.MutationHookOptions<MutationMutation, MutationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MutationMutation, MutationMutationVariables>(MutationDocument, options);
+      }
+export type MutationMutationHookResult = ReturnType<typeof useMutationMutation>;
+export type MutationMutationResult = Apollo.MutationResult<MutationMutation>;
+export type MutationMutationOptions = Apollo.BaseMutationOptions<MutationMutation, MutationMutationVariables>;
 export const FindArtworkDocument = gql`
     query findArtwork($findArtworkHandle: String!) {
   findArtwork(handle: $findArtworkHandle) {
     Artworks {
+      id
       kind
       handle
       title
+      tokenId
       image
       description
       listed
@@ -433,6 +539,20 @@ export const FindArtworkDocument = gql`
         wallet {
           provider
           publicKey
+        }
+      }
+      owner {
+        id
+      }
+      events {
+        eventData {
+          eventType
+          price
+          txHash
+        }
+        createdAt
+        userEventId {
+          handle
         }
       }
     }

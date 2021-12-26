@@ -10,10 +10,13 @@ import ArtworkHistoryItem from "../../../components/Artwork/ArtworkHistoryItem";
 import { AudioPlayerContext } from "../../../hooks/audioPlayer";
 import { Session } from "../../../hooks/session";
 import { useFindArtworkQuery } from "../../../graphql/generated/apolloComponents";
-
+import { MetamaskContext } from "../../../hooks/connectWallet";
+import client from "../../../lib/apollo-client";
+import { fixedSalePurchase } from "../../../graphql/artwork/mutations/fixedSalePurchase";
 export { getServerSideProps } from "../../../hooks/session";
 
 export default function Artwork({ session }: { session: Session }) {
+  const { purchaseNFT } = React.useContext(MetamaskContext);
   const [isRefreshing, setIsRefreshing] = useState(false);
   let handle = "";
   if (typeof window !== "undefined") {
@@ -36,6 +39,30 @@ export default function Artwork({ session }: { session: Session }) {
 
   function handleClick(url: string, artist: string, title: string) {
     playOrPause(url, artist, title);
+  }
+
+  async function handleFixedSalePurchase(tokenId:string, price: string, artworkId: string) {
+    const txHash = await purchaseNFT({tokenId, price})
+    if (!txHash) {
+      console.log("no transaction hash")
+    };
+    const input = {
+      txHash,
+      artworkId,
+      price
+    }
+    const res = await client.mutate({
+      mutation: fixedSalePurchase,
+      variables: {
+        inputType: {
+          ...input
+        }
+      }
+    })
+    console.log({res})
+    if (res.data?.addArtwork?.Artworks !== null) {
+      alert("success")
+    }
   }
 
   
@@ -216,44 +243,43 @@ export default function Artwork({ session }: { session: Session }) {
                 <div className={styles["nft__details--top"]}>
                   {/* <div className={styles["nft__details--price"]}> */}
                   <div className={styles["nft__details--price"]}>
-                    <div>Reserve Price</div>
-                    <div>1378 BNB</div>
-                    <div>$1,220</div>
+                    <div>{artwork.saleType !== "fixed" ? "Reserve Price" : "Sale Price"}</div>
+                    <div>{artwork.saleType !== "fixed" ? artwork.reservePrice : artwork.price}</div>
+                    <div>{artwork.saleType !== "fixed" ? artwork.reservePrice : artwork.price}</div>
                   </div>
-                  <Countdown liveAt={date} style="countdown_card-small" />
+                  {artwork.listed && artwork.saleType !== "fixed" && <Countdown liveAt={date} style="countdown_card-small" />}
                 </div>
-                <div className={styles["nft__details--btn"]}>
-                  <div className={styles["nft__details--btn-inner"]}>
+                {artwork.listed && <div className={styles["nft__details--btn"]} onClick={() => handleFixedSalePurchase(artwork.tokenId, artwork.price.toString(), artwork.id)}>
+                  {artwork.saleType !== "fixed" ? <div className={styles["nft__details--btn-inner"]}>
                     Make an offer
-                  </div>
-                </div>
+                  </div> :  <div className={styles["nft__details--btn-inner"]}>
+                    Purchase single
+                  </div>}
+                </div>}
+                {/* TODO call chain even to change the price and relist token */}
+                {!artwork.listed && artwork?.owner?.id == session?.user?.id && <button>Relist token</button>}
               </div>
             </div>
             <div className={styles["nft__history"]}>
               <div className={styles["nft__history--title"]}>Album History</div>
               <div className={styles["nft__history--items"]}>
                 {/* HARDCODED LISTED, IMG, DATE */}
-                <ArtworkHistoryItem
-                  imgSrc={coverImage}
-                  listed={false}
-                  date={"Sep 22, 2021 at 3:39am"}
-                  artwork={artwork}
-                  actor={"sophiekahn"}
-                />
-                <ArtworkHistoryItem
-                  imgSrc={coverImage}
-                  listed={true}
-                  date={"Sep 22, 2021 at 3:39am"}
-                  artwork={artwork}
-                  actor={"sophiekahn"}
-                />
-                <ArtworkHistoryItem
-                  imgSrc={coverImage}
-                  listed={false}
-                  date={"Sep 22, 2021 at 3:39am"}
-                  artwork={artwork}
-                  actor={"sophiekahn"}
-                />
+                {
+                  artwork.events.map((event) => {
+                    return (
+                      <ArtworkHistoryItem
+                        imgSrc={coverImage}
+                        date={event.createdAt}
+                        eventType={event.eventData!.eventType!}
+                        actor={event.userEventId.handle}
+                        price={event.eventData.price}
+                        txHash={event.eventData.txHash}
+                      />
+                    )
+                  })
+                }
+                
+                
               </div>
             </div>
           </div>
@@ -278,3 +304,4 @@ export default function Artwork({ session }: { session: Session }) {
           <h3>{singleArtwork.artwork.price}</h3>
           <h3>{singleArtwork.artwork.reservePrice}</h3> */
 }
+

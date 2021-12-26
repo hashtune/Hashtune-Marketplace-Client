@@ -12,9 +12,8 @@ export type Session = {
         email: string
         isApprovedCreator: boolean
         publicKey: string
-    }
-   
-}
+    } 
+} | undefined
 export async function getServerSideProps({req}: GetServerSidePropsContext) {
   const { data } = await client.query({
     query: listArtworkQuery,

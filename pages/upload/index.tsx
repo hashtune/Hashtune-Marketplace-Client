@@ -5,11 +5,14 @@ import router from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import styles from "../../styles/pages/Upload.module.scss";
+import { Session } from "../../hooks/session";
 
-export default function Upload() {
+export { getServerSideProps } from "../../hooks/session";
+
+export default function Upload({ session }: { session: Session }) {
   return (
     <div className={"app " + styles["upload__layout"]}>
-      <Navbar />
+      <Navbar session={session} />
       <div className={styles["upload__hero"]}>
         <div className={styles["upload__hero-container"]}>
           <div className={styles["upload__content"]}>

@@ -4,9 +4,11 @@ export const artworkQuery = gql`
   query findArtwork($findArtworkHandle: String!) {
     findArtwork(handle: $findArtworkHandle) {
       Artworks {
+        id
         kind
         handle
         title
+        tokenId
         image
         description
         listed
@@ -41,6 +43,20 @@ export const artworkQuery = gql`
           wallet {
             provider
             publicKey
+          }
+        }
+        owner {
+          id
+        }
+        events {
+          eventData {
+            eventType
+            price
+            txHash
+          }
+          createdAt
+          userEventId {
+            handle
           }
         }
       }

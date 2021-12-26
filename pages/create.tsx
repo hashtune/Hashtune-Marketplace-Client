@@ -44,7 +44,6 @@ export default function CreatePage({ session }: { session: Session }) {
           description
           saleType
           txHash
-          pending
           creator {
             fullName
           }
