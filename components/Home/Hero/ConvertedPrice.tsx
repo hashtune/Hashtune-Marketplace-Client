@@ -20,8 +20,11 @@ const ConvertedPrice = (props: CoinProp) => {
         <div className="price_card-data--crypto">
           {props.currentHighInBnb} BNB
         </div>
-        <div className="price_card-data--divider"></div>
-        <div className="price_card-data--fiat">{priceInDollars} $</div>
+        <div className="price_card-data--divider" />
+        <div className="price_card-data--fiat">
+          {/* TODO fix this nan */}
+          {isNaN(priceInDollars) ? "" : priceInDollars} $
+        </div>
       </div>
     </div>
   );

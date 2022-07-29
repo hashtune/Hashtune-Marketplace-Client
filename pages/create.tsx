@@ -4,15 +4,13 @@ import React, { useEffect } from "react";
 import client from "../lib/apollo-client";
 import gql from "graphql-tag";
 import { Navbar } from "../components/Layout/Navbar/Navbar";
-import styles from "./Create.module.scss";
+import styles from "../styles/pages/Create.module.scss";
 import { checkHandleFree } from "../lib/apiQueries/ArtworkQueries";
 import { SaleType } from "../hooks/connectWallet";
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-  // TODO: return the information about the user from metamask
-  return {
-    props: {},
-  };
-}
+import { Session } from "../hooks/session";
+
+export { getServerSideProps } from "../hooks/session";
+
 export type CreateInputType = {
   txHash: string;
   handle: string;
@@ -27,7 +25,7 @@ export type CreateInputType = {
   currentOwner: string;
   creator: string;
 };
-export default function CreatePage() {
+export default function CreatePage({ session }: { session: Session }) {
   const { createNFT } = React.useContext(MetamaskContext);
   const [handle, setHandle] = React.useState<string>("");
   const [handleFree, setHandleFree] = React.useState<boolean>(true);
@@ -46,7 +44,6 @@ export default function CreatePage() {
           description
           saleType
           txHash
-          pending
           creator {
             fullName
           }
@@ -162,7 +159,7 @@ export default function CreatePage() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar session={session} />
       <main>
         <div className={styles.form}>
           <input

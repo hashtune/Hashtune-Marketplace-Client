@@ -1,0 +1,17 @@
+.users {
+  @media screen and (max-width: 768px) {
+    margin-top: 20rem;
+  }
+  &__container {
+    // grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+    display: grid;
+    gap: 3rem;
+  }
+  &__item {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
+}

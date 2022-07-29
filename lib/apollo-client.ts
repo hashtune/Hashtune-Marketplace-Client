@@ -4,9 +4,12 @@ import {
   createHttpLink,
   InMemoryCache,
 } from "@apollo/client";
-
+const url =
+  process.env.STAGE === "development"
+    ? "https://hashtune.co/graphql"
+    : "http://localhost:5000/graphql";
 const apolloHttpLink = createHttpLink({
-  uri: "http://localhost:5000/graphql",
+  uri: url,
   credentials: "include",
 });
 

@@ -1,7 +1,10 @@
 import { gql } from "@apollo/client";
 export const listArtworkQuery = gql`
-    query queryListArtworks {
-    listArtworks {
+  query queryListArtworks(
+    $listArtworksListed: Boolean
+    $listArtworksAuction: Boolean
+  ) {
+    listArtworks(listed: $listArtworksListed, auction: $listArtworksAuction) {
       Artworks {
         id
         handle
@@ -37,17 +40,17 @@ export const listArtworkQuery = gql`
       }
       ClientErrorArtworkNotFound {
         message
-        }
-        ClientErrorArgumentsConflict {
-          message
-          path
-        }
-        ClientErrorUnknown {
-          message
-        }
-        ClientErrorUserUnauthorized {
-          message
-        }
+      }
+      ClientErrorArgumentsConflict {
+        message
+        path
+      }
+      ClientErrorUnknown {
+        message
+      }
+      ClientErrorUserUnauthorized {
+        message
+      }
       ExternalChainError {
         message
       }
@@ -55,5 +58,5 @@ export const listArtworkQuery = gql`
         message
       }
     }
-}
+  }
 `;

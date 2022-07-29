@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "./Artwork.module.scss";
 import ListArtwork from "../ListArtwork/ListArtwork";
 import { ListArtworksFieldsProp } from "../../../lib/interfaces/ArtworkInterfaces";
-import Link from "next/link";
 import client from "../../../lib/apollo-client";
-import { QueryListArtworksQuery } from "../../../graphql/generated/apolloComponents";
 import SortDropDown from "./SortDropdown";
 import { listArtworkQuery } from "../../../graphql/artwork/queries/listArtworks";
 
 const ArtworkContainer = (props: ListArtworksFieldsProp) => {
   const [artworks, setArtworks] = useState(props.artworks);
   const [tabState, setTabState] = useState("All Hashtunes");
+  let playButton = "/dist/play-button.svg";
 
   const getAuctions = async () => {
     const res = await client.query({
@@ -50,19 +49,20 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
       <div className="tab-nav tab-nav__container">
         <div className="tab-nav__indicators">
           <a
-            className="tab-nav__indicators--element"
+            className={tabState === "All Hashtunes" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"}
             onClick={() => setTabState("All Hashtunes")}
+
           >
             All Hashtunes
           </a>
           <a
-            className="tab-nav__indicators--element"
+            className={tabState === "Auctions" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"}
             onClick={() => setTabState("Auctions")}
           >
             Auctions
           </a>
           <a
-            className="tab-nav__indicators--element"
+            className={tabState === "Buy Now" ? "tab-nav__indicators--element-active" : "tab-nav__indicators--element"}
             onClick={() => setTabState("Buy Now")}
           >
             Buy Now
@@ -77,11 +77,9 @@ const ArtworkContainer = (props: ListArtworksFieldsProp) => {
         {artworks.length > 0 &&
           artworks?.map((artwork) => (
             <div key={artwork.id} className={styles["artworks__item"]}>
-              <Link href={`/${artwork.creator.handle}/${artwork.id}`}>
-                <a>
+                
                   <ListArtwork imageSize={368} artwork={artwork} />
-                </a>
-              </Link>
+                
             </div>
           ))}
       </div>

@@ -106,7 +106,27 @@ section {
   }
 }
 
-
 .flex-content-center {
   justify-content: center !important;
+}
+
+.disabled-link {
+  pointer-events: none;
+}
+
+.opacity-small {
+  opacity: 0.4;
+}
+.opacity-medium {
+}
+.opacity-big {
+}
+
+.divider {
+  margin: 2rem 0;
+  margin: 2.4rem 0;
+
+  height: 0.1rem;
+  background-color: #151515;
+  border: none;
 }

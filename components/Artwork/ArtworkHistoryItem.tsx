@@ -1,18 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "../../pages/[user]/[artwork]/SingleArtwork.module.scss";
-import {
-  ListArtworkFields,
-  ListArtworkFieldsProp,
-} from "../../lib/interfaces/ArtworkInterfaces";
-import Price from "../Home/ListArtwork/Price";
-
 interface HistoryItemProps {
   imgSrc: string;
-  listed: boolean;
   date: string;
   actor: string;
-  artwork: ListArtworkFields;
+  txHash: string;
+  eventType: string; // TODO get this enum
+  price?: string;
 }
 
 const ArtworkHistoryItem = (props: HistoryItemProps) => {
@@ -29,19 +24,19 @@ const ArtworkHistoryItem = (props: HistoryItemProps) => {
         </div>
         <div className={styles["nft__history--info"]}>
           <div className={styles["nft__history--action"]}>
-            {props.listed ? "Listed" : "Minted"} by @{props.actor}
+            {props.eventType} by @{props.actor}
           </div>
+          {/* TODO: Convert to time ago */}
           <div className={styles["nft__history--date"]}>{props.date}</div>
         </div>
       </div>
-      {props.listed ? (
-        <div className={styles["nft__history--price"]}>
-          <div className={styles["nft__history--price-bnb"]}>100 BNB</div>
-          <div className={styles["nft__history--price-dollar"]}>$1220</div>
+      <div className={styles["nft__history--price"]}>
+        {/* TODO: prop price conversions */}
+        <div className={styles["nft__history--price-bnb"]}>{props.price}</div>
+        <div className={styles["nft__history--price-dollar"]}>
+          {props.txHash}
         </div>
-      ) : (
-        <></>
-      )}
+      </div>
     </div>
   );
 };

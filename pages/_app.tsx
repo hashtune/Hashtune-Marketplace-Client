@@ -2,7 +2,9 @@ import "../styles/app.scss";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { MetamaskContextProvider } from "../hooks/connectWallet";
-const GA_TRACKING_ID = "";
+import { AudioPlayerContextProvider } from "../hooks/audioPlayer";
+
+const GA_TRACKING_ID = "G-GF75Z533XJ";
 import { ApolloProvider } from "@apollo/client";
 import client from "../lib/apollo-client"
 
@@ -129,7 +131,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
     <ApolloProvider client={client}>
       <MetamaskContextProvider>
+      <AudioPlayerContextProvider>
         <Component {...pageProps} />
+        </AudioPlayerContextProvider>
       </MetamaskContextProvider>
       </ApolloProvider>
     </>

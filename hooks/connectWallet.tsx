@@ -11,6 +11,10 @@ export type CreateNFTProps = {
   creatorsList: string[];
   creatorsRoyalties: number[];
 };
+export type PurchaseNFTProps = {
+  tokenId: string;
+  price: string;
+};
 
 export type MetamaskContext = {
   account: string;
@@ -37,6 +41,7 @@ export type MetamaskContext = {
   createNFT: (props: CreateNFTProps) => Promise<string>;
   getSignature: () => Promise<string>;
   disconnectAccount: () => Promise<void>;
+  purchaseNFT: (props: PurchaseNFTProps) => Promise<string>;
 };
 
 export const MetamaskContext = React.createContext<MetamaskContext>({
@@ -64,6 +69,7 @@ export const MetamaskContext = React.createContext<MetamaskContext>({
   createNFT: () => ({} as Promise<string>),
   getSignature: () => ({} as Promise<string>),
   disconnectAccount: () => ({} as Promise<void>),
+  purchaseNFT: () => ({} as Promise<string>),
 });
 
 export const msgParams = JSON.stringify({
@@ -203,7 +209,6 @@ export const MetamaskContextProvider = ({ children }: any) => {
     } else {
       // TODO call this.disconnectAccount() when the user disconnects
       // via meta mask. Involves refactoring when we ask for accounts
-      console.log({ account });
       setWalletConnected(false);
     }
   }, [account]);
@@ -224,6 +229,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
     );
     return { ethersProvider, contract };
   };
+  // TODO move to separate chain interactions file
   const approveArtist = async () => {
     try {
       const result = await contract.approveArtist(
@@ -263,6 +269,20 @@ export const MetamaskContextProvider = ({ children }: any) => {
     }
   };
 
+  const purchaseNFT = async (props: PurchaseNFTProps) => {
+    const { tokenId, price } = props;
+    try {
+      const result = await contract.buy(tokenId, {
+        gasLimit: 1000000,
+        value: ethers.utils.parseEther(price.toString()), //tokenPrice, how do I get this?
+      });
+      console.log({ result });
+      return result.hash;
+    } catch (e) {
+      console.log("issue purchasing nft");
+    }
+  };
+
   useEffect(() => {
     if (isMetaMaskInstalled()) {
       const { ethersProvider, contract } = getContract();
@@ -299,6 +319,7 @@ export const MetamaskContextProvider = ({ children }: any) => {
         createNFT,
         getSignature,
         disconnectAccount,
+        purchaseNFT,
       }}
     >
       {children}

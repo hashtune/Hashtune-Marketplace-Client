@@ -1,12 +1,14 @@
 import { gql } from "@apollo/client";
 
-export const artworkQuery=  gql`
-query findArtwork($findArtworkId: String!) {
-    findArtwork(id: $findArtworkId) {
+export const artworkQuery = gql`
+  query findArtwork($findArtworkHandle: String!) {
+    findArtwork(handle: $findArtworkHandle) {
       Artworks {
+        id
         kind
         handle
         title
+        tokenId
         image
         description
         listed
@@ -43,6 +45,20 @@ query findArtwork($findArtworkId: String!) {
             publicKey
           }
         }
+        owner {
+          id
+        }
+        events {
+          eventData {
+            eventType
+            price
+            txHash
+          }
+          createdAt
+          userEventId {
+            handle
+          }
+        }
       }
       ClientErrorArtworkNotFound {
         message
@@ -58,5 +74,5 @@ query findArtwork($findArtworkId: String!) {
         message
       }
     }
-}
-`
+  }
+`;
